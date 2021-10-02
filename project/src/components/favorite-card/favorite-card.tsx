@@ -1,6 +1,7 @@
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 
-import {Offer, FavoriteBtnProp} from '../../constants';
+import {Offer} from '../../types/types';
+import {FavoriteBtnProp} from '../../constants';
 import {getStarsWidth} from '../../util';
 
 
@@ -18,11 +19,15 @@ function FavoriteCard({offer: {price, isFavorite, title, previewImage, rating, t
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
+
           <FavoriteBtn isFavorite={isFavorite} btn={FavoriteBtnProp.CARD}/>
+
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
+
             <span style={{width: getStarsWidth(rating)}}></span>
+
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

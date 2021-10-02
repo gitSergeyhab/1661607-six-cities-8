@@ -2,7 +2,8 @@ import Header from '../header/header';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import MainCard from '../main-card/main-card';
 
-import {Offer, Comment, FavoriteBtnProp, STARS} from '../../constants';
+import {Offer, Comment} from '../../types/types';
+import {FavoriteBtnProp, STARS} from '../../constants';
 import {getStarsWidth} from '../../util';
 
 
@@ -22,11 +23,11 @@ function Good({goodName}: {goodName: string}) {
   return <li className="property__inside-item">{goodName}</li>;
 }
 
-function RatingStar({star: {count, titleName}}: {star: {count: string, titleName: string}}) {
+function RatingStar({star: {score, titleName}}: {star: {score: string, titleName: string}}) {
   return (
     <>
-      <input className="form__rating-input visually-hidden" name="rating" value={count} id={`${count}-stars`} type="radio"/>
-      <label htmlFor={`${count}-stars`} className="reviews__rating-label form__rating-label" title={titleName}>
+      <input className="form__rating-input visually-hidden" name="rating" value={score} id={`${score}-stars`} type="radio"/>
+      <label htmlFor={`${score}-stars`} className="reviews__rating-label form__rating-label" title={titleName}>
         <svg className="form__star-image" width="37" height="33">
           <use xlinkHref="#icon-star"></use>
         </svg>
@@ -43,9 +44,7 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
           <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-
           {user.name}
-
         </span>
       </div>
       <div className="reviews__info">
@@ -58,9 +57,7 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
           </div>
         </div>
         <p className="reviews__text">
-
           {comment}
-
         </p>
         <time className="reviews__time" dateTime={(new Date(date).toDateString())}>{(new Date(date).toLocaleString('en-US', {month: 'long', year: 'numeric'}))}</time>
       </div>
@@ -68,7 +65,7 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
   );
 }
 
-function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Comment[], neighbourhoods: Offer[]}): JSX.Element {
+function Property({offer, comments, neighbours}: {offer: Offer, comments: Comment[], neighbours: Offer[]}): JSX.Element {
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = offer;
 
@@ -93,9 +90,7 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-
                   {title}
-
                 </h1>
 
                 <FavoriteBtn isFavorite={isFavorite} btn={FavoriteBtnProp.PROPERTY}/>
@@ -110,25 +105,17 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-
                   {type}
-
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-
                   {bedrooms}
-
                 </li>
                 <li className="property__feature property__feature--adults">
-
                   {maxAdults}
-
                 </li>
               </ul>
               <div className="property__price">
-
                 <b className="property__price-value">&euro;{price}</b>
-
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -146,9 +133,7 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
                     <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-
                     {host.name}
-
                   </span>
                   <span className="property__user-status">
 
@@ -158,9 +143,7 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-
                     {description}
-
                   </p>
                 </div>
               </div>
@@ -175,7 +158,7 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
                   <div className="reviews__rating-form form__rating">
 
-                    {STARS.map((star) => <RatingStar star={star} key={star.count}/>)}
+                    {STARS.map((star) => <RatingStar star={star} key={star.score}/>)}
 
                   </div>
                   <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
@@ -196,7 +179,7 @@ function Property({offer, comments, neighbourhoods}: {offer: Offer, comments: Co
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {neighbourhoods.map((neighbour) => <MainCard offer={neighbour} key={neighbour.id}/>)}
+              {neighbours.map((neighbour) => <MainCard offer={neighbour} key={neighbour.id}/>)}
 
             </div>
           </section>

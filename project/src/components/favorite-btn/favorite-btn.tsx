@@ -1,8 +1,10 @@
-import {ButtonFavorite} from '../../constants';
+import {ButtonFavorite} from '../../types/types';
 
 
 function FavoriteBtn({isFavorite, btn}: {isFavorite: boolean, btn: ButtonFavorite}): JSX.Element {
+
   const activeClass = isFavorite ? `${btn.className}__bookmark-button--active` : '';
+
   return (
     <button className={`${btn.className}__bookmark-button ${activeClass} button`} type="button">
       <svg className={`${btn.className}__bookmark-icon`} width={btn.width} height={btn.height}>
@@ -14,5 +16,3 @@ function FavoriteBtn({isFavorite, btn}: {isFavorite: boolean, btn: ButtonFavorit
 }
 
 export default FavoriteBtn;
-
-

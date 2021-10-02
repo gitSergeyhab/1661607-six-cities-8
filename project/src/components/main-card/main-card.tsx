@@ -1,6 +1,7 @@
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 
-import {Offer, FavoriteBtnProp} from '../../constants';
+import {Offer} from '../../types/types';
+import {FavoriteBtnProp} from '../../constants';
 import {getStarsWidth} from '../../util';
 
 
@@ -31,7 +32,9 @@ function MainCard({offer: {isPremium, price, isFavorite, title, previewImage, ra
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
+
             <span style={{width: getStarsWidth(rating)}}></span>
+
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

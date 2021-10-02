@@ -1,4 +1,4 @@
-const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+import {cities} from '../../constants';
 
 
 function Location({city}: {city: string}): JSX.Element {

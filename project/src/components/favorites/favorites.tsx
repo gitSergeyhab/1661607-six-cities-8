@@ -1,9 +1,10 @@
 import FavoriteCard from '../favorite-card/favorite-card';
 import Header from '../header/header';
 
-import {OfferList} from '../../constants';
+import {Offer} from '../../types/types';
 
-function Favorites({offers}: OfferList): JSX.Element {
+
+function Favorites({offers}: {offers: Offer[]}): JSX.Element {
   return (
     <div className="page">
 

@@ -2,11 +2,13 @@ import MainCard from '../main-card/main-card';
 import Header from '../header/header';
 import Locations from '../locations/locations';
 
+import {Offer} from '../../types/types';
 
-import {OfferList} from '../../constants';
 
+function App({offers}: {offers: Offer[]}): JSX.Element {
 
-function App({offers}: OfferList): JSX.Element {
+  const offersAmsterdam = offers.filter((offer) => offer.city.name === 'Amsterdam');
+
   return (
     <div className="page page--gray page--main">
 
@@ -23,7 +25,9 @@ function App({offers}: OfferList): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+
+              <b className="places__found">{offersAmsterdam.length} places to stay in Amsterdam</b>
+
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -41,7 +45,7 @@ function App({offers}: OfferList): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {offers.map((offer) => <MainCard offer={offer} key={offer.id}/>)}
+                {offersAmsterdam.map((offer) => <MainCard offer={offer} key={offer.id}/>)}
 
               </div>
             </section>
