@@ -1,6 +1,6 @@
 const RATING_COEFFICIENT = 20;
 
-const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 const FavoriteBtnProp = {
   CARD: {className: 'place-card', width: '18', height: '19'},
@@ -18,7 +18,7 @@ const STARS = [
 
 export {
   RATING_COEFFICIENT,
-  cities,
+  CITIES,
   FavoriteBtnProp,
   STARS
 };
