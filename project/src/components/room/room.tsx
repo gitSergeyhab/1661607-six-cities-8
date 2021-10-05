@@ -65,7 +65,7 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
   );
 }
 
-function Property({offer, comments, neighbours}: {offer: Offer, comments: Comment[], neighbours: Offer[]}): JSX.Element {
+function Room({offer, comments, neighbours}: {offer: Offer, comments: Comment[], neighbours: Offer[]}): JSX.Element {
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = offer;
 
@@ -189,4 +189,4 @@ function Property({offer, comments, neighbours}: {offer: Offer, comments: Commen
   );
 }
 
-export default Property;
+export default Room;

@@ -1,7 +1,9 @@
+import {Link} from 'react-router-dom';
+
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 
 import {Offer} from '../../types/types';
-import {FavoriteBtnProp} from '../../constants';
+import {FavoriteBtnProp, AppRoute} from '../../constants';
 import {getStarsWidth} from '../../util';
 
 
@@ -16,9 +18,9 @@ function MainCard({offer: {isPremium, price, isFavorite, title, previewImage, ra
       {isPremium ? <Premium/> : null}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={AppRoute.Room}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -39,7 +41,7 @@ function MainCard({offer: {isPremium, price, isFavorite, title, previewImage, ra
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={AppRoute.Room}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
