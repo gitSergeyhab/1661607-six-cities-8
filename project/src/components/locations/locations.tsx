@@ -14,11 +14,11 @@ function Location({city, selectedCity}: {city: string, selectedCity: string}): J
   );
 }
 
-function Locations(): JSX.Element {
+function Locations({selectedCity}: {selectedCity: string}): JSX.Element {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {CITIES.map((city) => <Location city={city} selectedCity={CITIES[3]} key={city}/>)}
+        {CITIES.map((city) => <Location city={city} selectedCity={selectedCity} key={city}/>)}
       </ul>
     </section>
   );

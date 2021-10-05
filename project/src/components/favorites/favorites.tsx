@@ -7,7 +7,7 @@ import {Offer} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 
 
-function Favorites({offers, authorizationStatus}: {offers: Offer[], authorizationStatus: string}): JSX.Element {
+function Favorites({offers}: {offers: Offer[]}): JSX.Element {
   return (
     <div className="page">
 

@@ -5,9 +5,9 @@ import Locations from '../locations/locations';
 import {Offer} from '../../types/types';
 
 
-function Main({offers, authorizationStatus}: {offers: Offer[], authorizationStatus: string}): JSX.Element {
+function Main({offers, authorizationStatus, selectedCity}: {offers: Offer[], authorizationStatus: string, selectedCity: string}): JSX.Element {
 
-  const offersAmsterdam = offers.filter((offer) => offer.city.name === 'Amsterdam');
+  const offersAmsterdam = offers.filter((offer) => offer.city.name === selectedCity);
 
   return (
     <div className="page page--gray page--main">
@@ -18,7 +18,7 @@ function Main({offers, authorizationStatus}: {offers: Offer[], authorizationStat
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
 
-          <Locations/>
+          <Locations selectedCity={selectedCity}/>
 
         </div>
         <div className="cities">
@@ -26,7 +26,7 @@ function Main({offers, authorizationStatus}: {offers: Offer[], authorizationStat
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
 
-              <b className="places__found">{offersAmsterdam.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offersAmsterdam.length} places to stay in {selectedCity}</b>
 
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
