@@ -4,14 +4,14 @@ import FavoriteCard from '../favorite-card/favorite-card';
 import Header from '../header/header';
 
 import {Offer} from '../../types/types';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 
 
-function Favorites({offers}: {offers: Offer[]}): JSX.Element {
+function Favorites({offers, authorizationStatus}: {offers: Offer[], authorizationStatus: string}): JSX.Element {
   return (
     <div className="page">
 
-      <Header/>
+      <Header authorizationStatus={AuthorizationStatus.Auth}/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

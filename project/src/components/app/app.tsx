@@ -19,7 +19,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main offers={OFFERS} status={AuthorizationStatus.Auth}/>
+          <Main offers={OFFERS} authorizationStatus={AuthorizationStatus.NoAuth}/>
         </Route>
         <Route exact path={AppRoute.Login}>
           <Login/>
@@ -28,14 +28,19 @@ function App(): JSX.Element {
           <PrivateRoute
             exact
             path={AppRoute.Favorites}
-            render={() => <Favorites offers={OFFERS.filter((offer) => offer.isFavorite)}/> }
-            authorizationStatus={AuthorizationStatus.Auth}
+            render={() => <Favorites offers={OFFERS.filter((offer) => offer.isFavorite)} authorizationStatus={AuthorizationStatus.NoAuth} /> }
+            authorizationStatus={AuthorizationStatus.NoAuth}
           />
           {/* ??? почему вместо PrivateRoute не сделать так: ??? */}
           {/* {checkStatus(AuthorizationStatus.NoAuth) ? <Favorites offers={OFFERS.filter((offer) => offer.isFavorite)}/> : <Redirect to={AppRoute.Login}/>} */}
         </Route>
         <Route exact path={AppRoute.Room}>
-          <Room offer={OFFERS[0]} comments={COMMENTS} neighbours={OFFERS.slice(1,4)}/>
+          <Room
+            offer={OFFERS[0]}
+            comments={COMMENTS}
+            neighbours={OFFERS.slice(1,4)}
+            authorizationStatus={AuthorizationStatus.NoAuth}
+          />
         </Route>
         <Route>
           <NotFoundPage/>

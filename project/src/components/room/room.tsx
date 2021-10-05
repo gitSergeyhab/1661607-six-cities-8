@@ -3,8 +3,8 @@ import FavoriteBtn from '../favorite-btn/favorite-btn';
 import MainCard from '../main-card/main-card';
 
 import {Offer, Comment} from '../../types/types';
-import {FavoriteBtnProp, STARS} from '../../constants';
-import {getStarsWidth} from '../../util';
+import {AuthorizationStatus, FavoriteBtnProp, STARS} from '../../constants';
+import {getStarsWidth} from '../../utils/util';
 
 
 function PremiumMarker() {
@@ -65,7 +65,31 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
   );
 }
 
-function Room({offer, comments, neighbours}: {offer: Offer, comments: Comment[], neighbours: Offer[]}): JSX.Element {
+function AddReview(): JSX.Element {
+
+  return (
+    <form className="reviews__form form" action="#" method="post">
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
+      <div className="reviews__rating-form form__rating">
+
+        {STARS.map((star) => <RatingStar star={star} key={star.score}/>)}
+
+      </div>
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <div className="reviews__button-wrapper">
+        <p className="reviews__help">
+        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+        </p>
+        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+      </div>
+    </form>
+  );
+}
+
+function Room(
+  {offer, comments, neighbours, authorizationStatus} :
+  {offer: Offer, comments: Comment[], neighbours: Offer[], authorizationStatus: string},
+): JSX.Element {
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = offer;
 
@@ -154,21 +178,9 @@ function Room({offer, comments, neighbours}: {offer: Offer, comments: Comment[],
                   {comments.map((comment) => <Review commentObj={comment} key={comment.id}/>)}
 
                 </ul>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
 
-                    {STARS.map((star) => <RatingStar star={star} key={star.score}/>)}
+                {authorizationStatus === AuthorizationStatus.Auth ? <AddReview/> : null}
 
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
               </section>
             </div>
           </div>

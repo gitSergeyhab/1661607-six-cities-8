@@ -4,7 +4,7 @@ import FavoriteBtn from '../favorite-btn/favorite-btn';
 
 import {Offer} from '../../types/types';
 import {FavoriteBtnProp, AppRoute} from '../../constants';
-import {getStarsWidth} from '../../util';
+import {getStarsWidth} from '../../utils/util';
 
 
 function FavoriteCard({offer: {price, isFavorite, title, previewImage, rating, type}}: {offer: Offer}): JSX.Element {

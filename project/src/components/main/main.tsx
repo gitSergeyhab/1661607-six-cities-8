@@ -5,14 +5,14 @@ import Locations from '../locations/locations';
 import {Offer} from '../../types/types';
 
 
-function Main({offers, status}: {offers: Offer[], status: string}): JSX.Element {
+function Main({offers, authorizationStatus}: {offers: Offer[], authorizationStatus: string}): JSX.Element {
 
   const offersAmsterdam = offers.filter((offer) => offer.city.name === 'Amsterdam');
 
   return (
     <div className="page page--gray page--main">
 
-      <Header status={status}/>
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
