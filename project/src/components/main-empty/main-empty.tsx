@@ -2,17 +2,17 @@ import Header from '../header/header';
 import Locations from '../locations/locations';
 
 
-function MainEmpty(): JSX.Element {
+function MainEmpty({authorizationStatus, selectedCity}: {authorizationStatus: string, selectedCity: string}): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
-      <Header/>
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
 
-          <Locations/>
+          <Locations selectedCity={selectedCity}/>
 
         </div>
         <div className="cities">
@@ -20,7 +20,7 @@ function MainEmpty(): JSX.Element {
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+                <p className="cities__status-description">We could not find any property available at the moment in {selectedCity}</p>
               </div>
             </section>
             <div className="cities__right-section"></div>

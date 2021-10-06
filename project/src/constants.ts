@@ -15,10 +15,23 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
+enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Room = '/offer/:id',
+}
+
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+}
 
 export {
   RATING_COEFFICIENT,
   CITIES,
   FavoriteBtnProp,
-  STARS
+  STARS,
+  AppRoute,
+  AuthorizationStatus
 };

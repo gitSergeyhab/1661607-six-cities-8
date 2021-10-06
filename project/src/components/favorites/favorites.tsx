@@ -1,14 +1,17 @@
+import {Link} from 'react-router-dom';
+
 import FavoriteCard from '../favorite-card/favorite-card';
 import Header from '../header/header';
 
 import {Offer} from '../../types/types';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 
 
 function Favorites({offers}: {offers: Offer[]}): JSX.Element {
   return (
     <div className="page">
 
-      <Header/>
+      <Header authorizationStatus={AuthorizationStatus.Auth}/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -18,9 +21,9 @@ function Favorites({offers}: {offers: Offer[]}): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="/">
+                    <Link className="locations__item-link" to={AppRoute.Main}>
                       <span>Amsterdam</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">
@@ -33,9 +36,9 @@ function Favorites({offers}: {offers: Offer[]}): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="/">
+                    <Link className="locations__item-link" to={AppRoute.Main}>
                       <span>Cologne</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="favorites__places">
