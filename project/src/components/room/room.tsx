@@ -1,10 +1,15 @@
+import { useParams } from 'react-router';
+
 import Header from '../header/header';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import MainCard from '../main-card/main-card';
+import OffersList from '../offers-list/offers-list';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 import {Offer, Comment} from '../../types/types';
 import {AuthorizationStatus, FavoriteBtnProp, STARS} from '../../constants';
 import {getStarsWidth} from '../../utils/util';
+
+/* eslint-disable no-console */
 
 
 function PremiumMarker() {
@@ -87,11 +92,20 @@ function AddReview(): JSX.Element {
 }
 
 function Room(
-  {offer, comments, neighbours, authorizationStatus} :
-  {offer: Offer, comments: Comment[], neighbours: Offer[], authorizationStatus: string},
+  {offers, comments, neighbours, authorizationStatus} :
+  {offers: Offer[], comments: Comment[], neighbours: Offer[], authorizationStatus: string},
 ): JSX.Element {
 
-  const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = offer;
+  const params: {id: string} = useParams();
+  const id = +params.id;
+
+  const thatOffer = offers.find((offer) => offer.id === id);
+
+  if (!thatOffer) {
+    return <NotFoundPage/>;
+  }
+
+  const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = thatOffer;
 
   return (
     <div className="page">
@@ -191,7 +205,7 @@ function Room(
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {neighbours.map((neighbour) => <MainCard offer={neighbour} key={neighbour.id}/>)}
+              <OffersList offers={neighbours}/>
 
             </div>
           </section>

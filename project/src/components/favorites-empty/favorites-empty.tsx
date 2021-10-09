@@ -1,3 +1,4 @@
+import Footer from '../footer/footer';
 import Header from '../header/header';
 
 
@@ -18,6 +19,8 @@ function FavoritesEmpty(): JSX.Element {
           </section>
         </div>
       </main>
+
+      <Footer/>
     </div>
   );
 }
