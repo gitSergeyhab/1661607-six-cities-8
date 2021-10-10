@@ -7,8 +7,8 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 
+import {Offer, Comment} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../constants';
-import { Offer, Comment } from '../../types/types';
 
 
 type AppProps = {
@@ -18,25 +18,28 @@ type AppProps = {
   city: string,
 }
 
-
 function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Element {
   return(
     <BrowserRouter>
       <Switch>
+
         <Route exact path={AppRoute.Main}>
           <Main offers={offers} authorizationStatus={authorizationStatus} selectedCity={city}/>
         </Route>
+
         <Route exact path={AppRoute.Login}>
           <Login/>
         </Route>
+
         <Route exact path={AppRoute.Favorites}>
           <PrivateRoute
             exact
             path={AppRoute.Favorites}
-            render = {() => <Favorites offers={offers} />}
+            render = {() => <Favorites offers={offers}/>}
             authorizationStatus={authorizationStatus}
           />
         </Route>
+
         <Route exact path={AppRoute.Room}>
           <Room
             offers={offers}
@@ -45,9 +48,11 @@ function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Eleme
             authorizationStatus={authorizationStatus}
           />
         </Route>
+
         <Route>
-          <NotFoundPage/>
+          <NotFoundPage authorizationStatus={authorizationStatus}/>
         </Route>
+
       </Switch>
     </BrowserRouter>
   );

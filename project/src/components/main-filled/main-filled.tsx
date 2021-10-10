@@ -2,10 +2,10 @@ import Header from '../header/header';
 import Locations from '../locations/locations';
 import OffersList from '../offers-list/offers-list';
 
-import {Offer} from '../../types/types';
+import {MainProps} from '../main/main';
 
 
-function MainFilled({offers, authorizationStatus, selectedCity}: {offers: Offer[], authorizationStatus: string, selectedCity: string}): JSX.Element {
+function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
 

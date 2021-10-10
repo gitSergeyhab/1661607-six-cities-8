@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 
 import FavoriteCard from '../favorite-card/favorite-card';
+import Footer from '../footer/footer';
 import Header from '../header/header';
 
 import {Offer} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../constants';
-import Footer from '../footer/footer';
 
 
 function FavoritesFilled({offers}: {offers: Offer[]}): JSX.Element {
@@ -52,7 +52,9 @@ function FavoritesFilled({offers}: {offers: Offer[]}): JSX.Element {
           </section>
         </div>
       </main>
+
       <Footer/>
+
     </div>
   );
 }

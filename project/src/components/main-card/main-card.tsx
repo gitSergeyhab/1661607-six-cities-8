@@ -1,7 +1,5 @@
 import OfferCard from '../offer-card/offer-card';
-
 import {Offer} from '../../types/types';
-/* eslint-disable no-console */
 
 
 type MainCardProps = {
@@ -10,7 +8,6 @@ type MainCardProps = {
   onMouseEnter: () => void,
   onMouseLeave: () => void,
 }
-
 
 function MainCard({offer, typeCard, onMouseLeave, onMouseEnter}: MainCardProps): JSX.Element {
 

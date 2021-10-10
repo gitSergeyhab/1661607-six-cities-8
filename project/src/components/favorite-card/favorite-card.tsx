@@ -2,7 +2,7 @@
 import OfferCard from '../offer-card/offer-card';
 
 import {Offer} from '../../types/types';
-import { TypeOfferCard } from '../../constants';
+import {TypeOfferCard} from '../../constants';
 
 
 function FavoriteCard({offer}: {offer: Offer}): JSX.Element {

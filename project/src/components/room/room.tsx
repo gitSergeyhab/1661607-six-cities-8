@@ -1,15 +1,14 @@
-import { useParams } from 'react-router';
+import {useParams} from 'react-router';
 
-import Header from '../header/header';
+import CommentForm from '../comment-form/comment-form';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-import OffersList from '../offers-list/offers-list';
+import Header from '../header/header';
 import NotFoundPage from '../not-found-page/not-found-page';
+import OffersList from '../offers-list/offers-list';
 
 import {Offer, Comment} from '../../types/types';
-import {AuthorizationStatus, FavoriteBtnProp, STARS} from '../../constants';
 import {getStarsWidth} from '../../utils/util';
-
-/* eslint-disable no-console */
+import {AuthorizationStatus, FavoriteBtnProp} from '../../constants';
 
 
 function PremiumMarker() {
@@ -26,19 +25,6 @@ function ApartmentPicture({src}: {src: string}) {
 
 function Good({goodName}: {goodName: string}) {
   return <li className="property__inside-item">{goodName}</li>;
-}
-
-function RatingStar({star: {score, titleName}}: {star: {score: string, titleName: string}}) {
-  return (
-    <>
-      <input className="form__rating-input visually-hidden" name="rating" value={score} id={`${score}-stars`} type="radio"/>
-      <label htmlFor={`${score}-stars`} className="reviews__rating-label form__rating-label" title={titleName}>
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
-    </>
-  );
 }
 
 function Review({commentObj: {comment, date, rating, user}}: {commentObj: Comment}) {
@@ -70,31 +56,10 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
   );
 }
 
-function AddReview(): JSX.Element {
 
-  return (
-    <form className="reviews__form form" action="#" method="post">
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
+type RoomProps = {offers: Offer[], comments: Comment[], neighbours: Offer[], authorizationStatus: AuthorizationStatus};
 
-        {STARS.map((star) => <RatingStar star={star} key={star.score}/>)}
-
-      </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-      <div className="reviews__button-wrapper">
-        <p className="reviews__help">
-        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-        </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-      </div>
-    </form>
-  );
-}
-
-function Room(
-  {offers, comments, neighbours, authorizationStatus} :
-  {offers: Offer[], comments: Comment[], neighbours: Offer[], authorizationStatus: string},
-): JSX.Element {
+function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): JSX.Element {
 
   const params: {id: string} = useParams();
   const id = +params.id;
@@ -102,7 +67,7 @@ function Room(
   const thatOffer = offers.find((offer) => offer.id === id);
 
   if (!thatOffer) {
-    return <NotFoundPage/>;
+    return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = thatOffer;
@@ -110,7 +75,7 @@ function Room(
   return (
     <div className="page">
 
-      <Header/>
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -193,7 +158,7 @@ function Room(
 
                 </ul>
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <AddReview/> : null}
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm/> : null}
 
               </section>
             </div>

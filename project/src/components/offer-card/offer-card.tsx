@@ -3,18 +3,19 @@ import {Link} from 'react-router-dom';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 
 import {Offer} from '../../types/types';
-import {FavoriteBtnProp, TypeOfferCard} from '../../constants';
 import {getStarsWidth} from '../../utils/util';
-/* eslint-disable no-console */
+import {FavoriteBtnProp, TypeOfferCard} from '../../constants';
+
 
 const OFFER_PATH = '/offer/';
 
+type OfferCardProps = {offer: Offer, typeCard: string};
 
 function Premium() {
   return <div className="place-card__mark"><span>Premium</span></div>;
 }
 
-function OfferCard({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}, typeCard}: {offer: Offer,typeCard: string,}): JSX.Element {
+function OfferCard({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}, typeCard}: OfferCardProps): JSX.Element {
 
   const infoClass = typeCard === TypeOfferCard.Main ? '' : 'favorites__card-info';
   const wrapperClass = typeCard === TypeOfferCard.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper';

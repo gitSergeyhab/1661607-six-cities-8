@@ -1,12 +1,14 @@
 import Footer from '../footer/footer';
 import Header from '../header/header';
 
+import {AuthorizationStatus} from '../../constants';
+
 
 function FavoritesEmpty(): JSX.Element {
   return (
     <div className="page page--favorites-empty">
 
-      <Header/>
+      <Header authorizationStatus={AuthorizationStatus.Auth}/>
 
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
@@ -21,6 +23,7 @@ function FavoritesEmpty(): JSX.Element {
       </main>
 
       <Footer/>
+
     </div>
   );
 }

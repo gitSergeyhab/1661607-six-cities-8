@@ -4,7 +4,10 @@ import MainEmpty from '../main-empty/main-empty';
 import {Offer} from '../../types/types';
 
 
-function Main({offers, authorizationStatus, selectedCity}: {offers: Offer[], authorizationStatus: string, selectedCity: string}): JSX.Element {
+export type MainProps = {offers: Offer[], authorizationStatus: string, selectedCity: string};
+
+
+function Main({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 
   const hasOffers = offers.filter((offer) => offer.city.name === selectedCity).length;
 
