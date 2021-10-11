@@ -15,16 +15,21 @@ const STARS = [
   {score: '1', titleName: 'terribly'},
 ];
 
-enum AppRoute {
+const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
 }
 
-enum AuthorizationStatus {
+const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
+}
+
+const enum TypeOfferCard {
+  Main = 'Main',
+  Favorite = 'Favorite'
 }
 
 export {
@@ -33,5 +38,6 @@ export {
   FavoriteBtnProp,
   STARS,
   AppRoute,
-  AuthorizationStatus
+  AuthorizationStatus,
+  TypeOfferCard
 };

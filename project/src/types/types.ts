@@ -20,11 +20,24 @@ type Host = {
   name: string,
 }
 
+
+type Location = {
+  latitude: number,
+  longitude: number,
+  zoom: number,
+}
+
+type City = {
+  location: Location
+  name: string,
+}
+
 export type Offer = {
   price: number,
   rating: number,
   title: string,
-  city: {name: string}, // поменять
+  location: Location,
+  city: City,
   type: string,
   previewImage: string,
   isPremium: boolean,

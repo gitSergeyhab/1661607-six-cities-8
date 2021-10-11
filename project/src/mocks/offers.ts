@@ -1,11 +1,22 @@
-const OFFERS = [
+export const OFFERS = [
   {
     price: 120,
     rating: 3.4,
     title: 'Beautiful & luxurious apartment at great location',
     type: 'Apartment',
     previewImage: 'img/apartment-01.jpg',
-    city: {name: 'Amsterdam'},
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10},
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.35514938496378,
+      longitude: 4.673877537499948,
+      zoom: 8,
+    },
     isPremium: true,
     isFavorite: false,
     id: 1,
@@ -27,7 +38,18 @@ const OFFERS = [
     title: 'Wood and stone place',
     type: 'Private room',
     previewImage: 'img/room.jpg',
-    city: {name: 'Amsterdam'},
+    city: {
+      location: {
+        latitude: 52.470216,
+        longitude: 4.995168,
+        zoom: 10},
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.45514938496378,
+      longitude: 4.773877537499948,
+      zoom: 8,
+    },
     isPremium: false,
     isFavorite: false,
     id: 2,
@@ -37,7 +59,7 @@ const OFFERS = [
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
@@ -49,7 +71,18 @@ const OFFERS = [
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     previewImage: 'img/apartment-02.jpg',
-    city: {name: 'Amsterdam'},
+    city: {
+      location: {
+        latitude: 52.270216,
+        longitude: 4.795168,
+        zoom: 10},
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.25514938496378,
+      longitude: 4.573877537499948,
+      zoom: 8,
+    },
     isPremium: false,
     isFavorite: true,
     id: 3,
@@ -59,7 +92,7 @@ const OFFERS = [
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
@@ -71,7 +104,18 @@ const OFFERS = [
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
     previewImage: 'img/apartment-03.jpg',
-    city: {name: 'Amsterdam'},
+    city: {
+      location: {
+        latitude: 52.470216,
+        longitude: 4.795168,
+        zoom: 10},
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.45514938496378,
+      longitude: 4.573877537499948,
+      zoom: 8,
+    },
     isPremium: true,
     isFavorite: false,
     id: 4,
@@ -93,7 +137,18 @@ const OFFERS = [
     title: 'Wood and stone place',
     type: 'Private room',
     previewImage: 'img/room.jpg',
-    city: {name: 'Amsterdam'},
+    city: {
+      location: {
+        latitude: 52.270216,
+        longitude: 4.995168,
+        zoom: 10},
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.25514938496378,
+      longitude: 4.773877537499948,
+      zoom: 8,
+    },
     isPremium: false,
     isFavorite: true,
     id: 5,
@@ -103,10 +158,10 @@ const OFFERS = [
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-max.jpg',
       id: 3,
       isPro: true,
-      name: 'Angelina',
+      name: 'Max',
     },
   },
 
@@ -116,7 +171,18 @@ const OFFERS = [
     title: 'White castle',
     type: 'Apartment',
     previewImage: 'img/room.jpg',
-    city: {name: 'Cologne'},
+    city: {
+      location: {
+        latitude: 51.370216,
+        longitude: 4.495168,
+        zoom: 10},
+      name: 'Cologne',
+    },
+    location: {
+      latitude: 51.35514938496378,
+      longitude: 4.273877537499948,
+      zoom: 8,
+    },
     isPremium: false,
     isFavorite: true,
     id: 6,
@@ -126,45 +192,10 @@ const OFFERS = [
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-max.jpg',
       id: 3,
       isPro: true,
-      name: 'Angelina',
-    },
-  },
-];
-
-
-const COMMENTS = [
-  {
-    comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    date: '2019-05-08T14:13:56.569Z',
-    id: 1,
-    rating: 4,
-    user: {
-      avatarUrl: 'img/avatar-angelina.jpg',
-      id: 4,
-      isPro: true,
-      name: 'Angelina',
-    },
-  },
-
-  {
-    comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    date: '2019-09-09T14:13:56.569Z',
-    id: 2,
-    rating: 5,
-    user: {
-      avatarUrl: 'img/avatar-max.jpg',
-      id: 7,
-      isPro: false,
       name: 'Max',
     },
   },
 ];
-
-
-export {
-  OFFERS,
-  COMMENTS
-};

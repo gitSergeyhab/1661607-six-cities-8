@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom';
 import Header from '../header/header';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 
 
-function NotFoundPage(): JSX.Element {
+function NotFoundPage({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
-      <Header/>
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--index page__main--index-empty">
         <section  style={{margin: '150px auto', textAlign: 'center'}}>
