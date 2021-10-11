@@ -49,7 +49,11 @@ function CommentForm(): JSX.Element {
           <RatingStar
             star={star}
             starsCount={starsCount}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => setStarsCount(evt.target.value)}
+            onChange={() => setStarsCount(star.score)}
+
+            //???  или так правильние ???
+            // onChange={(evt: ChangeEvent<HTMLInputElement>) => setStarsCount(evt.target.value)}
+
             key={star.score}
           />))}
 
