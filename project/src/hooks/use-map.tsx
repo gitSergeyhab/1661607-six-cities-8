@@ -1,6 +1,6 @@
 import { useEffect, useState, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { Center } from '../types/types';
+import { Point } from '../types/types';
 
 
 const ZOOM = 11;
@@ -8,7 +8,7 @@ const LAYER_PNG = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 
-function useMap (mapRef: MutableRefObject<HTMLElement | null>, center: Center): Map | null {
+function useMap (mapRef: MutableRefObject<HTMLElement | null>, center: Point): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
 

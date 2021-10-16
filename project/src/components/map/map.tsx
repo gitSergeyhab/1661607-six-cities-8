@@ -1,11 +1,11 @@
 import { useEffect, useRef} from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { Center, Offer } from '../../types/types';
+import { Point, Offer } from '../../types/types';
 import 'leaflet/dist/leaflet.css';
 
 
-type MapProps = {center: Center, offers: Offer[], selectedId: number}
+type MapProps = {center: Point, offers: Offer[], selectedId: number}
 
 const getOfferIcon = (iconUrl: string) => new Icon({iconUrl, iconSize: [30, 40], iconAnchor: [15, 40]});
 

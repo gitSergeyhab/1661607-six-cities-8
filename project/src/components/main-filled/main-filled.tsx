@@ -1,14 +1,14 @@
+import { useState } from 'react';
+
 import Header from '../header/header';
 import Locations from '../locations/locations';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
-
 import {MainProps} from '../main/main';
-import { useState } from 'react';
+import { cityCoordinate } from '../../constants';
 
 
-const center = {lat: 52.3809553943508, lng: 4.939309666406198};
-
+const center = cityCoordinate.amsterdam;
 
 function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 

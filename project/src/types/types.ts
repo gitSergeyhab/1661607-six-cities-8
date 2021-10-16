@@ -51,7 +51,7 @@ export type Offer = {
   host: Host,
 }
 
-export type Center = {lat: number, lng: number}
+export type Point = {lat: number, lng: number}
 
 
 export type ButtonFavorite = {className: string, width: string, height: string};

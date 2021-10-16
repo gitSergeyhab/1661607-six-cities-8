@@ -179,6 +179,7 @@ function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): 
             </div>
           </section>
           {/* !! удалить !! */}
+          {/* Еще рано) вторую карту нарисую тогда удалю... иначе: Свойство "offerId" объявлено, но его значение не было прочитано.ts(6133)*/}
           {offerId}
         </div>
       </main>
