@@ -7,14 +7,14 @@ export const OFFERS = [
     previewImage: 'img/apartment-01.jpg',
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 10},
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     isPremium: true,
@@ -40,14 +40,14 @@ export const OFFERS = [
     previewImage: 'img/room.jpg',
     city: {
       location: {
-        latitude: 52.470216,
-        longitude: 4.995168,
+        latitude: 52.369553943508,
+        longitude: 4.85309666406198,
         zoom: 10},
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.45514938496378,
-      longitude: 4.773877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     isPremium: false,
@@ -73,14 +73,14 @@ export const OFFERS = [
     previewImage: 'img/apartment-02.jpg',
     city: {
       location: {
-        latitude: 52.270216,
-        longitude: 4.795168,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 10},
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.25514938496378,
-      longitude: 4.573877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8,
     },
     isPremium: false,
@@ -106,14 +106,14 @@ export const OFFERS = [
     previewImage: 'img/apartment-03.jpg',
     city: {
       location: {
-        latitude: 52.470216,
-        longitude: 4.795168,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 10},
       name: 'Amsterdam',
     },
     location: {
-      latitude: 52.45514938496378,
-      longitude: 4.573877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8,
     },
     isPremium: true,
@@ -131,40 +131,6 @@ export const OFFERS = [
       name: 'Angelina',
     },
   },
-  {
-    price: 80,
-    rating: 4.7,
-    title: 'Wood and stone place',
-    type: 'Private room',
-    previewImage: 'img/room.jpg',
-    city: {
-      location: {
-        latitude: 52.270216,
-        longitude: 4.995168,
-        zoom: 10},
-      name: 'Amsterdam',
-    },
-    location: {
-      latitude: 52.25514938496378,
-      longitude: 4.773877537499948,
-      zoom: 8,
-    },
-    isPremium: false,
-    isFavorite: true,
-    id: 5,
-    maxAdults: 4,
-    bedrooms: 3,
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
-    images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-small-03.jpg'],
-    host: {
-      avatarUrl: 'img/avatar-max.jpg',
-      id: 3,
-      isPro: true,
-      name: 'Max',
-    },
-  },
-
   {
     price: 180,
     rating: 4.7,

@@ -1,13 +1,20 @@
 import Header from '../header/header';
 import Locations from '../locations/locations';
 import OffersList from '../offers-list/offers-list';
+import Map from '../map/map';
 
 import {MainProps} from '../main/main';
+import { useState } from 'react';
+
+
+const center = {lat: 52.3809553943508, lng: 4.939309666406198};
 
 
 function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+
+  const [offerId, setOfferId] = useState(-1);
 
   return (
     <div className="page page--gray page--main">
@@ -45,12 +52,16 @@ function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX
               </form>
 
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers}/>
+                <OffersList setOfferId={setOfferId} offers={selectedCityOffers}/>
               </div>
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+
+              <section className="cities__map map">
+                <Map center={center} offers={selectedCityOffers} selectedId={offerId}/>
+              </section>
+
             </div>
           </div>
         </div>

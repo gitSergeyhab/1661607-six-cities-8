@@ -50,10 +50,6 @@ function CommentForm(): JSX.Element {
             star={star}
             starsCount={starsCount}
             onChange={() => setStarsCount(star.score)}
-
-            //???  или так правильние ???
-            // onChange={(evt: ChangeEvent<HTMLInputElement>) => setStarsCount(evt.target.value)}
-
             key={star.score}
           />))}
 

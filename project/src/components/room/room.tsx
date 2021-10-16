@@ -9,6 +9,7 @@ import OffersList from '../offers-list/offers-list';
 import {Offer, Comment} from '../../types/types';
 import {getStarsWidth} from '../../utils/util';
 import {AuthorizationStatus, FavoriteBtnProp} from '../../constants';
+import { useState } from 'react';
 
 
 function PremiumMarker() {
@@ -60,6 +61,9 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
 type RoomProps = {offers: Offer[], comments: Comment[], neighbours: Offer[], authorizationStatus: AuthorizationStatus};
 
 function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): JSX.Element {
+
+  const [offerId, setOfferId] = useState(-1);
+
 
   const params: {id: string} = useParams();
   const id = +params.id;
@@ -170,10 +174,12 @@ function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): 
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              <OffersList offers={neighbours}/>
+              <OffersList setOfferId={setOfferId} offers={neighbours}/>
 
             </div>
           </section>
+          {/* !! удалить !! */}
+          {offerId}
         </div>
       </main>
     </div>
