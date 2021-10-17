@@ -4,22 +4,20 @@ import FavoriteBtn from '../favorite-btn/favorite-btn';
 
 import {Offer} from '../../types/types';
 import {getStarsWidth} from '../../utils/util';
-import {FavoriteBtnProp, TypeOfferCard} from '../../constants';
+import {FavoriteBtnProp} from '../../constants';
 
 
 const OFFER_PATH = '/offer/';
 
-type OfferCardProps = {offer: Offer, typeCard: string};
+type OfferCardProps = {offer: Offer, infoClass: string, wrapperClass: string, imgWidth: string, imgHeight: string};
 
 function Premium() {
   return <div className="place-card__mark"><span>Premium</span></div>;
 }
 
-function OfferCard({offer: {isPremium, price, isFavorite, title, previewImage, rating, type, id}, typeCard}: OfferCardProps): JSX.Element {
-
-  const infoClass = typeCard === TypeOfferCard.Main ? '' : 'favorites__card-info';
-  const wrapperClass = typeCard === TypeOfferCard.Main ? 'cities__image-wrapper' : 'favorites__image-wrapper';
-  const [width, height] = typeCard === TypeOfferCard.Main ? ['260', '200'] : ['150', '110'];
+function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
+  const {isPremium, price, isFavorite, title, previewImage, rating, type, id} = offer;
+  const {infoClass, wrapperClass, imgHeight, imgWidth} = restProps;
 
   return (
     <>
@@ -27,7 +25,7 @@ function OfferCard({offer: {isPremium, price, isFavorite, title, previewImage, r
 
       <div className={`${wrapperClass} place-card__image-wrapper`}>
         <Link to={`${OFFER_PATH}${id}`}>
-          <img className="place-card__image" src={previewImage} width={width} height={height} alt="Place"/>
+          <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place"/>
         </Link>
       </div>
 
@@ -59,4 +57,3 @@ function OfferCard({offer: {isPremium, price, isFavorite, title, previewImage, r
 }
 
 export default OfferCard;
-
