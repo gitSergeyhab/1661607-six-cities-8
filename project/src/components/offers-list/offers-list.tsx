@@ -1,27 +1,19 @@
-import {useState} from 'react';
-
 import MainCard from '../main-card/main-card';
-
 import {Offer} from '../../types/types';
 
 
-function OffersList({offers} : {offers: Offer[]}):JSX.Element {
+type OfferListProps = {offers: Offer[], setOfferId: React.Dispatch<React.SetStateAction<number>>};
 
-  const [activeOfferId, setActiveOfferId] = useState(-1);
-
+function OffersList({offers, setOfferId} : OfferListProps): JSX.Element {
   return (
     <>
       {offers.map((offer) => (
         <MainCard
           offer={offer}
-          onMouseLeave={() => setActiveOfferId(-1)}
-          onMouseEnter={() => setActiveOfferId(offer.id)}
+          onMouseLeave={() => setOfferId(-1)}
+          onMouseEnter={() => setOfferId(offer.id)}
           key={offer.id}
         />))}
-
-      {/* !! удалить !! */}
-      <h2> иначе ругается на неиспользуемый activeOfferId <br/>{activeOfferId}</h2>
-
     </>
   );
 }
