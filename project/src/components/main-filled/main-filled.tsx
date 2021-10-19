@@ -5,10 +5,10 @@ import Locations from '../locations/locations';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
 import {MainProps} from '../main/main';
-import { cityCoordinate } from '../../constants';
+import { CityCoordinate } from '../../constants';
 
 
-const center = cityCoordinate.amsterdam;
+const center = CityCoordinate.AMSTERDAM;
 
 function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 

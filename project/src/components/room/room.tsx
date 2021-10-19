@@ -10,10 +10,10 @@ import ReviewList from '../review-list/review-list';
 
 import {Offer, Comment} from '../../types/types';
 import {getStarsWidth} from '../../utils/util';
-import {AuthorizationStatus, cityCoordinate, FavoriteBtnProp} from '../../constants';
+import {AuthorizationStatus, CityCoordinate, FavoriteBtnProp} from '../../constants';
 import { useState } from 'react';
 
-const center = cityCoordinate.amsterdam;
+const center = CityCoordinate.AMSTERDAM;
 
 
 function PremiumMarker() {
