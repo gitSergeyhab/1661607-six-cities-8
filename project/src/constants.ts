@@ -4,6 +4,7 @@ const RATING_COEFFICIENT = 20;
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+
 const FavoriteBtnProp = {
   CARD: {className: 'place-card', width: '18', height: '19'},
   PROPERTY: {className: 'property', width: '31', height: '33'},
@@ -42,6 +43,7 @@ const CityCoordinate: {[property: string]: Point} = {
   COLOGNE: {lat: 50.8936, lng: 7.0731},
   DUSSELDORF: {lat: 51.2217, lng: 6.77616},
 };
+
 
 export {
   RATING_COEFFICIENT,

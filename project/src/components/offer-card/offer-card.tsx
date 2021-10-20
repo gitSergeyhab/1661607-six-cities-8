@@ -1,10 +1,10 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 
-import {Offer} from '../../types/types';
-import {getStarsWidth} from '../../utils/util';
-import {FavoriteBtnProp} from '../../constants';
+import { Offer } from '../../types/types';
+import { getStarsWidth } from '../../utils/util';
+import { FavoriteBtnProp } from '../../constants';
 
 
 const OFFER_PATH = '/offer/';

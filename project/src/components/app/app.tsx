@@ -6,7 +6,6 @@ import Main from '../main/main';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
-
 import {Offer, Comment} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 
@@ -18,13 +17,14 @@ type AppProps = {
   city: string,
 }
 
+
 function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Element {
   return(
     <BrowserRouter>
       <Switch>
 
         <Route exact path={AppRoute.Main}>
-          <Main offers={offers} authorizationStatus={authorizationStatus} selectedCity={city}/>
+          <Main offers={offers} authorizationStatus={authorizationStatus}/>
         </Route>
 
         <Route exact path={AppRoute.Login}>
@@ -44,7 +44,6 @@ function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Eleme
           <Room
             offers={offers}
             comments={comments}
-            neighbours={offers.slice(1,4)}
             authorizationStatus={authorizationStatus}
           />
         </Route>

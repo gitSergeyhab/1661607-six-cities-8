@@ -12,7 +12,7 @@ function MainEmpty({authorizationStatus, selectedCity}: {authorizationStatus: st
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
 
-          <Locations selectedCity={selectedCity}/>
+          <Locations/>
 
         </div>
         <div className="cities">
