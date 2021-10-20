@@ -44,6 +44,13 @@ const CityCoordinate: {[property: string]: Point} = {
   DUSSELDORF: {lat: 51.2217, lng: 6.77616},
 };
 
+const SortOption: {[prop: string]: string} = {
+  Popular: 'Popular',
+  PriceLowToHight:'Price: low to high',
+  PriceHightToLow: 'Price: high to low',
+  TopRated: 'Top rated first',
+};
+
 
 export {
   RATING_COEFFICIENT,
@@ -53,5 +60,6 @@ export {
   AppRoute,
   AuthorizationStatus,
   TypeOfferCard,
-  CityCoordinate
+  CityCoordinate,
+  SortOption
 };

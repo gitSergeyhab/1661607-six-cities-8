@@ -5,9 +5,11 @@ import MainEmpty from '../main-empty/main-empty';
 import { Offer } from '../../types/types';
 import { State } from '../../store/reducer';
 
-const mapStateToProps = ({city}: State) => ({selectedCity: city});
+
+const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
 
 export type MainProps = {offers: Offer[], authorizationStatus: string, selectedCity: string};
+
 
 function Main({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
 

@@ -24,7 +24,7 @@ function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Eleme
       <Switch>
 
         <Route exact path={AppRoute.Main}>
-          <Main offers={offers} authorizationStatus={authorizationStatus}/>
+          <Main authorizationStatus={authorizationStatus}/>
         </Route>
 
         <Route exact path={AppRoute.Login}>

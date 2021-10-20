@@ -1,7 +1,8 @@
 export const enum ActionType {
   ChangeCity = 'city/ChangeCity',
   GetOffers = 'offer/GetOffers',
-  ChangeCityAndOffers = 'all/ChangeCityAndOffers'
+  ChangeCityAndOffers = 'city-offer/ChangeCityAndOffers',
+  ChangeOption = 'option/ChangeOption'
 }
 
 // ??? первые два эккшна не нужны ???
@@ -21,4 +22,13 @@ export const changeCityAndOffers = (city: string) => ({
   payload: city,
 } as const);
 
-export type Actions = ReturnType<typeof changeCity> | ReturnType<typeof getOffers> | ReturnType<typeof changeCityAndOffers>;
+export const changeOption = (option: string) => ({
+  type: ActionType.ChangeOption,
+  payload: option,
+} as const);
+
+export type Actions =
+  ReturnType<typeof changeCity> |
+  ReturnType<typeof getOffers> |
+  ReturnType<typeof changeCityAndOffers> |
+  ReturnType<typeof changeOption>;
