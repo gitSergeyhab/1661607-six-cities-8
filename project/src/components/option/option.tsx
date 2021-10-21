@@ -9,14 +9,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onOptionC
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type OptionProps = ConnectedProps<typeof connector> & {option: string, onCloseListClick: () => void};
+
+
 function Option({activeOption, onOptionClick, option, onCloseListClick} : OptionProps): JSX.Element {
 
-  const onClick = (evt: /*MouseEvent<HTMLLIElement> ??? почему-то не работает ??? */ any) => {
-    evt.preventDefault();
-    const dataOption = evt.target.dataset;
-    if (dataOption) {
-      onOptionClick(dataOption.sort);
-    }
+  const onClick = () => {
+    onOptionClick(option);
     onCloseListClick();
   };
 
@@ -24,7 +22,7 @@ function Option({activeOption, onOptionClick, option, onCloseListClick} : Option
     <li
       onClick={onClick}
       className={`places__option ${activeOption === option ? 'places__option--active' : ''}`}
-      data-sort={option} tabIndex={0}
+      tabIndex={0}
     >
       {option}
     </li>

@@ -37,9 +37,7 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
       markerGroup.addTo(map);
     }
 
-    return function cleanup() {
-      markerGroup.remove();
-    };
+    return () => {markerGroup.remove();};
   });
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { MouseEvent } from 'react';
 
 import FavoriteCard from '../favorite-card/favorite-card';
 import { changeCityAndOffers } from '../../store/action';
@@ -23,19 +22,14 @@ function FavoritesInCity({offers, city, onCityClick} : {offers: Offer[], city: s
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const mapOffers = cityOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id}/>);
 
-  const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
-    const cityTarget = evt.currentTarget.dataset.city;
-    if (cityTarget) {
-      onCityClick(cityTarget);
-    }
-  };
+  const onClick = () => onCityClick(city);
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
 
-          <Link className="locations__item-link" onClick={onClick} data-city={city} to={AppRoute.Main}>
+          <Link className="locations__item-link" onClick={onClick} to={AppRoute.Main}>
             <span>{city}</span>
           </Link>
 
