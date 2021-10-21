@@ -166,7 +166,7 @@ export const OFFERS = [
   },
   {
     price: 180,
-    rating: 4.7,
+    rating: 2.7,
     title: 'White castle',
     type: 'Apartment',
     previewImage: 'img/room.jpg',
@@ -198,7 +198,7 @@ export const OFFERS = [
     },
   },
   {
-    price: 180,
+    price: 280,
     rating: 4.7,
     title: 'White castle',
     type: 'Apartment',
@@ -249,7 +249,7 @@ export const OFFERS = [
       zoom: 8,
     },
     isPremium: false,
-    isFavorite: true,
+    isFavorite: false,
     id: 9,
     maxAdults: 4,
     bedrooms: 3,

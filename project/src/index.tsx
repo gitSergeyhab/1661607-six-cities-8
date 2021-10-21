@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducer } from './store/reducer';
 import App from './components/app/app';
-import { AuthorizationStatus, CITIES } from './constants';
+import { AuthorizationStatus } from './constants';
 
 import {OFFERS} from './mocks/offers';
 import {COMMENTS} from './mocks/comments';
@@ -18,7 +18,7 @@ const store = createStore(reducer, composeWithDevTools());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App offers={OFFERS} comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth} city={CITIES[3]} />
+      <App offers={OFFERS} comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth} />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

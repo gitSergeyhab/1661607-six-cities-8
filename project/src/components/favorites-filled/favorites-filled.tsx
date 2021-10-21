@@ -1,14 +1,16 @@
-import {Link} from 'react-router-dom';
-
-import FavoriteCard from '../favorite-card/favorite-card';
+import FavoritesInCity from '../favorites-in-city/favorites-in-city';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 
-import {Offer} from '../../types/types';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import { Offer } from '../../types/types';
+import { AuthorizationStatus } from '../../constants';
 
 
 function FavoritesFilled({offers}: {offers: Offer[]}): JSX.Element {
+
+  const cities = [...new Set (offers.map((offer) => offer.city.name))];
+  const citiesWithOffers = cities.map((city) => <FavoritesInCity offers={offers} city={city} key={city}/>);
+
   return (
     <div className="page">
 
@@ -19,35 +21,9 @@ function FavoritesFilled({offers}: {offers: Offer[]}): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <Link className="locations__item-link" to={AppRoute.Main}>
-                      <span>Amsterdam</span>
-                    </Link>
-                  </div>
-                </div>
-                <div className="favorites__places">
 
-                  {offers.filter((offer) => offer.city.name === 'Amsterdam').map((offer) => <FavoriteCard offer={offer} key={offer.id}/>)}
+              {citiesWithOffers}
 
-                </div>
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <Link className="locations__item-link" to={AppRoute.Main}>
-                      <span>Cologne</span>
-                    </Link>
-                  </div>
-                </div>
-                <div className="favorites__places">
-
-                  {offers.filter((offer) => offer.city.name === 'Cologne').map((offer) => <FavoriteCard offer={offer} key={offer.id}/>)}
-
-                </div>
-              </li>
             </ul>
           </section>
         </div>

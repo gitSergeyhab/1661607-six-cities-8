@@ -14,11 +14,10 @@ type AppProps = {
   offers: Offer[],
   comments: Comment[],
   authorizationStatus: AuthorizationStatus,
-  city: string,
 }
 
 
-function App({offers, comments, authorizationStatus, city}: AppProps): JSX.Element {
+function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
   return(
     <BrowserRouter>
       <Switch>
