@@ -1,4 +1,5 @@
-import {useParams} from 'react-router';
+import { useParams } from 'react-router';
+import { useState } from 'react';
 
 import CommentForm from '../comment-form/comment-form';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
@@ -7,13 +8,9 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
 import ReviewList from '../review-list/review-list';
-
 import {Offer, Comment} from '../../types/types';
 import {getStarsWidth} from '../../utils/util';
-import {AuthorizationStatus, cityCoordinate, FavoriteBtnProp} from '../../constants';
-import { useState } from 'react';
-
-const center = cityCoordinate.amsterdam;
+import {AuthorizationStatus, CityCoordinate, FavoriteBtnProp} from '../../constants';
 
 
 function PremiumMarker() {
@@ -33,9 +30,9 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-type RoomProps = {offers: Offer[], comments: Comment[], neighbours: Offer[], authorizationStatus: AuthorizationStatus};
+type RoomProps = {offers: Offer[], comments: Comment[], authorizationStatus: AuthorizationStatus};
 
-function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): JSX.Element {
+function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element {
 
   const [offerId, setOfferId] = useState(-1);
 
@@ -50,6 +47,10 @@ function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): 
   }
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = thatOffer;
+  const cityName = thatOffer.city.name;
+
+  const center = CityCoordinate[cityName.toUpperCase()];
+  const neighbours = offers.filter((offer) => offer.city.name === cityName); //   /hotels/: hotel_id/nearby
 
   return (
     <div className="page">
@@ -140,7 +141,9 @@ function Room({offers, comments, neighbours, authorizationStatus} : RoomProps): 
             </div>
           </div>
           <section className="property__map map">
+
             <Map center={center} offers={neighbours} selectedId={offerId}/>
+
           </section>
         </section>
         <div className="container">

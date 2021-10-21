@@ -2,7 +2,7 @@ import {Comment} from '../../types/types';
 import {getStarsWidth} from '../../utils/util';
 
 
-function Review({commentObj: {comment, date, rating, user}}: {commentObj: Comment}): JSX.Element {
+function Review({comment: {comment: commentText, date, rating, user}}: {comment: Comment}): JSX.Element {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -23,7 +23,7 @@ function Review({commentObj: {comment, date, rating, user}}: {commentObj: Commen
           </div>
         </div>
         <p className="reviews__text">
-          {comment}
+          {commentText}
         </p>
         <time className="reviews__time" dateTime={(new Date(date).toDateString())}>{(new Date(date).toLocaleString('en-US', {month: 'long', year: 'numeric'}))}</time>
       </div>
