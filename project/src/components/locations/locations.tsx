@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import {CITIES} from '../../constants';
-import { State } from '../../store/reducer';
+import { State } from '../../types/types';
 import { changeCity, getOffers } from '../../store/action';
 
 import { connect, ConnectedProps } from 'react-redux';

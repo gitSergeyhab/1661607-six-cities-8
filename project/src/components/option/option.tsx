@@ -1,4 +1,4 @@
-import { State } from '../../store/reducer';
+import { State } from '../../types/types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { changeOption } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';

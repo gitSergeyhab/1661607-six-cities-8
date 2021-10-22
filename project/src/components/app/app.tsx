@@ -6,8 +6,9 @@ import Main from '../main/main';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
-import {Offer, Comment} from '../../types/types';
+import {Offer, Comment, State} from '../../types/types';
 import {AppRoute, AuthorizationStatus} from '../../constants';
+import { connect } from 'react-redux';
 
 
 type AppProps = {
@@ -16,6 +17,7 @@ type AppProps = {
   authorizationStatus: AuthorizationStatus,
 }
 
+const mapStateToProps = ({allOffers} : State) => ({offers: allOffers});
 
 function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
   return(
@@ -56,4 +58,4 @@ function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

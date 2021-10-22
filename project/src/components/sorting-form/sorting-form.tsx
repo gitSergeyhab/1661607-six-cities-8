@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Option from '../option/option';
-import { State } from '../../store/reducer';
+import { State } from '../../types/types';
 import { SortOption } from '../../constants';
 
 

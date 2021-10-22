@@ -25,6 +25,16 @@ const enum AppRoute {
   Room = '/offer/:id',
 }
 
+const enum APIRoute {
+  Hotels = '/hotels',
+  Nearby = '/nearby',
+  Favorite = '/favorite',
+  Status = '/:status',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}
+
 const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -58,6 +68,7 @@ export {
   FavoriteBtnProp,
   STARS,
   AppRoute,
+  APIRoute,
   AuthorizationStatus,
   TypeOfferCard,
   CityCoordinate,

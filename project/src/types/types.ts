@@ -1,3 +1,5 @@
+import { AuthorizationStatus } from '../constants';
+
 type User = {
   avatarUrl: string,
   id: number,
@@ -52,6 +54,21 @@ export type Offer = {
 }
 
 export type Point = {lat: number, lng: number}
+
+
+export type State = {
+  city: string,
+  allOffers: Offer[],
+  offers: Offer[],
+  activeOption: string,
+  authorizationStatus: AuthorizationStatus,
+  isHotelsLoaded: boolean,
+}
+
+export type AuthData = {
+  login: string;
+  password: string;
+};
 
 
 export type ButtonFavorite = {className: string, width: string, height: string};
