@@ -1,6 +1,10 @@
 import { RATING_COEFFICIENT, SortOption } from '../constants';
 import { Offer } from '../types/types';
 
+const ReviewLength = {
+  MAX: 300,
+  MIN: 50,
+};
 
 const getOffersByCity = (offers: Offer[], city: string): Offer[] => offers.filter((offer) => offer.city.name === city);
 
@@ -19,13 +23,19 @@ const getSortedOffers = (offers: Offer[], option: string): Offer[] => {
     case SortOption.TopRated:
       return sortHighRated(offers);
     default:
-      return offers;
+      return [...offers];
   }
+};
+
+const disableReviewSubmit = (star: string, text: string): boolean => {
+  const length = text.length;
+  return !(star && length <= ReviewLength.MAX && length >= ReviewLength.MIN);
 };
 
 
 export {
   getStarsWidth,
   getOffersByCity,
-  getSortedOffers
+  getSortedOffers,
+  disableReviewSubmit
 };

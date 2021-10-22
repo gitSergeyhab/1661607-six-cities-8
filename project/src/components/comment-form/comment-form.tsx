@@ -1,6 +1,7 @@
 
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {STARS} from '../../constants';
+import { disableReviewSubmit } from '../../utils/util';
 
 
 type RatingStarProps = {
@@ -34,6 +35,8 @@ function CommentForm(): JSX.Element {
   const [review, setReview] = useState('');
   const [starsCount, setStarsCount] = useState('');
 
+  const disabled = disableReviewSubmit(starsCount, review);
+
   return (
     <form className="reviews__form form" action="#" method="post"
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {
@@ -66,11 +69,11 @@ function CommentForm(): JSX.Element {
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={disabled}>Submit</button>
       </div>
 
       {/* !! удалить !! */}
-      <h3>чтобы еслинт не ругался: review: {review}, starsCount: {starsCount}</h3>
+      <h3>чтобы еслинт не ругался: review: {review.length}, starsCount: {starsCount}</h3>
 
     </form>
   );
