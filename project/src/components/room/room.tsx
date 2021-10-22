@@ -69,7 +69,7 @@ function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element 
           <div className="property__container container">
             <div className="property__wrapper">
 
-              {isPremium ? <PremiumMarker/> : null}
+              {isPremium && <PremiumMarker/>}
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -135,7 +135,7 @@ function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element 
 
                 <ReviewList comments={comments}/>
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm/> : null}
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm/>}
 
               </section>
             </div>

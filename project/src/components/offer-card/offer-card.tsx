@@ -21,7 +21,7 @@ function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
 
   return (
     <>
-      {isPremium ? <Premium/> : null}
+      {isPremium && <Premium/>}
 
       <div className={`${wrapperClass} place-card__image-wrapper`}>
         <Link to={`${OFFER_PATH}${id}`}>

@@ -1,8 +1,10 @@
-import axios, {AxiosInstance, AxiosError, AxiosResponse} from 'axios';
+import axios, {AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig} from 'axios';
+import { getToken } from './token';
 
 
 const BASE_URL = 'https://8.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
+const TOKEN_HEADER = 'X-Token';
 
 const enum HttpCode {
   Unauthorized = 401,
@@ -10,9 +12,21 @@ const enum HttpCode {
 
 type UnauthorizedCB = () => void;
 
+
 export const createAPI = (onUnauthorized: UnauthorizedCB): AxiosInstance => {
 
   const api = axios.create({baseURL: BASE_URL, timeout: REQUEST_TIMEOUT});
+
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToken();
+      if (token) {
+        config.headers[TOKEN_HEADER] = token;
+      }
+
+      return config;
+    },
+  );
 
   api.interceptors.response.use(
     (response: AxiosResponse) => response,
