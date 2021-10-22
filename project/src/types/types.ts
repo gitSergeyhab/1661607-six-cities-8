@@ -13,7 +13,7 @@ export type Comment = {
   user: User,
 }
 
-type Host = {
+export type Host = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
@@ -27,7 +27,7 @@ type Location = {
   zoom: number,
 }
 
-type City = {
+export type City = {
   location: Location
   name: string,
 }
