@@ -1,7 +1,8 @@
-import { State } from '../../types/types';
 import { bindActionCreators, Dispatch } from 'redux';
-import { changeOption } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
+
+import { State } from '../../types/types';
+import { changeOption } from '../../store/action';
 
 
 const mapStateToProps = ({activeOption}: State) => ({activeOption});

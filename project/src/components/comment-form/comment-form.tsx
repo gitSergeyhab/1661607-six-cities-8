@@ -1,4 +1,3 @@
-
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {STARS} from '../../constants';
 import { disableReviewSubmit } from '../../utils/util';
@@ -71,10 +70,6 @@ function CommentForm(): JSX.Element {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={disabled}>Submit</button>
       </div>
-
-      {/* !! удалить !! */}
-      <h3>чтобы еслинт не ругался: review: {review.length}, starsCount: {starsCount}</h3>
-
     </form>
   );
 }

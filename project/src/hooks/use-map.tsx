@@ -3,7 +3,7 @@ import { Map, TileLayer } from 'leaflet';
 import { Point } from '../types/types';
 
 
-const ZOOM = 11;
+const ZOOM = 13;
 const LAYER_PNG = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 

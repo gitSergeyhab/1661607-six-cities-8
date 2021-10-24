@@ -1,51 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { reducer } from './store/reducer';
 import App from './components/app/app';
+import { reducer } from './store/reducer';
 import { AuthorizationStatus } from './constants';
-
-// import { adaptHotelFromServer } from './services/adapters';
-
-// import {OFFERS} from './mocks/offers';
-import {COMMENTS} from './mocks/comments';
-
 import { createAPI } from './services/api';
-import { loadOffers, requireLogout } from './store/action';
-import { fetchHotelsAction, ThunkAppDispatch } from './store/api-actions';
+import { requireAuthorization} from './store/action';
+import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
+import { ThunkAppDispatch } from './types/types';
 
-const api = createAPI(() => store.dispatch(requireLogout()));
+import {COMMENTS} from './mocks/comments'; // удалю
 
-export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+
+const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
+
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
 (store.dispatch as ThunkAppDispatch)(fetchHotelsAction());
-store.dispatch(loadOffers(store.getState().allOffers));
 
-/* eslint-disable no-console */
-
-
-// api.get('/hotels').then((res) => res.data).then((res) => console.log(res));
-
-// fetch('https://8.react.pages.academy/six-cities/hotels').then((r) => r.json()).then((r) => r.forEach((hot: any) => console.log(adaptHotelFromServer(hot))));
+(store.dispatch as ThunkAppDispatch)(checkLoginAction());
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth} />
+      <App comments={COMMENTS} />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
 
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Provider store={store}>
-//       <App offers={OFFERS} comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth} />
-//     </Provider>
-//   </React.StrictMode>,
-//   document.getElementById('root'));
