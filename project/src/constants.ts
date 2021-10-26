@@ -10,11 +10,11 @@ const FavoriteBtnProp = {
 };
 
 const STARS = [
-  {score: '5', titleName: 'perfect'},
-  {score: '4', titleName: 'good'},
-  {score: '3', titleName: 'not bad'},
-  {score: '2', titleName: 'badly'},
-  {score: '1', titleName: 'terribly'},
+  {score: 5, titleName: 'perfect'},
+  {score: 4, titleName: 'good'},
+  {score: 3, titleName: 'not bad'},
+  {score: 2, titleName: 'badly'},
+  {score: 1, titleName: 'terribly'},
 ];
 
 
@@ -39,6 +39,7 @@ const enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
+  NotFound = '/not-found',
 }
 
 const enum APIRoute {
@@ -56,9 +57,9 @@ const enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
 }
 
-const enum TypeOfferCard {
-  Main = 'Main',
-  Favorite = 'Favorite'
+const enum ReasonContentFailure {
+  Loading = 'Loading',
+  NotFound = 'NotFound',
 }
 
 export {
@@ -71,5 +72,5 @@ export {
   AppRoute,
   APIRoute,
   AuthorizationStatus,
-  TypeOfferCard
+  ReasonContentFailure
 };

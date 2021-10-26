@@ -1,8 +1,10 @@
+import { Dispatch } from 'react';
+
 import MainCard from '../main-card/main-card';
-import {Offer} from '../../types/types';
+import { Offer } from '../../types/types';
 
 
-type OfferListProps = {offers: Offer[], setOfferId: React.Dispatch<React.SetStateAction<number>>};
+type OfferListProps = {offers: Offer[], setOfferId: Dispatch<React.SetStateAction<number>>};
 
 function OffersList({offers, setOfferId} : OfferListProps): JSX.Element {
   return (

@@ -1,10 +1,18 @@
-import { RATING_COEFFICIENT, SortOption } from '../constants';
 import { Offer } from '../types/types';
+import { RATING_COEFFICIENT, SortOption } from '../constants';
+
 
 const ReviewLength = {
-  MAX: 300,
   MIN: 50,
+  MAX: 300,
 };
+
+const Re = {
+  NUMBER: /\d/,
+  LETTER: /[a-zа-я]/i,
+  EMAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+};
+
 
 const getOffersByCity = (offers: Offer[], city: string): Offer[] => offers.filter((offer) => offer.city.name === city);
 
@@ -26,19 +34,15 @@ const getSortedOffers = (offers: Offer[], option: string): Offer[] => {
       return [...offers];
   }
 };
-
-const disableReviewSubmit = (star: string, text: string): boolean => {
+const disableByStarAndCommentLength = (star: number, text: string): boolean => {
   const length = text.length;
   return !(star && length <= ReviewLength.MAX && length >= ReviewLength.MIN);
 };
 
 const checkPassword = (password: string | undefined | null): boolean =>
-  password !== null && password !== undefined && /\d/.test(password) && /[a-zа-я]/i.test(password);
+  password !== null && password !== undefined && Re.NUMBER.test(password) && Re.LETTER.test(password);
 
-const checkEmail = (email: string): boolean => {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-};
+const checkEmail = (email: string): boolean => Re.EMAIL.test(String(email).toLowerCase());
 
 const disableSignInSubmit = (email: string, password: string): boolean => !checkEmail(email) || !checkPassword(password);
 
@@ -46,7 +50,7 @@ export {
   getStarsWidth,
   getOffersByCity,
   getSortedOffers,
-  disableReviewSubmit,
+  disableByStarAndCommentLength,
   checkPassword,
   checkEmail,
   disableSignInSubmit

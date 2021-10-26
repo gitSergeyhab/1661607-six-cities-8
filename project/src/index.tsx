@@ -9,14 +9,16 @@ import App from './components/app/app';
 import { reducer } from './store/reducer';
 import { AuthorizationStatus } from './constants';
 import { createAPI } from './services/api';
-import { requireAuthorization} from './store/action';
+import { requireAuthorization, redirectToNotFoundPage} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/types';
 
-import {COMMENTS} from './mocks/comments'; // удалю
 
+const api = createAPI(
+  () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
+  () => store.dispatch(redirectToNotFoundPage()),
+);
 
-const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
@@ -28,7 +30,7 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.wit
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App comments={COMMENTS} />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

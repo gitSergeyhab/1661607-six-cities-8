@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { AuthorizationStatus } from '../constants';
+import { AuthorizationStatus, ReasonContentFailure } from '../constants';
 import { Actions } from '../store/action';
 
 
@@ -27,6 +27,12 @@ export type Host = {
   name: string,
 }
 
+export type ServerHost = {
+  'avatar_url': string,
+  id: number,
+  'is_pro': boolean,
+  name: string,
+}
 
 type Location = {
   latitude: number,
@@ -64,7 +70,7 @@ export type ServerOffer = {
   city: City,
   description: string,
   goods: string[],
-  host: Host,
+  host: ServerHost,
   id: number,
   images: string[],
   'is_favorite': boolean,
@@ -79,7 +85,7 @@ export type ServerOffer = {
 }
 
 type ServerUser = {
-  avatarUrl: string,
+  'avatar_url': string,
   id: number,
   'is_pro': boolean,
   name: string,
@@ -100,10 +106,13 @@ export type State = {
   city: string,
   allOffers: Offer[],
   originOffers: Offer[],
+  nearby: Offer[],
   offers: Offer[],
+  roomOffer: Offer | ReasonContentFailure,
+  comments: Comment[],
   activeOption: string,
   authorizationStatus: AuthorizationStatus,
-  isHotelsLoaded: boolean,
+  areHotelsLoaded: boolean,
 }
 
 export type AuthData = {
@@ -111,8 +120,9 @@ export type AuthData = {
   password: string;
 };
 
-export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
-
-
 export type ButtonFavorite = {className: string, width: string, height: string};
+
+
+export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

@@ -1,4 +1,4 @@
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Favorites from '../favorites/favorites';
@@ -8,22 +8,21 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import Spinner from '../spinner/spinner';
-import {Offer, Comment, State} from '../../types/types';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import { Offer, State } from '../../types/types';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 
 
 type AppProps = {
   offers: Offer[],
-  comments: Comment[],
   authorizationStatus: AuthorizationStatus,
-  isHotelsLoaded: boolean
+  areHotelsLoaded: boolean
 }
 
-const mapStateToProps = ({allOffers, isHotelsLoaded, authorizationStatus} : State) => ({offers: allOffers, isHotelsLoaded, authorizationStatus});
+const mapStateToProps = ({allOffers, areHotelsLoaded, authorizationStatus} : State) => ({offers: allOffers, areHotelsLoaded, authorizationStatus});
 
-function App({offers, comments, authorizationStatus, isHotelsLoaded}: AppProps): JSX.Element {
+function App({offers, authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
 
-  if (!isHotelsLoaded) {
+  if (!areHotelsLoaded) {
     return <Spinner/>;
   }
 
@@ -50,14 +49,13 @@ function App({offers, comments, authorizationStatus, isHotelsLoaded}: AppProps):
 
         <Route exact path={AppRoute.Room}>
           <Room
-            offers={offers}
-            comments={comments}
             authorizationStatus={authorizationStatus}
           />
         </Route>
 
         <Route>
           <NotFoundPage authorizationStatus={authorizationStatus}/>
+
         </Route>
 
       </Switch>

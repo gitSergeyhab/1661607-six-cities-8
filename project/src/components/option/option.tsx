@@ -1,27 +1,27 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 
-import { State } from '../../types/types';
 import { changeOption } from '../../store/action';
+import { State } from '../../types/types';
 
 
 const mapStateToProps = ({activeOption}: State) => ({activeOption});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onOptionClick: changeOption}, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeSortOption: changeOption}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type OptionProps = ConnectedProps<typeof connector> & {option: string, onCloseListClick: () => void};
+type OptionProps = ConnectedProps<typeof connector> & {option: string, closeOptions: () => void};
 
 
-function Option({activeOption, onOptionClick, option, onCloseListClick} : OptionProps): JSX.Element {
+function Option({activeOption, changeSortOption, option, closeOptions} : OptionProps): JSX.Element {
 
-  const onClick = () => {
-    onOptionClick(option);
-    onCloseListClick();
+  const handleSortOptionClick = () => {
+    changeSortOption(option);
+    closeOptions();
   };
 
   return (
     <li
-      onClick={onClick}
+      onClick={handleSortOptionClick}
       className={`places__option ${activeOption === option ? 'places__option--active' : ''}`}
       tabIndex={0}
     >

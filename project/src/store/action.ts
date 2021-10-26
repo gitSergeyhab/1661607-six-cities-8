@@ -1,25 +1,28 @@
 import { AuthorizationStatus } from '../constants';
-import { Offer } from '../types/types';
+import { Comment, Offer } from '../types/types';
+
 
 export const enum ActionType {
-  ChangeCity = 'city/ChangeCity',
-  GetOffers = 'offer/GetOffers',
-  ChangeOption = 'option/ChangeOption',
+  ChangeCity = 'main/city/ChangeCity',
+  ChangeMainOffers = 'main/offers/ChangeMainOffers',
+  ChangeOption = 'main/option/ChangeOption',
   LoadOffers = 'data/main/offers/LoadOffers',
+  LoadNearby = 'data/room/offers/LoadNearby',
   LoadOffer = 'data/room/offer/LoadOffer',
   LoadComments = 'data/room/comments/LoadComments',
   RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
+  RedirectToNotFoundPage = 'error404/RedirectToNotFoundPage',
+  ClearOfferRoom = 'room/offer/ClearOfferRoom',
 }
-
 
 const changeCity = (city: string) => ({
   type: ActionType.ChangeCity,
   payload: city,
 } as const);
 
-const getOffers = (city: string) => ({
-  type: ActionType.GetOffers,
+const changeMainOffers = (city: string) => ({
+  type: ActionType.ChangeMainOffers,
   payload: city,
 } as const);
 
@@ -33,6 +36,11 @@ const loadOffers = (offers: Offer[]) => ({
   payload: offers,
 } as const);
 
+const loadNearby = (offers: Offer[]) => ({
+  type: ActionType.LoadNearby,
+  payload: offers,
+} as const);
+
 const loadOffer = (offers: Offer) => ({
   type: ActionType.LoadOffer,
   payload: offers,
@@ -43,25 +51,43 @@ const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   payload: authStatus,
 } as const);
 
+
 const requireLogout = () => ({type: ActionType.Logout} as const);
+
+const redirectToNotFoundPage = () => ({type: ActionType.RedirectToNotFoundPage} as const);
+
+const clearOfferRoom = () => ({type: ActionType.ClearOfferRoom} as const);
+
+const loadComments = (comments: Comment[]) => ({
+  type: ActionType.LoadComments,
+  payload: comments,
+} as const);
 
 
 export type Actions =
+  ReturnType<typeof clearOfferRoom> |
+  ReturnType<typeof redirectToNotFoundPage> |
   ReturnType<typeof requireAuthorization> |
   ReturnType<typeof requireLogout> |
   ReturnType<typeof changeCity> |
-  ReturnType<typeof getOffers> |
+  ReturnType<typeof changeMainOffers> |
   ReturnType<typeof changeOption> |
   ReturnType<typeof loadOffers> |
-  ReturnType<typeof loadOffer>;
+  ReturnType<typeof loadNearby> |
+  ReturnType<typeof loadOffer> |
+  ReturnType<typeof loadComments>;
 
 
 export {
   changeCity,
-  getOffers,
+  changeMainOffers,
   changeOption,
   loadOffers,
+  loadNearby,
   loadOffer,
+  loadComments,
   requireLogout,
-  requireAuthorization
+  requireAuthorization,
+  redirectToNotFoundPage,
+  clearOfferRoom
 };

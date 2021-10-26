@@ -1,8 +1,26 @@
+import { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+
 import Review from '../review/review';
-import {Comment} from '../../types/types';
+import { fetchCommentsAction } from '../../store/api-actions';
+import { Comment, ThunkAppDispatch } from '../../types/types';
 
 
-function ReviewList({comments} : {comments: Comment[]}): JSX.Element {
+const mapStateToProps = ({comments} : {comments: Comment[]}) => ({comments});
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadComments: fetchCommentsAction}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ReviewListProps = PropsFromRedux & {hotelId: number}
+
+
+function ReviewList({hotelId, comments, loadComments} : ReviewListProps): JSX.Element {
+
+  useEffect(() => {
+    loadComments(hotelId);
+  }, [hotelId, loadComments]);
+
   return  (
     <ul className="reviews__list">
       {comments.map((comment) => <Review comment={comment} key={comment.id}/>)}
@@ -10,4 +28,4 @@ function ReviewList({comments} : {comments: Comment[]}): JSX.Element {
   );
 }
 
-export default ReviewList;
+export default connector(ReviewList);

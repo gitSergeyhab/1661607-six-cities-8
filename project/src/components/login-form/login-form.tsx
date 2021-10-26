@@ -3,18 +3,17 @@ import { bindActionCreators } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { loginAction } from '../../store/api-actions';
-import { State, ThunkAppDispatch } from '../../types/types';
+import { ThunkAppDispatch } from '../../types/types';
 import { checkEmail, checkPassword, disableSignInSubmit } from '../../utils/util';
 
 
-const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
 const mapDispatchToProps = (dispatch:  ThunkAppDispatch) =>bindActionCreators({onLogin: loginAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function LoginForm({onLogin, authorizationStatus} : PropsFromRedux): JSX.Element {
+function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,8 +30,8 @@ function LoginForm({onLogin, authorizationStatus} : PropsFromRedux): JSX.Element
       setFunction(value);
     };
 
-  const onEmailChange = changeInputValue(checkEmail, setEmail, 'Wrong Email', 'email');
-  const onPasswordChange = changeInputValue(checkPassword, setPassword, 'Wrong Password', 'password');
+  const handleEmailChange = changeInputValue(checkEmail, setEmail, 'Wrong Email', 'email');
+  const handlePasswordChange = changeInputValue(checkPassword, setPassword, 'Wrong Password', 'password');
 
   const onSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -44,12 +43,16 @@ function LoginForm({onLogin, authorizationStatus} : PropsFromRedux): JSX.Element
       <div className="login__input-wrapper form__input-wrapper">
         <label className="visually-hidden">E-mail</label>
         <div style={{color: 'red'}}>{error.email}</div>
-        <input className="login__input form__input" type="email" name="email" placeholder="Email" required value={email} onChange={onEmailChange}/>
+        <input className="login__input form__input" type="email" name="email" placeholder="Email" required
+          value={email} onChange={handleEmailChange}
+        />
       </div>
       <div className="login__input-wrapper form__input-wrapper">
         <label className="visually-hidden">Password</label>
         <div style={{color: 'red'}}>{error.password}</div>
-        <input className="login__input form__input" type="password" name="password" placeholder="Password" required value={password} onChange={onPasswordChange}/>
+        <input className="login__input form__input" type="password" name="password" placeholder="Password" required
+          value={password} onChange={handlePasswordChange}
+        />
       </div>
       <button className="login__submit form__submit button" type="submit" disabled={disableSignInSubmit(email, password)}>Sign in</button>
     </form>
