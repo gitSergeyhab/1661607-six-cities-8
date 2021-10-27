@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,7 +6,7 @@ import { postCommentAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/types';
 import { disableByStarAndLength } from '../../utils/util';
 import { STARS } from '../../constants';
-
+/* eslint-disable no-console */
 
 const ERROR_DISPLAY_TIME = 2000;
 
@@ -61,15 +61,27 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
     setRating(0);
   };
 
+  let errorTimeout: NodeJS.Timeout | null = null;
   const notifyError = () => {
     setErrorSanding(true);
-    setTimeout(() => setErrorSanding(false), ERROR_DISPLAY_TIME);
+    errorTimeout = setTimeout(() => setErrorSanding(false), ERROR_DISPLAY_TIME);
   };
+
+  useEffect(() => function cleanup () {
+    if (errorTimeout) {
+      clearTimeout(errorTimeout);
+    }
+  }, [errorTimeout]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     changeBlockForm(true);
     postComment({hotelId, review, rating, clearComment, notifyError, unBlockForm});
+    // ??? похоже, если CommentForm удаляется до выполнения postComment вылезает ошибка
+    /*Warning: Can't perform a React state update on an unmounted component.
+    his is a no-op, but it indicates a memory leak in your application.
+    To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function. */
+    // видимо, нужно в useEffect как-то остановить выполнение postComment - но как ???
   };
 
 

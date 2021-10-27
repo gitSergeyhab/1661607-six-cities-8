@@ -7,6 +7,7 @@ export const enum ActionType {
   ChangeMainOffers = 'main/offers/ChangeMainOffers',
   ChangeOption = 'main/option/ChangeOption',
   LoadOffers = 'data/main/offers/LoadOffers',
+  LoadFavoriteOffers = 'data/favorite/offers/LoadFavoriteOffers',
   LoadNearby = 'data/room/offers/LoadNearby',
   LoadOffer = 'data/room/offer/LoadOffer',
   LoadComments = 'data/room/comments/LoadComments',
@@ -46,6 +47,11 @@ const loadOffer = (offers: Offer) => ({
   payload: offers,
 } as const);
 
+const loadFavoriteOffers = (offers: Offer[]) => ({
+  type: ActionType.LoadFavoriteOffers,
+  payload: offers,
+} as const);
+
 const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -73,6 +79,7 @@ export type Actions =
   ReturnType<typeof changeMainOffers> |
   ReturnType<typeof changeOption> |
   ReturnType<typeof loadOffers> |
+  ReturnType<typeof loadFavoriteOffers> |
   ReturnType<typeof loadNearby> |
   ReturnType<typeof loadOffer> |
   ReturnType<typeof loadComments>;
@@ -83,6 +90,7 @@ export {
   changeMainOffers,
   changeOption,
   loadOffers,
+  loadFavoriteOffers,
   loadNearby,
   loadOffer,
   loadComments,

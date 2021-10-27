@@ -1,7 +1,7 @@
-import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, clearOfferRoom, loadComments} from './action';
+import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, clearOfferRoom, loadComments, loadFavoriteOffers} from './action';
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
-import { ServerOffer, ThunkActionResult, AuthData, ServerComment } from '../types/types';
+import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
 import { removeUserEmail, saveUserEmail } from '../services/user-email';
 import { APIRoute, AuthorizationStatus } from '../constants';
 
@@ -76,8 +76,13 @@ export const postCommentAction = ({hotelId, review, rating, clearComment, notify
         dispatch(loadComments(clientComment));
         clearComment(); // set 0 star and '' review
       })
-      .catch(notifyError) // made submit red for 2 sec
+      .catch(notifyError) // made red message for 2 sec
       .finally(unBlockForm);
   };
 
-
+export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+    const clientOffers = data.map((serverOffer) => adaptHotelFromServer(serverOffer));
+    dispatch(loadFavoriteOffers(clientOffers));
+  };

@@ -108,6 +108,7 @@ export type State = {
   originOffers: Offer[],
   nearby: Offer[],
   offers: Offer[],
+  favoriteOffers: Offer[],
   roomOffer: Offer | ReasonContentFailure,
   comments: Comment[],
   activeOption: string,

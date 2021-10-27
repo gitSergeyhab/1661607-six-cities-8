@@ -14,6 +14,7 @@ const initialState: State = {
   originOffers: [],
   nearby: [],
   offers: getOffersByCity([], initialCity),
+  favoriteOffers: [],
   roomOffer: ReasonContentFailure.Loading,
   comments: [],
   activeOption: SortOption.Popular,
@@ -49,6 +50,8 @@ export const reducer = (state = initialState, action: Actions): State => {
       return {...state, nearby: action.payload};
     case ActionType.LoadOffers:
       return {...state, allOffers: action.payload};
+    case ActionType.LoadFavoriteOffers:
+      return {...state, favoriteOffers: action.payload};
     case ActionType.LoadOffer:
       return {...state, roomOffer: action.payload};
     case ActionType.LoadComments:
