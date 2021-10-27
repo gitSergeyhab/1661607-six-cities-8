@@ -1,4 +1,5 @@
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Favorites from '../favorites/favorites';
 import Login from '../login/login';
@@ -6,24 +7,31 @@ import Main from '../main/main';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
-import {Offer, Comment} from '../../types/types';
-import {AppRoute, AuthorizationStatus} from '../../constants';
+import Spinner from '../spinner/spinner';
+import { Offer, State } from '../../types/types';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 
 
 type AppProps = {
   offers: Offer[],
-  comments: Comment[],
   authorizationStatus: AuthorizationStatus,
+  areHotelsLoaded: boolean
 }
 
+const mapStateToProps = ({allOffers, areHotelsLoaded, authorizationStatus} : State) => ({offers: allOffers, areHotelsLoaded, authorizationStatus});
 
-function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
+function App({offers, authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
+
+  if (!areHotelsLoaded) {
+    return <Spinner/>;
+  }
+
   return(
     <BrowserRouter>
       <Switch>
 
         <Route exact path={AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus}/>
+          <Main authorizationStatus={authorizationStatus} />
         </Route>
 
         <Route exact path={AppRoute.Login}>
@@ -34,21 +42,20 @@ function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
           <PrivateRoute
             exact
             path={AppRoute.Favorites}
-            render = {() => <Favorites offers={offers}/>}
+            render = {() => <Favorites/>}
             authorizationStatus={authorizationStatus}
           />
         </Route>
 
         <Route exact path={AppRoute.Room}>
           <Room
-            offers={offers}
-            comments={comments}
             authorizationStatus={authorizationStatus}
           />
         </Route>
 
         <Route>
           <NotFoundPage authorizationStatus={authorizationStatus}/>
+
         </Route>
 
       </Switch>
@@ -56,4 +63,4 @@ function App({offers, comments, authorizationStatus}: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

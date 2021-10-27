@@ -1,3 +1,10 @@
+import { AxiosInstance } from 'axios';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+
+import { AuthorizationStatus, ReasonContentFailure } from '../constants';
+import { Actions } from '../store/action';
+
+
 type User = {
   avatarUrl: string,
   id: number,
@@ -13,13 +20,19 @@ export type Comment = {
   user: User,
 }
 
-type Host = {
+export type Host = {
   avatarUrl: string,
   id: number,
   isPro: boolean,
   name: string,
 }
 
+export type ServerHost = {
+  'avatar_url': string,
+  id: number,
+  'is_pro': boolean,
+  name: string,
+}
 
 type Location = {
   latitude: number,
@@ -27,7 +40,7 @@ type Location = {
   zoom: number,
 }
 
-type City = {
+export type City = {
   location: Location
   name: string,
 }
@@ -51,7 +64,66 @@ export type Offer = {
   host: Host,
 }
 
+
+export type ServerOffer = {
+  bedrooms: number,
+  city: City,
+  description: string,
+  goods: string[],
+  host: ServerHost,
+  id: number,
+  images: string[],
+  'is_favorite': boolean,
+  'is_premium': boolean,
+  location: Location,
+  'max_adults': number,
+  'preview_image': string,
+  price: number,
+  rating: number,
+  title: string,
+  type: string,
+}
+
+type ServerUser = {
+  'avatar_url': string,
+  id: number,
+  'is_pro': boolean,
+  name: string,
+}
+
+export type ServerComment = {
+  comment: string,
+  date: string,
+  id: number,
+  rating: number,
+  user: ServerUser,
+}
+
+
 export type Point = {lat: number, lng: number}
 
+export type State = {
+  city: string,
+  allOffers: Offer[],
+  originOffers: Offer[],
+  nearby: Offer[],
+  offers: Offer[],
+  favoriteOffers: Offer[],
+  roomOffer: Offer | ReasonContentFailure,
+  comments: Comment[],
+  activeOption: string,
+  authorizationStatus: AuthorizationStatus,
+  areHotelsLoaded: boolean,
+}
+
+export type AuthData = {
+  email: string;
+  password: string;
+};
 
 export type ButtonFavorite = {className: string, width: string, height: string};
+
+
+export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

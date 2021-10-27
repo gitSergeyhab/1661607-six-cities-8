@@ -1,17 +1,20 @@
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import CommentForm from '../comment-form/comment-form';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
-import NotFoundPage from '../not-found-page/not-found-page';
-import OffersList from '../offers-list/offers-list';
 import Map from '../map/map';
+import NotFoundPage from '../not-found-page/not-found-page';
 import ReviewList from '../review-list/review-list';
-import {Offer, Comment} from '../../types/types';
-import {getStarsWidth} from '../../utils/util';
-import {AuthorizationStatus, CityCoordinate, FavoriteBtnProp} from '../../constants';
-
+import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
+import Spinner from '../spinner/spinner';
+import { fetchOfferRoomAction } from '../../store/api-actions';
+import { getStarsWidth } from '../../utils/util';
+import { Comment, Offer, ThunkAppDispatch } from '../../types/types';
+import { AuthorizationStatus, FavoriteBtnProp, ReasonContentFailure } from '../../constants';
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -30,27 +33,38 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-type RoomProps = {offers: Offer[], comments: Comment[], authorizationStatus: AuthorizationStatus};
+type RoomProps = {authorizationStatus: AuthorizationStatus};
 
-function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element {
+const mapStateToProps = ({nearby, roomOffer, comments} : {nearby: Offer[], roomOffer: Offer | ReasonContentFailure, comments: Comment[]}) =>
+  ({neighbours: nearby, roomOffer, comments});
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>
 
-  const [offerId, setOfferId] = useState(-1);
+function Room({authorizationStatus, neighbours, roomOffer, comments, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
 
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
-  const thatOffer = offers.find((offer) => offer.id === id);
+  useEffect(() => {
+    loadOffer(id);
+  }, [id, loadOffer]);
 
-  if (!thatOffer) {
+
+  if (roomOffer === ReasonContentFailure.NotFound) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = thatOffer;
-  const cityName = thatOffer.city.name;
+  if (roomOffer === ReasonContentFailure.Loading) {
+    return <Spinner/>;
+  }
 
-  const center = CityCoordinate[cityName.toUpperCase()];
-  const neighbours = offers.filter((offer) => offer.city.name === cityName); //   /hotels/: hotel_id/nearby
+  const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = roomOffer;
+
+  const center = {lat: roomOffer.location.latitude, lng: roomOffer.location.longitude};
+  const offersForMap = [...neighbours, roomOffer];
+
 
   return (
     <div className="page">
@@ -69,7 +83,7 @@ function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element 
           <div className="property__container container">
             <div className="property__wrapper">
 
-              {isPremium ? <PremiumMarker/> : null}
+              {isPremium && <PremiumMarker/>}
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -133,32 +147,27 @@ function Room({offers, comments, authorizationStatus} : RoomProps): JSX.Element 
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
 
-                <ReviewList comments={comments}/>
+                <ReviewList hotelId={roomOffer.id}/>
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm/> : null}
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm hotelId={roomOffer.id}/>}
 
               </section>
             </div>
           </div>
           <section className="property__map map">
 
-            <Map center={center} offers={neighbours} selectedId={offerId}/>
+            <Map center={center} offers={offersForMap} selectedId={roomOffer.id}/>
 
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
 
-              <OffersList setOfferId={setOfferId} offers={neighbours}/>
+          <RoomNearbyCards id={id} />;
 
-            </div>
-          </section>
         </div>
       </main>
     </div>
   );
 }
 
-export default Room;
+export default connector(Room);

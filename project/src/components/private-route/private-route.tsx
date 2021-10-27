@@ -1,5 +1,4 @@
-import {Route, Redirect} from 'react-router-dom';
-import {RouteProps} from 'react-router-dom';
+import {Route, Redirect, RouteProps} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 
 

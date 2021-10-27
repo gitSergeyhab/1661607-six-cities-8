@@ -1,5 +1,5 @@
-import {Comment} from '../../types/types';
-import {getStarsWidth} from '../../utils/util';
+import { Comment } from '../../types/types';
+import { getStarsWidth } from '../../utils/util';
 
 
 function Review({comment: {comment: commentText, date, rating, user}}: {comment: Comment}): JSX.Element {

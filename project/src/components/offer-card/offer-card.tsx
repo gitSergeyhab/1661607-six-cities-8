@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 import FavoriteBtn from '../favorite-btn/favorite-btn';
-
 import { Offer } from '../../types/types';
 import { getStarsWidth } from '../../utils/util';
 import { FavoriteBtnProp } from '../../constants';
@@ -21,7 +20,7 @@ function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
 
   return (
     <>
-      {isPremium ? <Premium/> : null}
+      {isPremium && <Premium/>}
 
       <div className={`${wrapperClass} place-card__image-wrapper`}>
         <Link to={`${OFFER_PATH}${id}`}>

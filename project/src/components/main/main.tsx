@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 
 import MainFilled from '../main-filled/main-filled';
 import MainEmpty from '../main-empty/main-empty';
-import { Offer } from '../../types/types';
-import { State } from '../../store/reducer';
+import { Offer, State } from '../../types/types';
+import { AuthorizationStatus } from '../../constants';
 
 
 const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
 
-export type MainProps = {offers: Offer[], authorizationStatus: string, selectedCity: string};
+export type MainProps = {offers: Offer[], authorizationStatus: AuthorizationStatus, selectedCity: string};
 
 
 function Main({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {

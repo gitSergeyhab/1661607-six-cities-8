@@ -1,31 +1,32 @@
 import { bindActionCreators, Dispatch } from 'redux';
-
-import {CITIES} from '../../constants';
-import { State } from '../../store/reducer';
-import { changeCityAndOffers } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { MouseEvent } from 'react';
+
+import { changeCity, changeMainOffers } from '../../store/action';
+import { State } from '../../types/types';
+import { CITIES } from '../../constants';
 
 
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
 
 
 const mapStateToProps = ({city} : State) => ({selectedCity: city});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onClickCity: changeCityAndOffers}, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Location({city, selectedCity, onClickCity} : {city: string} & PropsFromRedux): JSX.Element {
+function Location({city, selectedCity, changeCityName, changeOffers} : {city: string} & PropsFromRedux): JSX.Element {
 
-  const onClick = (evt: MouseEvent) => {
+  const handleCityClick = (evt: MouseEvent) => {
     evt.preventDefault();
-    onClickCity(city);
+    changeCityName(city);
+    changeOffers(city);
   };
 
   return (
     <li className="locations__item">
-      <a href='/'  onClick={onClick} className={`locations__item-link tabs__item ${city === selectedCity ? ACTIVE_CITY_CLASS : ''}`}>
+      <a href='/'  onClick={handleCityClick} className={`locations__item-link tabs__item ${city === selectedCity ? ACTIVE_CITY_CLASS : ''}`}>
         <span>{city}</span>
       </a>
     </li>

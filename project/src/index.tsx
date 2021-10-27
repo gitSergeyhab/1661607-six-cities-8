@@ -1,24 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import thunk from 'redux-thunk';
+import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { reducer } from './store/reducer';
 import App from './components/app/app';
+import { reducer } from './store/reducer';
 import { AuthorizationStatus } from './constants';
+import { createAPI } from './services/api';
+import { requireAuthorization, redirectToNotFoundPage} from './store/action';
+import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
+import { ThunkAppDispatch } from './types/types';
 
-import {OFFERS} from './mocks/offers';
-import {COMMENTS} from './mocks/comments';
+
+const api = createAPI(
+  () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
+  () => store.dispatch(redirectToNotFoundPage()),
+);
 
 
-const store = createStore(reducer, composeWithDevTools());
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+
+(store.dispatch as ThunkAppDispatch)(fetchHotelsAction());
+
+(store.dispatch as ThunkAppDispatch)(checkLoginAction());
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App offers={OFFERS} comments={COMMENTS} authorizationStatus={AuthorizationStatus.Auth} />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
+

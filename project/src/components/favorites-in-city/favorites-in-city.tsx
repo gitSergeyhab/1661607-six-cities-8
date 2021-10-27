@@ -3,33 +3,32 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 
 import FavoriteCard from '../favorite-card/favorite-card';
-import { changeCityAndOffers } from '../../store/action';
+import { changeCity, changeMainOffers } from '../../store/action';
 import { Offer } from '../../types/types';
 import { AppRoute } from '../../constants';
 
 
-// import {Actions} from '../../store/action'; // ??? с Actions почему-то не работает ???
-// const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({onCityClick: changeCityAndOffers}, dispatch);
-
-
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({onCityClick: changeCityAndOffers}, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function FavoritesInCity({offers, city, onCityClick} : {offers: Offer[], city: string} & PropsFromRedux):JSX.Element {
+function FavoritesInCity({offers, city, changeCityName, changeOffers} : {offers: Offer[], city: string} & PropsFromRedux):JSX.Element {
 
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const mapOffers = cityOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id}/>);
 
-  const onClick = () => onCityClick(city);
+  const handleCityClick = () => {
+    changeCityName(city);
+    changeOffers(city);
+  };
 
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
 
-          <Link className="locations__item-link" onClick={onClick} to={AppRoute.Main}>
+          <Link className="locations__item-link" onClick={handleCityClick} to={AppRoute.Main}>
             <span>{city}</span>
           </Link>
 
