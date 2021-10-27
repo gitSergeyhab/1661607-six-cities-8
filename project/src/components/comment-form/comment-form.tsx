@@ -6,7 +6,6 @@ import { postCommentAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/types';
 import { disableByStarAndLength } from '../../utils/util';
 import { STARS } from '../../constants';
-/* eslint-disable no-console */
 
 const ERROR_DISPLAY_TIME = 2000;
 

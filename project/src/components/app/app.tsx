@@ -43,8 +43,6 @@ function App({offers, authorizationStatus, areHotelsLoaded}: AppProps): JSX.Elem
             exact
             path={AppRoute.Favorites}
             render = {() => <Favorites/>}
-
-            // render = {() => <Favorites offers={offers}/>}
             authorizationStatus={authorizationStatus}
           />
         </Route>

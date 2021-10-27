@@ -20,8 +20,6 @@ function Favorites({favoriteOffers, loadFavorites}: PropsFromRedux): JSX.Element
     loadFavorites();
   });
 
-  // const favorites = offers.filter((offer) => offer.isFavorite); // GET /favorite
-
   return favoriteOffers.length ?
     <FavoritesFilled offers={favoriteOffers} /> :
     <FavoritesEmpty/>;
