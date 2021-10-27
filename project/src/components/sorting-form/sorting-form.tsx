@@ -6,8 +6,8 @@ import { State } from '../../types/types';
 import { SortOption } from '../../constants';
 
 
-function SortingList({closeOptions} : {closeOptions: () => void}): JSX.Element {
-  const optionList = Object.keys(SortOption).map((key) => <Option closeOptions={closeOptions} option={SortOption[key]} key={key}/>);
+function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Element {
+  const optionList = Object.keys(SortOption).map((key) => <Option onOptionsClick={onOptionsClick} option={SortOption[key]} key={key}/>);
   return (
     <ul className="places__options places__options--custom places__options--opened">
       {optionList}
@@ -35,7 +35,7 @@ function SortingForm({activeOption} : {activeOption: string}): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      {isOptionsShown ? <SortingList closeOptions={handleArrowClick}/> : ''}
+      {isOptionsShown ? <SortingList onOptionsClick={handleArrowClick}/> : ''}
     </form>
   );
 }

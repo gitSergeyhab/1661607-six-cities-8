@@ -4,7 +4,7 @@ import { Offer, Comment } from '../types/types';
 export const adaptHotelFromServer = (serverHotel: any): Offer => { // если назначать конкретый тип...
   const offer = {
     ...serverHotel,
-    isFavorite: !serverHotel['is_favorite'],
+    isFavorite: serverHotel['is_favorite'],
     isPremium: serverHotel['is_premium'],
     maxAdults: serverHotel['max_adults'],
     previewImage: serverHotel['preview_image'],

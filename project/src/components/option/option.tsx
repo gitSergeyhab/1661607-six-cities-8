@@ -9,14 +9,14 @@ const mapStateToProps = ({activeOption}: State) => ({activeOption});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeSortOption: changeOption}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type OptionProps = ConnectedProps<typeof connector> & {option: string, closeOptions: () => void};
+type OptionProps = ConnectedProps<typeof connector> & {option: string, onOptionsClick: () => void};
 
 
-function Option({activeOption, changeSortOption, option, closeOptions} : OptionProps): JSX.Element {
+function Option({activeOption, changeSortOption, option, onOptionsClick} : OptionProps): JSX.Element {
 
   const handleSortOptionClick = () => {
     changeSortOption(option);
-    closeOptions();
+    onOptionsClick();
   };
 
   return (

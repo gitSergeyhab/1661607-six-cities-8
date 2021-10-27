@@ -4,11 +4,11 @@ import { bindActionCreators } from 'redux';
 
 import { postCommentAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/types';
-import { disableByStarAndCommentLength } from '../../utils/util';
+import { disableByStarAndLength } from '../../utils/util';
 import { STARS } from '../../constants';
 
 
-const TIME_ERROR_SHOWN = 2000;
+const ERROR_DISPLAY_TIME = 2000;
 
 type RatingStarProps = {
   star: {score: number, titleName: string},
@@ -38,22 +38,6 @@ function RatingStar({star: {score, titleName}, starsCount, onChange, disabled}: 
   );
 }
 
-
-function UsualSubmitBtn({disabled}: {disabled: boolean}): JSX.Element{
-  return (
-    <button className="reviews__submit form__submit button"  type="submit" disabled={disabled}>
-    Submit
-    </button>);
-}
-
-function ErrorSubmitBtn(): JSX.Element{
-  return (
-    <button className="reviews__submit form__submit button" style={{backgroundColor: 'red', color: 'black'}} type="submit" disabled>
-      <b>can not send it, <br /> try again later</b>
-    </button>);
-}
-
-
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({postComment: postCommentAction}, dispatch);
 const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -66,7 +50,7 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
   const [isErrorSanding, setErrorSanding] = useState(false);
   const [isFormBlocked, changeBlockForm] = useState(false);
 
-  const disabled = disableByStarAndCommentLength(rating, review);
+  const isDisabledByReviewCondition = disableByStarAndLength(rating, review);
 
   const unBlockForm = () => {
     changeBlockForm(false);
@@ -79,7 +63,7 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
 
   const notifyError = () => {
     setErrorSanding(true);
-    setTimeout(() => setErrorSanding(false), TIME_ERROR_SHOWN);
+    setTimeout(() => setErrorSanding(false), ERROR_DISPLAY_TIME);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -87,6 +71,7 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
     changeBlockForm(true);
     postComment({hotelId, review, rating, clearComment, notifyError, unBlockForm});
   };
+
 
   return (
     <form className="reviews__form form" action="#" method="post"
@@ -114,12 +99,15 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
       >
       </textarea>
 
+      {isErrorSanding && <span style={{color: 'red', fontWeight: 'bold'}}>be careful! you broke everything... but we will fix it. Try again later</span>}
+
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        {isErrorSanding ? <ErrorSubmitBtn /> : <UsualSubmitBtn disabled={disabled || isFormBlocked}/>}
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabledByReviewCondition || isFormBlocked}>Submit</button>
       </div>
+
     </form>
   );
 }

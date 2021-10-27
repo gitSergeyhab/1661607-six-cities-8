@@ -34,7 +34,7 @@ const getSortedOffers = (offers: Offer[], option: string): Offer[] => {
       return [...offers];
   }
 };
-const disableByStarAndCommentLength = (star: number, text: string): boolean => {
+const disableByStarAndLength = (star: number, text: string): boolean => {
   const length = text.length;
   return !(star && length <= ReviewLength.MAX && length >= ReviewLength.MIN);
 };
@@ -50,7 +50,7 @@ export {
   getStarsWidth,
   getOffersByCity,
   getSortedOffers,
-  disableByStarAndCommentLength,
+  disableByStarAndLength,
   checkPassword,
   checkEmail,
   disableSignInSubmit
