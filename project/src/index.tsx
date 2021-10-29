@@ -7,24 +7,23 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './components/app/app';
 import { reducer } from './store/reducer';
-import { AuthorizationStatus } from './constants';
+import { AuthorizationStatus, RoomDataStatus } from './constants';
 import { createAPI } from './services/api';
-import { requireAuthorization, redirectToNotFoundPage} from './store/action';
+import { requireAuthorization, changeRoomDataStatus} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/types';
 
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
-  () => store.dispatch(redirectToNotFoundPage()),
+  () => store.dispatch(changeRoomDataStatus(RoomDataStatus.NotFound)),
 );
 
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+(store.dispatch as ThunkAppDispatch)(checkLoginAction());
 
 (store.dispatch as ThunkAppDispatch)(fetchHotelsAction());
-
-(store.dispatch as ThunkAppDispatch)(checkLoginAction());
 
 
 ReactDOM.render(

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { AuthorizationStatus, ReasonContentFailure } from '../constants';
+import { AuthorizationStatus, RoomDataStatus} from '../constants';
 import { Actions } from '../store/action';
 
 
@@ -41,7 +41,7 @@ type Location = {
 }
 
 export type City = {
-  location: Location
+  location: Location,
   name: string,
 }
 
@@ -109,11 +109,13 @@ export type State = {
   nearby: Offer[],
   offers: Offer[],
   favoriteOffers: Offer[],
-  roomOffer: Offer | ReasonContentFailure,
+  roomOffer: Offer,
   comments: Comment[],
   activeOption: string,
   authorizationStatus: AuthorizationStatus,
   areHotelsLoaded: boolean,
+  areFavoritesLoaded: boolean,
+  roomDataStatus: RoomDataStatus,
 }
 
 export type AuthData = {

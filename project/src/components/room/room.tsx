@@ -13,8 +13,9 @@ import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
 import Spinner from '../spinner/spinner';
 import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
-import { Comment, Offer, ThunkAppDispatch } from '../../types/types';
-import { AuthorizationStatus, FavoriteBtnProp, ReasonContentFailure } from '../../constants';
+import { State, ThunkAppDispatch } from '../../types/types';
+import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus} from '../../constants';
+
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -33,15 +34,14 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-type RoomProps = {authorizationStatus: AuthorizationStatus};
-
-const mapStateToProps = ({nearby, roomOffer, comments} : {nearby: Offer[], roomOffer: Offer | ReasonContentFailure, comments: Comment[]}) =>
-  ({neighbours: nearby, roomOffer, comments});
+const mapStateToProps = ({nearby, roomOffer, comments, roomDataStatus} : State) => ({neighbours: nearby, roomOffer, comments, roomDataStatus});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type RoomProps = {authorizationStatus: AuthorizationStatus};
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-function Room({authorizationStatus, neighbours, roomOffer, comments, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
+function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
 
 
   const params: {id: string} = useParams();
@@ -52,13 +52,14 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, loadOffer} 
   }, [id, loadOffer]);
 
 
-  if (roomOffer === ReasonContentFailure.NotFound) {
+  if (roomDataStatus === RoomDataStatus.NotFound) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (roomOffer === ReasonContentFailure.Loading) {
+  if (roomDataStatus === RoomDataStatus.Loading) {
     return <Spinner/>;
   }
+
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = roomOffer;
 
@@ -90,7 +91,7 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, loadOffer} 
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} btn={FavoriteBtnProp.PROPERTY}/>
+                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btn={FavoriteBtnProp.PROPERTY}/>
 
               </div>
               <div className="property__rating rating">

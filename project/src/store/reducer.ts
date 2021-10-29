@@ -1,12 +1,35 @@
 import { Actions, ActionType } from './action';
 import { getOffersByCity, getSortedOffers } from '../utils/util';
-import { State } from '../types/types';
-import { AuthorizationStatus, CITIES, ReasonContentFailure, SortOption } from '../constants';
+import { Offer, State } from '../types/types';
+import { AuthorizationStatus, CITIES, SortOption, RoomDataStatus } from '../constants';
 
 
 const INITIAL_CITY_INDEX = 0;
 
 const initialCity = CITIES[INITIAL_CITY_INDEX];
+
+
+const defaultOffer: Offer = {
+  price: 0,
+  rating: 0,
+  title: '',
+  location: {latitude: 0,longitude: 0,zoom: 1},
+  city: {
+    location: {latitude: 0,longitude: 0,zoom: 1},
+    name: '',
+  },
+  type: '',
+  previewImage: '',
+  isPremium: false,
+  isFavorite: false,
+  id: 1,
+  maxAdults: 0,
+  bedrooms: 0,
+  description: '',
+  goods: [],
+  images: [],
+  host: {avatarUrl: '',id: 0,isPro: false,name: ''},
+};
 
 const initialState: State = {
   city: initialCity,
@@ -15,19 +38,19 @@ const initialState: State = {
   nearby: [],
   offers: getOffersByCity([], initialCity),
   favoriteOffers: [],
-  roomOffer: ReasonContentFailure.Loading,
+  roomOffer: defaultOffer,
   comments: [],
   activeOption: SortOption.Popular,
   authorizationStatus: AuthorizationStatus.NoAuth,
   areHotelsLoaded: false,
+  areFavoritesLoaded: false,
+  roomDataStatus: RoomDataStatus.Loading,
 };
 
 export const reducer = (state = initialState, action: Actions): State => {
   switch (action.type) {
-    case ActionType.RedirectToNotFoundPage:
-      return {...state, roomOffer: ReasonContentFailure.NotFound};
-    case ActionType.ClearOfferRoom:
-      return {...state, roomOffer: ReasonContentFailure.Loading};
+    case ActionType.ChangeRoomDataStatus:
+      return {...state, roomDataStatus: action.payload};
     case ActionType.RequireAuthorization:
       return {...state, authorizationStatus: action.payload};
     case ActionType.Logout:
@@ -51,7 +74,11 @@ export const reducer = (state = initialState, action: Actions): State => {
     case ActionType.LoadOffers:
       return {...state, allOffers: action.payload};
     case ActionType.LoadFavoriteOffers:
-      return {...state, favoriteOffers: action.payload};
+      return {
+        ...state,
+        favoriteOffers: action.payload,
+        areFavoritesLoaded: true,
+      };
     case ActionType.LoadOffer:
       return {...state, roomOffer: action.payload};
     case ActionType.LoadComments:

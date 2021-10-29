@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../constants';
+import { AuthorizationStatus, RoomDataStatus } from '../constants';
 import { Comment, Offer } from '../types/types';
 
 
@@ -14,7 +14,7 @@ export const enum ActionType {
   RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
   RedirectToNotFoundPage = 'error404/RedirectToNotFoundPage',
-  ClearOfferRoom = 'room/offer/ClearOfferRoom',
+  ChangeRoomDataStatus = 'room/ChangeRoomDataStatus'
 }
 
 const changeCity = (city: string) => ({
@@ -60,9 +60,13 @@ const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 const requireLogout = () => ({type: ActionType.Logout} as const);
 
+const changeRoomDataStatus = (status: RoomDataStatus) => ({
+  type: ActionType.ChangeRoomDataStatus,
+  payload: status,
+} as const);
+
 const redirectToNotFoundPage = () => ({type: ActionType.RedirectToNotFoundPage} as const);
 
-const clearOfferRoom = () => ({type: ActionType.ClearOfferRoom} as const);
 
 const loadComments = (comments: Comment[]) => ({
   type: ActionType.LoadComments,
@@ -71,7 +75,7 @@ const loadComments = (comments: Comment[]) => ({
 
 
 export type Actions =
-  ReturnType<typeof clearOfferRoom> |
+  ReturnType<typeof changeRoomDataStatus> |
   ReturnType<typeof redirectToNotFoundPage> |
   ReturnType<typeof requireAuthorization> |
   ReturnType<typeof requireLogout> |
@@ -97,5 +101,5 @@ export {
   requireLogout,
   requireAuthorization,
   redirectToNotFoundPage,
-  clearOfferRoom
+  changeRoomDataStatus
 };

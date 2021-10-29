@@ -8,19 +8,19 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import Spinner from '../spinner/spinner';
-import { Offer, State } from '../../types/types';
+import { State } from '../../types/types';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 
 
 type AppProps = {
-  offers: Offer[],
   authorizationStatus: AuthorizationStatus,
-  areHotelsLoaded: boolean
+  areHotelsLoaded: boolean,
 }
 
-const mapStateToProps = ({allOffers, areHotelsLoaded, authorizationStatus} : State) => ({offers: allOffers, areHotelsLoaded, authorizationStatus});
 
-function App({offers, authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
+const mapStateToProps = ({areHotelsLoaded, authorizationStatus, roomDataStatus} : State) => ({areHotelsLoaded, authorizationStatus, roomDataStatus});
+
+function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
 
   if (!areHotelsLoaded) {
     return <Spinner/>;
@@ -48,14 +48,11 @@ function App({offers, authorizationStatus, areHotelsLoaded}: AppProps): JSX.Elem
         </Route>
 
         <Route exact path={AppRoute.Room}>
-          <Room
-            authorizationStatus={authorizationStatus}
-          />
+          <Room authorizationStatus={authorizationStatus}/>
         </Route>
 
         <Route>
           <NotFoundPage authorizationStatus={authorizationStatus}/>
-
         </Route>
 
       </Switch>
