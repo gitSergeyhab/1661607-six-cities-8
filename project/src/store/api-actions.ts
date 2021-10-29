@@ -1,9 +1,9 @@
-import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, clearOfferRoom, loadComments, loadFavoriteOffers} from './action';
+import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus} from './action';
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
 import { removeUserEmail, saveUserEmail } from '../services/user-email';
-import { APIRoute, AuthorizationStatus } from '../constants';
+import { APIRoute, AuthorizationStatus, RoomDataStatus } from '../constants';
 
 
 export const fetchHotelsAction = (): ThunkActionResult =>
@@ -17,7 +17,8 @@ export const fetchHotelsAction = (): ThunkActionResult =>
 
 export const checkLoginAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login).then(() => dispatch(requireAuthorization(AuthorizationStatus.Auth)));
+    await api.get(APIRoute.Login);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
 
 
@@ -48,11 +49,15 @@ export const fetchNearbyHotelsAction = (hotelId: number): ThunkActionResult =>
   };
 
 
-export const fetchOfferRoomAction = (hotelId: number): ThunkActionResult =>
+export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    dispatch(clearOfferRoom());
+    if (clearStatus) { // true - всегда, кроме postFavoriteStatus
+      dispatch(changeRoomDataStatus(RoomDataStatus.Loading));
+    }
     const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}`);
     const clientData = adaptHotelFromServer(data);
+    dispatch(changeRoomDataStatus(RoomDataStatus.Ok)); // убрать спиннер
+
     dispatch(loadOffer(clientData));
   };
 
@@ -69,7 +74,7 @@ type PostCommentArguments = {hotelId: number, review: string, rating: number, cl
 
 export const postCommentAction = ({hotelId, review, rating, clearComment, notifyError, unBlockForm}: PostCommentArguments): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<ServerComment[]>(`${APIRoute.Comments}/${hotelId}`, {comment: review, rating})
+    await api.post<ServerComment[]>(`${APIRoute.Comments}/${hotelId*1000}`, {comment: review, rating})
       .then((result) => {
         const {data} = result;
         const clientComment = data.map((serverComment) => adaptCommentFromServer(serverComment));
@@ -85,4 +90,13 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
     const {data} = await api.get<Offer[]>(APIRoute.Favorite);
     const clientOffers = data.map((serverOffer) => adaptHotelFromServer(serverOffer));
     dispatch(loadFavoriteOffers(clientOffers));
+  };
+
+
+export const postFavoriteStatus = (hotelId: number, status: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
+    dispatch(fetchHotelsAction());
+    dispatch(fetchOfferRoomAction(hotelId, false));
+    dispatch(fetchFavoriteHotelsAction());
   };

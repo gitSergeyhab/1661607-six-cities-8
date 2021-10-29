@@ -57,7 +57,8 @@ const enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
 }
 
-const enum ReasonContentFailure {
+const enum RoomDataStatus {
+  Ok = 'Ok',
   Loading = 'Loading',
   NotFound = 'NotFound',
 }
@@ -72,5 +73,5 @@ export {
   AppRoute,
   APIRoute,
   AuthorizationStatus,
-  ReasonContentFailure
+  RoomDataStatus
 };

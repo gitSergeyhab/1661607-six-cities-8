@@ -1,5 +1,3 @@
-import Locations from '../locations/locations';
-
 function Spinner(): JSX.Element {
   return (
     <div className="page page--gray page--main">
@@ -15,12 +13,6 @@ function Spinner(): JSX.Element {
         </div>
       </header>
       <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-
-          <Locations />
-
-        </div>
         <div className="cities">
           <div className="cities__places-container container">
             <h2 style={{margin: 'auto'}}>Loading... .. .</h2>
