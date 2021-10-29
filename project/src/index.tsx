@@ -9,7 +9,7 @@ import App from './components/app/app';
 import { reducer } from './store/reducer';
 import { AuthorizationStatus, RoomDataStatus } from './constants';
 import { createAPI } from './services/api';
-import { requireAuthorization,/* redirectToNotFoundPage,*/ changeRoomDataStatus} from './store/action';
+import { requireAuthorization, changeRoomDataStatus} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/types';
 

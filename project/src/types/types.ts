@@ -1,8 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { AuthorizationStatus,/*, ReasonContentFailure*/
-  RoomDataStatus} from '../constants';
+import { AuthorizationStatus, RoomDataStatus} from '../constants';
 import { Actions } from '../store/action';
 
 

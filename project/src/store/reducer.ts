@@ -1,7 +1,7 @@
 import { Actions, ActionType } from './action';
 import { getOffersByCity, getSortedOffers } from '../utils/util';
 import { Offer, State } from '../types/types';
-import { AuthorizationStatus, CITIES,/* ReasonContentFailure, */SortOption, RoomDataStatus } from '../constants';
+import { AuthorizationStatus, CITIES, SortOption, RoomDataStatus } from '../constants';
 
 
 const INITIAL_CITY_INDEX = 0;
