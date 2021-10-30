@@ -23,7 +23,6 @@ type MapProps = {center: Point, offers: Offer[], selectedId: number};
 function Map({center, offers, selectedId}: MapProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('Map');
-  console.log('selectedId: ', selectedId, 'center', center);
 
 
   const mapRef = useRef(null);
@@ -43,6 +42,7 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
 
     return () => {markerGroup.remove();};
   });
+
 
   useEffect(() => {
     map?.setView(center);

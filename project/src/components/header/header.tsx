@@ -10,7 +10,7 @@ import { AuthorizationStatus, AppRoute } from '../../constants';
 
 function HeaderLogo(): JSX.Element {
   /* eslint-disable no-console */
-  console.log('HeaderLogo');
+  // console.log('HeaderLogo');
   return (
     <div className="header__left">
       <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
@@ -23,7 +23,7 @@ function HeaderLogo(): JSX.Element {
 
 function NotAuthHeader(): JSX.Element {
   /* eslint-disable no-console */
-  console.log('NotAuthHeader');
+  // console.log('NotAuthHeader');
   return(
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -46,7 +46,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function AuthHeader({handleSignOutClick}: PropsFromRedux): JSX.Element {
   /* eslint-disable no-console */
-  console.log('AuthHeader');
+  // console.log('AuthHeader');
 
   const userEmail = getUserEmail();
 
@@ -75,7 +75,7 @@ const AuthHeaderWithReduxProps = connector(AuthHeader);
 
 function Header({authorizationStatus}: {authorizationStatus?: string}): JSX.Element {
   /* eslint-disable no-console */
-  console.log('Header');
+  // console.log('Header');
   let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeaderWithReduxProps/> : <NotAuthHeader/>;
   authComponent = window.location.pathname === AppRoute.Login ? <span></span> : authComponent;
 

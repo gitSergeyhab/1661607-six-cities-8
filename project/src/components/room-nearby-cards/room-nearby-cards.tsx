@@ -15,7 +15,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type RoomNearbyCardsProps = PropsFromRedux & {id: number, nearbyRoomId: number}
 
 function RoomNearbyCards({id, neighbours, favoriteOffers, nearbyRoomId, getNearby} : RoomNearbyCardsProps): JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('RoomNearbyCards');
   useEffect(() => {
     getNearby(id);
   }, [id, getNearby, favoriteOffers]);

@@ -18,7 +18,7 @@ function OfferCard({offer, nearbyRoomId, ...restProps}: OfferCardProps): JSX.Ele
   const {isPremium, price, isFavorite, title, previewImage, rating, type, id} = offer;
   const {infoClass, wrapperClass, imgHeight, imgWidth} = restProps;
   /* eslint-disable no-console */
-  console.log('OfferCard');
+  // console.log('OfferCard');
 
   return (
     <>

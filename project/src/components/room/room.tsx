@@ -61,7 +61,6 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
   if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;
   }
-  console.log('id: ', id, 'roomOffer.id: ', roomOffer.id);
 
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = roomOffer;
@@ -167,7 +166,6 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
           </section>
         </section>
         <div className="container">
-          {/* <RoomNearbyCards id={id} />; */}
 
           <RoomNearbyCards id={roomOffer.id} nearbyRoomId={roomOffer.id} />;
 
