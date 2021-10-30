@@ -1,19 +1,13 @@
-
 import { ChangeEvent, memo } from 'react';
 
 
-type CommentFormTextareaProps = {isFormBlocked: boolean, review: string, onChange: (evt: ChangeEvent<HTMLTextAreaElement>) => void}
+type CommentFormTextareaProps = {disabled: boolean, value: string, onChange: (evt: ChangeEvent<HTMLTextAreaElement>) => void}
 
-function CommentFormTextarea({isFormBlocked, review, onChange} : CommentFormTextareaProps): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('Textarea');
-
+function CommentFormTextarea(props : CommentFormTextareaProps): JSX.Element {
 
   return (
     <textarea
-      disabled={isFormBlocked}
-      value={review}
-      onChange={onChange}
+      {...props}
       className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
     >
     </textarea>

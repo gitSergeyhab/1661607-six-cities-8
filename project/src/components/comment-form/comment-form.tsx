@@ -69,9 +69,9 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
 
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
-      <CommentFormStars onChange={handleStarClick} isFormBlocked={isFormBlocked} rating={rating}/>
+      <CommentFormStars onChange={handleStarClick} disabled={isFormBlocked} rating={rating}/>
 
-      <CommentFormTextarea onChange={handleTextInput} review={review} isFormBlocked={isFormBlocked}/>
+      <CommentFormTextarea onChange={handleTextInput} value={review} disabled={isFormBlocked}/>
 
       {isErrorSanding && <span style={{color: 'red', fontWeight: 'bold'}}>be careful! you broke everything... but we will fix it. Try again later</span>}
 
