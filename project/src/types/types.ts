@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { AuthorizationStatus, RoomDataStatus} from '../constants';
+import { AuthorizationStatus, CardType, RoomDataStatus} from '../constants';
 import { Actions } from '../store/action';
 
 
@@ -123,7 +123,8 @@ export type AuthData = {
   password: string;
 };
 
-export type ButtonFavorite = {className: string, width: string, height: string};
+
+export type BtnFavoriteSetting = {className: string, width: string, height: string, type: CardType};
 
 
 export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

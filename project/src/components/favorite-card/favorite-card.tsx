@@ -9,9 +9,11 @@ const [IMG_WIDTH, IMG_HIGHT] = ['150', '110'];
 const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgWidth: IMG_WIDTH, imgHeight: IMG_HIGHT};
 
 function FavoriteCard({offer}: {offer: Offer}): JSX.Element {
+  /* eslint-disable no-console */
+  console.log('FavoriteCard');
   return (
     <article className="favorites__card place-card">
-      <OfferCard offer={offer} {...offerCardProps}/>
+      <OfferCard offer={offer} {...offerCardProps} nearbyRoomId={0}/>
     </article>
   );
 }

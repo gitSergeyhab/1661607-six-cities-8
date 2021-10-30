@@ -9,28 +9,6 @@ const INITIAL_CITY_INDEX = 0;
 const initialCity = CITIES[INITIAL_CITY_INDEX];
 
 
-// const defaultOffer: Offer = {
-//   price: 0,
-//   rating: 0,
-//   title: '',
-//   location: {latitude: 0,longitude: 0,zoom: 1},
-//   city: {
-//     location: {latitude: 0,longitude: 0,zoom: 1},
-//     name: '',
-//   },
-//   type: '',
-//   previewImage: '',
-//   isPremium: false,
-//   isFavorite: false,
-//   id: 1,
-//   maxAdults: 0,
-//   bedrooms: 0,
-//   description: '',
-//   goods: [],
-//   images: [],
-//   host: {avatarUrl: '',id: 0,isPro: false,name: ''},
-// };
-
 const initialState: State = {
   city: initialCity,
   allOffers: [],

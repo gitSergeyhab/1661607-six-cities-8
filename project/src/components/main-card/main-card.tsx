@@ -18,7 +18,7 @@ function MainCard({offer, onMouseLeave, onMouseEnter}: MainCardProps): JSX.Eleme
 
   return (
     <article className="cities__place-card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <OfferCard offer={offer} {...offerCardProps}/>
+      <OfferCard offer={offer} {...offerCardProps} nearbyRoomId={0}/>
     </article>
   );
 }

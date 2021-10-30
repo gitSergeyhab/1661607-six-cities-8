@@ -7,7 +7,8 @@ import { AuthorizationStatus } from '../../constants';
 
 
 function FavoritesFilled({offers}: {offers: Offer[]}): JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('FavoritesFilled');
   const cities = [...new Set (offers.map((offer) => offer.city.name))];
   const citiesWithOffers = cities.map((city) => <FavoritesInCity offers={offers} city={city} key={city}/>);
 

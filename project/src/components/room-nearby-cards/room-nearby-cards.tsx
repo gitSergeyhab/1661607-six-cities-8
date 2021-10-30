@@ -7,19 +7,20 @@ import { fetchNearbyHotelsAction } from '../../store/api-actions';
 import { State, ThunkAppDispatch } from '../../types/types';
 
 
-const mapStateToProps = ({nearby} : State) => ({neighbours: nearby});
+const mapStateToProps = ({nearby, favoriteOffers} : State) => ({neighbours: nearby, favoriteOffers});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({getNearby: fetchNearbyHotelsAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>
+type RoomNearbyCardsProps = PropsFromRedux & {id: number, nearbyRoomId: number}
 
-function RoomNearbyCards({id, neighbours, getNearby} : {id: number} & PropsFromRedux): JSX.Element {
+function RoomNearbyCards({id, neighbours, favoriteOffers, nearbyRoomId, getNearby} : RoomNearbyCardsProps): JSX.Element {
 
   useEffect(() => {
     getNearby(id);
-  }, [id, getNearby]);
+  }, [id, getNearby, favoriteOffers]);
 
-  const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id}/>);
+  const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id} nearbyRoomId={nearbyRoomId}/>);
 
   return (
     <section className="near-places places">

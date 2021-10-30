@@ -21,6 +21,8 @@ type AppProps = {
 const mapStateToProps = ({areHotelsLoaded, authorizationStatus, roomDataStatus} : State) => ({areHotelsLoaded, authorizationStatus, roomDataStatus});
 
 function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
+  /* eslint-disable no-console */
+  console.log('App');
 
   if (!areHotelsLoaded) {
     return <Spinner/>;

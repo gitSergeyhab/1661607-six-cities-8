@@ -42,10 +42,12 @@ type RoomProps = {authorizationStatus: AuthorizationStatus};
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('Room');
 
   const params: {id: string} = useParams();
   const id = +params.id;
+
 
   useEffect(() => {
     loadOffer(id);
@@ -59,6 +61,7 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
   if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;
   }
+  console.log('id: ', id, 'roomOffer.id: ', roomOffer.id);
 
 
   const {isPremium, price, isFavorite, title, rating, type, host, description, maxAdults, bedrooms, goods, images} = roomOffer;
@@ -91,7 +94,9 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btn={FavoriteBtnProp.PROPERTY}/>
+                {/* <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.PROPERTY}/> */}
+                <FavoriteBtn isFavorite={isFavorite} hotelId={roomOffer.id} btnSetting={FavoriteBtnProp.Room} nearbyRoomId={0}/>
+
 
               </div>
               <div className="property__rating rating">
@@ -162,8 +167,9 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
           </section>
         </section>
         <div className="container">
+          {/* <RoomNearbyCards id={id} />; */}
 
-          <RoomNearbyCards id={id} />;
+          <RoomNearbyCards id={roomOffer.id} nearbyRoomId={roomOffer.id} />;
 
         </div>
       </main>

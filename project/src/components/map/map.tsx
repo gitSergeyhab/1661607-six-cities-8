@@ -21,6 +21,10 @@ type MapProps = {center: Point, offers: Offer[], selectedId: number};
 
 
 function Map({center, offers, selectedId}: MapProps): JSX.Element {
+  /* eslint-disable no-console */
+  console.log('Map');
+  console.log('selectedId: ', selectedId, 'center', center);
+
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, center);

@@ -14,7 +14,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
 function FavoritesInCity({offers, city, changeCityName, changeOffers} : {offers: Offer[], city: string} & PropsFromRedux):JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('FavoritesInCity');
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const mapOffers = cityOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id}/>);
 

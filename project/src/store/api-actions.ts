@@ -74,7 +74,7 @@ type PostCommentArguments = {hotelId: number, review: string, rating: number, cl
 
 export const postCommentAction = ({hotelId, review, rating, clearComment, notifyError, unBlockForm}: PostCommentArguments): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.post<ServerComment[]>(`${APIRoute.Comments}/${hotelId*1000}`, {comment: review, rating})
+    await api.post<ServerComment[]>(`${APIRoute.Comments}/${hotelId}`, {comment: review, rating})
       .then((result) => {
         const {data} = result;
         const clientComment = data.map((serverComment) => adaptCommentFromServer(serverComment));
@@ -93,10 +93,13 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
   };
 
 
-export const postFavoriteStatus = (hotelId: number, status: number): ThunkActionResult =>
+export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
     dispatch(fetchHotelsAction());
-    dispatch(fetchOfferRoomAction(hotelId, false));
+    if (roomId) {
+      dispatch(fetchOfferRoomAction(roomId, false));
+    }
+
     dispatch(fetchFavoriteHotelsAction());
   };

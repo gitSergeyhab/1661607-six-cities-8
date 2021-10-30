@@ -18,6 +18,9 @@ type RatingStarProps = {
 
 function RatingStar({star: {score, titleName}, starsCount, onChange, disabled}: RatingStarProps) {
 
+  /* eslint-disable no-console */
+  console.log('RatingStar');
+
   const id = `${score}-stars`;
 
   return (
@@ -43,7 +46,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type CommentFormProps = PropsFromRedux & {hotelId: number};
 
 function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('CommentForm');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [isErrorSanding, setErrorSanding] = useState(false);

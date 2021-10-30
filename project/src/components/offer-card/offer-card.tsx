@@ -8,15 +8,17 @@ import { FavoriteBtnProp } from '../../constants';
 
 const OFFER_PATH = '/offer/';
 
-type OfferCardProps = {offer: Offer, infoClass: string, wrapperClass: string, imgWidth: string, imgHeight: string};
+type OfferCardProps = {offer: Offer, nearbyRoomId: number, infoClass: string, wrapperClass: string, imgWidth: string, imgHeight: string};
 
 function Premium() {
   return <div className="place-card__mark"><span>Premium</span></div>;
 }
 
-function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
+function OfferCard({offer, nearbyRoomId, ...restProps}: OfferCardProps): JSX.Element {
   const {isPremium, price, isFavorite, title, previewImage, rating, type, id} = offer;
   const {infoClass, wrapperClass, imgHeight, imgWidth} = restProps;
+  /* eslint-disable no-console */
+  console.log('OfferCard');
 
   return (
     <>
@@ -35,7 +37,7 @@ function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavoriteBtn isFavorite={isFavorite} hotelId={id} btn={FavoriteBtnProp.CARD}/>
+          <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.Card} nearbyRoomId={nearbyRoomId}/>
 
         </div>
         <div className="place-card__rating rating">
