@@ -1,6 +1,6 @@
 import { Actions, ActionType } from './action';
 import { getOffersByCity, getSortedOffers } from '../utils/util';
-import { Offer, State } from '../types/types';
+import { State } from '../types/types';
 import { AuthorizationStatus, CITIES, SortOption, RoomDataStatus } from '../constants';
 
 
@@ -9,27 +9,27 @@ const INITIAL_CITY_INDEX = 0;
 const initialCity = CITIES[INITIAL_CITY_INDEX];
 
 
-const defaultOffer: Offer = {
-  price: 0,
-  rating: 0,
-  title: '',
-  location: {latitude: 0,longitude: 0,zoom: 1},
-  city: {
-    location: {latitude: 0,longitude: 0,zoom: 1},
-    name: '',
-  },
-  type: '',
-  previewImage: '',
-  isPremium: false,
-  isFavorite: false,
-  id: 1,
-  maxAdults: 0,
-  bedrooms: 0,
-  description: '',
-  goods: [],
-  images: [],
-  host: {avatarUrl: '',id: 0,isPro: false,name: ''},
-};
+// const defaultOffer: Offer = {
+//   price: 0,
+//   rating: 0,
+//   title: '',
+//   location: {latitude: 0,longitude: 0,zoom: 1},
+//   city: {
+//     location: {latitude: 0,longitude: 0,zoom: 1},
+//     name: '',
+//   },
+//   type: '',
+//   previewImage: '',
+//   isPremium: false,
+//   isFavorite: false,
+//   id: 1,
+//   maxAdults: 0,
+//   bedrooms: 0,
+//   description: '',
+//   goods: [],
+//   images: [],
+//   host: {avatarUrl: '',id: 0,isPro: false,name: ''},
+// };
 
 const initialState: State = {
   city: initialCity,
@@ -38,7 +38,7 @@ const initialState: State = {
   nearby: [],
   offers: getOffersByCity([], initialCity),
   favoriteOffers: [],
-  roomOffer: defaultOffer,
+  roomOffer: null,
   comments: [],
   activeOption: SortOption.Popular,
   authorizationStatus: AuthorizationStatus.NoAuth,

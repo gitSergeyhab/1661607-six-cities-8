@@ -56,7 +56,7 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (roomDataStatus === RoomDataStatus.Loading) {
+  if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;
   }
 

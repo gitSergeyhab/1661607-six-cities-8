@@ -109,7 +109,7 @@ export type State = {
   nearby: Offer[],
   offers: Offer[],
   favoriteOffers: Offer[],
-  roomOffer: Offer,
+  roomOffer: Offer | null,
   comments: Comment[],
   activeOption: string,
   authorizationStatus: AuthorizationStatus,
