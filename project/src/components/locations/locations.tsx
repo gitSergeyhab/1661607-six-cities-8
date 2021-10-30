@@ -10,7 +10,7 @@ import { CITIES } from '../../constants';
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
 
 
-const mapStateToProps = ({city} : State) => ({selectedCity: city});
+const mapStateToProps = ({MainData} : State) => ({selectedCity: MainData.city});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

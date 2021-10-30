@@ -18,15 +18,20 @@ type AppProps = {
 }
 
 
-const mapStateToProps = ({areHotelsLoaded, authorizationStatus, roomDataStatus} : State) => ({areHotelsLoaded, authorizationStatus, roomDataStatus});
+const mapStateToProps = ({MainData: {areHotelsLoaded}, UserData: {authorizationStatus}} : State) => ({areHotelsLoaded, authorizationStatus});
 
 function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('App');
+  console.log(areHotelsLoaded);
+
 
   if (!areHotelsLoaded) {
     return <Spinner/>;
   }
+
+  console.log('BrowserRouter');
+
 
   return(
     <BrowserRouter>

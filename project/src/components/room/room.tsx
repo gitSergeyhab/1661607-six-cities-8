@@ -34,7 +34,7 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-const mapStateToProps = ({nearby, roomOffer, comments, roomDataStatus} : State) => ({neighbours: nearby, roomOffer, comments, roomDataStatus});
+const mapStateToProps = ({RoomData: {nearby, roomOffer, comments, roomDataStatus}} : State) => ({neighbours: nearby, roomOffer, comments, roomDataStatus});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

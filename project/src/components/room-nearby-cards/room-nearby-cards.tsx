@@ -7,7 +7,7 @@ import { fetchNearbyHotelsAction } from '../../store/api-actions';
 import { State, ThunkAppDispatch } from '../../types/types';
 
 
-const mapStateToProps = ({nearby, favoriteOffers} : State) => ({neighbours: nearby, favoriteOffers});
+const mapStateToProps = ({RoomData: {nearby}, FavoriteData: {favoriteOffers}} : State) => ({neighbours: nearby, favoriteOffers});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({getNearby: fetchNearbyHotelsAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

@@ -6,7 +6,7 @@ import { Offer, State } from '../../types/types';
 import { AuthorizationStatus } from '../../constants';
 
 
-const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
+const mapStateToProps = ({MainData: {city, offers}}: State) => ({selectedCity: city, offers});
 
 export type MainProps = {offers: Offer[], authorizationStatus: AuthorizationStatus, selectedCity: string};
 

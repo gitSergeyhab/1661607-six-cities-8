@@ -4,10 +4,10 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import Review from '../review/review';
 import { fetchCommentsAction } from '../../store/api-actions';
-import { Comment, ThunkAppDispatch } from '../../types/types';
+import {State, ThunkAppDispatch } from '../../types/types';
 
 
-const mapStateToProps = ({comments} : {comments: Comment[]}) => ({comments});
+const mapStateToProps = ({RoomData} : State) => ({comments: RoomData.comments});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadComments: fetchCommentsAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

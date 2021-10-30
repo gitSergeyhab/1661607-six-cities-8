@@ -6,21 +6,12 @@ import { removeUserEmail, saveUserEmail } from '../services/user-email';
 import { APIRoute, AuthorizationStatus, RoomDataStatus } from '../constants';
 
 
-export const fetchHotelsAction = (): ThunkActionResult =>
-  async (dispatch, getState, api): Promise<void> => {
-    const {data} = await api.get(APIRoute.Hotels);
-    const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
-    dispatch(loadOffers(clientData));
-    dispatch(changeMainOffers(getState().city));
-  };
-
-
+// Authorization
 export const checkLoginAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
-
 
 export const loginAction = ({email, password} : AuthData): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -31,7 +22,6 @@ export const loginAction = ({email, password} : AuthData): ThunkActionResult =>
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
 
-
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     await api.delete(APIRoute.Logout);
@@ -40,14 +30,28 @@ export const logoutAction = (): ThunkActionResult =>
     dispatch(requireLogout());
   };
 
+/* eslint-disable no-console */
+// Main
+export const fetchHotelsAction = (): ThunkActionResult =>
+  async (dispatch, getState, api): Promise<void> => {
+    const {data} = await api.get(APIRoute.Hotels);
+    const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
+    dispatch(loadOffers(clientData));
+    console.log(getState().MainData);
 
+    dispatch(changeMainOffers(getState().MainData.city));
+    console.log(getState().MainData);
+
+  };
+
+
+// Room - Get
 export const fetchNearbyHotelsAction = (hotelId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}${APIRoute.Nearby}`);
     const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
     dispatch(loadNearby(clientData));
   };
-
 
 export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -61,7 +65,6 @@ export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): Thunk
     dispatch(loadOffer(clientData));
   };
 
-
 export const fetchCommentsAction = (hotelId: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const {data} = await api.get<ServerComment[]>(`${APIRoute.Comments}/${hotelId}`);
@@ -70,6 +73,7 @@ export const fetchCommentsAction = (hotelId: number): ThunkActionResult =>
   };
 
 
+// Room - Post
 type PostCommentArguments = {hotelId: number, review: string, rating: number, clearComment: () => void, notifyError: () => void, unBlockForm: () => void}
 
 export const postCommentAction = ({hotelId, review, rating, clearComment, notifyError, unBlockForm}: PostCommentArguments): ThunkActionResult =>
@@ -85,6 +89,8 @@ export const postCommentAction = ({hotelId, review, rating, clearComment, notify
       .finally(unBlockForm);
   };
 
+
+// Favorites
 export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const {data} = await api.get<Offer[]>(APIRoute.Favorite);
@@ -93,6 +99,7 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
   };
 
 
+// All  (btn-favorite)
 export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);

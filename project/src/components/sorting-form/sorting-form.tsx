@@ -16,7 +16,7 @@ function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Eleme
 }
 
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
+const mapStateToProps = ({MainData:  {activeOption}}: State) => ({activeOption});
 
 function SortingForm({activeOption} : {activeOption: string}): JSX.Element {
 

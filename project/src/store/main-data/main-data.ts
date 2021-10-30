@@ -30,7 +30,7 @@ const initialState: MainData = {
 export const mainData = (state = initialState, action: Actions): MainData => {
   switch (action.type) {
     case ActionType.LoadOffers:
-      return {...state, allOffers: action.payload};
+      return {...state, allOffers: action.payload, areHotelsLoaded: true};
     case ActionType.ChangeCity:
       return {...state, city: action.payload};
     case ActionType.ChangeMainOffers:
@@ -38,7 +38,6 @@ export const mainData = (state = initialState, action: Actions): MainData => {
         ...state,
         originOffers: getOffersByCity(state.allOffers, action.payload),
         offers: getOffersByCity(state.allOffers, action.payload),
-        areHotelsLoaded: true,
       };
     case ActionType.ChangeOption:
       return {...state,

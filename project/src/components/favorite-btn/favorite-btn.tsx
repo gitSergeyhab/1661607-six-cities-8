@@ -7,7 +7,7 @@ import { BtnFavoriteSetting, ThunkAppDispatch, State } from '../../types/types';
 
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({changeStatus: postFavoriteStatus}, dispatch);
-const mapStateToProps = ({authorizationStatus}: State) => ({authorizationStatus});
+const mapStateToProps = ({UserData: {authorizationStatus}}: State) => ({authorizationStatus});
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

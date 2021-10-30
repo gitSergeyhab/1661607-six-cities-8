@@ -5,7 +5,7 @@ import { changeOption } from '../../store/action';
 import { State } from '../../types/types';
 
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
+const mapStateToProps = ({MainData}: State) => ({activeOption: MainData.activeOption});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeSortOption: changeOption}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

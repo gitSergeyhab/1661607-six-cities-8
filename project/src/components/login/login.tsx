@@ -10,7 +10,7 @@ import { State } from '../../types/types';
 import { AppRoute, AuthorizationStatus, CITIES } from '../../constants';
 
 
-const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
+const mapStateToProps = ({UserData} : State) => ({authorizationStatus: UserData.authorizationStatus});
 const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
