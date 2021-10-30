@@ -93,7 +93,6 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   {title}
                 </h1>
 
-                {/* <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.PROPERTY}/> */}
                 <FavoriteBtn isFavorite={isFavorite} hotelId={roomOffer.id} btnSetting={FavoriteBtnProp.Room} nearbyRoomId={0}/>
 
 

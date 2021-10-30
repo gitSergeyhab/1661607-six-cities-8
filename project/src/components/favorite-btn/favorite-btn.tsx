@@ -16,7 +16,7 @@ type FavoriteBtnProps = PropsFromRedux & {isFavorite: boolean, btnSetting: BtnFa
 
 function FavoriteBtn({isFavorite, btnSetting, authorizationStatus, hotelId, changeStatus, nearbyRoomId = 0}: FavoriteBtnProps & {nearbyRoomId: number}): JSX.Element {
   /* eslint-disable no-console */
-  // console.log('FavoriteBtn');
+  console.log('FavoriteBtn', btnSetting.type);
 
   const history = useHistory();
 

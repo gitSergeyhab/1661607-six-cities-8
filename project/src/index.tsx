@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './components/app/app';
-import { reducer } from './store/reducer';
+import { rootReducer } from './store/root-reducer';
 import { AuthorizationStatus, RoomDataStatus } from './constants';
 import { createAPI } from './services/api';
 import { requireAuthorization, changeRoomDataStatus} from './store/action';
@@ -20,7 +20,7 @@ const api = createAPI(
 );
 
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 (store.dispatch as ThunkAppDispatch)(checkLoginAction());
 
 (store.dispatch as ThunkAppDispatch)(fetchHotelsAction());
