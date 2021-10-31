@@ -21,9 +21,6 @@ type MapProps = {center: Point, offers: Offer[], selectedId: number};
 
 
 function Map({center, offers, selectedId}: MapProps): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('Map');
-
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, center);
@@ -52,4 +49,3 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
 }
 
 export default memo(Map, (prev, next) => prev.center === next.center && prev.selectedId === next.selectedId) ;
-// export default Map ;

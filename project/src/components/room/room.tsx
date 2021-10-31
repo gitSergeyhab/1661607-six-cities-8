@@ -1,20 +1,18 @@
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
 import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
+import RoomCommentSection from '../room-comment-section/room-comment-section';
 import Spinner from '../spinner/spinner';
 import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
-import { State, ThunkAppDispatch } from '../../types/types';
-import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus} from '../../constants';
-import RoomCommentSection from '../room-comment-section/room-comment-section';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
+import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus } from '../../constants';
 
 
 function PremiumMarker() {
@@ -34,25 +32,22 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-const mapStateToProps = (state : State) =>
-  ({neighbours: getNearby(state), roomOffer: getRoomOffer(state), roomDataStatus: getRoomDataStatus(state)});
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type RoomProps = {authorizationStatus: AuthorizationStatus};
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-function Room({authorizationStatus, neighbours, roomOffer, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('Room');
+function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
+  const neighbours = useSelector(getNearby);
+  const roomOffer = useSelector(getRoomOffer);
+  const roomDataStatus = useSelector(getRoomDataStatus);
+
+  const dispatch = useDispatch();
+  const loadOffer = () => dispatch(fetchOfferRoomAction(id));
+
 
   useEffect(() => {
-    loadOffer(id);
-  }, [id, loadOffer]);
+    loadOffer();
+  }, [id]);
 
 
   if (roomDataStatus === RoomDataStatus.NotFound) {
@@ -169,4 +164,4 @@ function Room({authorizationStatus, neighbours, roomOffer, roomDataStatus, loadO
   );
 }
 
-export default connector(Room);
+export default Room;

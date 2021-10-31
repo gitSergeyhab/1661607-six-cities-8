@@ -1,19 +1,16 @@
-import { connect } from 'react-redux';
+import {useSelector } from 'react-redux';
 
 import CommentForm from '../comment-form/comment-form';
 import ReviewList from '../review-list/review-list';
-import { Comment, State } from '../../types/types';
 import { AuthorizationStatus} from '../../constants';
 import { getComments } from '../../store/room-data/room-data-selectors';
 
 
-const mapStateToProps = (state : State) => ({comments: getComments(state)});
+type RoomCommentSectionProps = {authorizationStatus: AuthorizationStatus, id: number};
 
-type RoomCommentSectionProps = {authorizationStatus: AuthorizationStatus, id: number, comments: Comment[]};
+function RoomCommentSection({id, authorizationStatus} : RoomCommentSectionProps): JSX.Element {
 
-function RoomCommentSection({id, authorizationStatus, comments} : RoomCommentSectionProps): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('RoomCommentSection');
+  const comments = useSelector(getComments);
 
   return (
     <section className="property__reviews reviews">
@@ -27,4 +24,4 @@ function RoomCommentSection({id, authorizationStatus, comments} : RoomCommentSec
   );
 }
 
-export default connect(mapStateToProps)(RoomCommentSection);
+export default RoomCommentSection;

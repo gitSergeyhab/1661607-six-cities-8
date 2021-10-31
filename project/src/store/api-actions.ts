@@ -30,7 +30,7 @@ export const logoutAction = (): ThunkActionResult =>
     dispatch(requireLogout());
   };
 
-/* eslint-disable no-console */
+
 // Main
 export const fetchHotelsAction = (): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {

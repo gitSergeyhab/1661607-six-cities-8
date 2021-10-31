@@ -1,25 +1,17 @@
 import { ChangeEvent, FormEvent,  useCallback,  useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {  useDispatch } from 'react-redux';
 
-import { postCommentAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/types';
-import { disableByStarAndLength } from '../../utils/util';
 import CommentFormStars from '../comment-form-stars/comment-form-stars';
 import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
+import { postCommentAction } from '../../store/api-actions';
+import { disableByStarAndLength } from '../../utils/util';
 
 
 const ERROR_DISPLAY_TIME = 2000;
 
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({postComment: postCommentAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type CommentFormProps = PropsFromRedux & {hotelId: number};
+function CommentForm({hotelId} : {hotelId: number}): JSX.Element {
 
-function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('CommentForm');
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [isErrorSanding, setErrorSanding] = useState(false);
@@ -48,15 +40,15 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
     }
   }, [errorTimeout]);
 
+
+  const dispatch = useDispatch();
+  const postComment = () => dispatch(postCommentAction({hotelId, review, rating, clearComment, notifyError, unBlockForm}));
+
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     changeBlockForm(true);
-    postComment({hotelId, review, rating, clearComment, notifyError, unBlockForm});
-    // ??? похоже, если CommentForm удаляется до выполнения postComment вылезает ошибка
-    /*Warning: Can't perform a React state update on an unmounted component.
-    his is a no-op, but it indicates a memory leak in your application.
-    To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function. */
-    // видимо, нужно в useEffect как-то остановить выполнение postComment - но как ???
+    postComment();
   };
 
 
@@ -86,4 +78,4 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
   );
 }
 
-export default connector(CommentForm);
+export default CommentForm;

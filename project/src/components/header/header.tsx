@@ -1,17 +1,14 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
+import { memo } from 'react';
+
 
 import { getUserEmail } from '../../services/user-email';
 import { logoutAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/types';
 import { AuthorizationStatus, AppRoute } from '../../constants';
-import { memo } from 'react';
-/* eslint-disable no-console */
 
 
 function HeaderLogo(): JSX.Element {
-  console.log('HeaderLogo');
   return (
     <div className="header__left">
       <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
@@ -23,7 +20,6 @@ function HeaderLogo(): JSX.Element {
 
 
 function NotAuthHeader(): JSX.Element {
-  console.log('NotAuthHeader');
   return(
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -40,12 +36,10 @@ function NotAuthHeader(): JSX.Element {
 }
 
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({handleSignOutClick: logoutAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function AuthHeader(): JSX.Element {
 
-function AuthHeader({handleSignOutClick}: PropsFromRedux): JSX.Element {
-  console.log('AuthHeader');
+  const dispatch = useDispatch();
+  const handleSignOutClick = () => dispatch(logoutAction());
 
   const userEmail = getUserEmail();
 
@@ -69,12 +63,10 @@ function AuthHeader({handleSignOutClick}: PropsFromRedux): JSX.Element {
   );
 }
 
-const AuthHeaderWithReduxProps = connector(AuthHeader);
-
 
 function Header({authorizationStatus}: {authorizationStatus?: string}): JSX.Element {
-  console.log('Header');
-  let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeaderWithReduxProps/> : <NotAuthHeader/>;
+
+  let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeader/> : <NotAuthHeader/>;
   authComponent = window.location.pathname === AppRoute.Login ? <span></span> : authComponent;
 
   return (

@@ -5,11 +5,13 @@ import Locations from '../locations/locations';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import SortingForm from '../sorting-form/sorting-form';
-import { MainProps } from '../main/main';
-import { CityCoordinate } from '../../constants';
+import { AuthorizationStatus, CityCoordinate } from '../../constants';
+import { Offer } from '../../types/types';
+
+export type MainFilledProps = {offers: Offer[], authorizationStatus: AuthorizationStatus, selectedCity: string};
 
 
-function MainFilled({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
+function MainFilled({offers, authorizationStatus, selectedCity}: MainFilledProps): JSX.Element {
   const center = CityCoordinate[selectedCity.toUpperCase()];
 
   const [offerId, setOfferId] = useState(-1);

@@ -18,6 +18,12 @@ export const enum ActionType {
   ChangeRoomDataStatus = 'room/ChangeRoomDataStatus'
 }
 
+//Main
+const loadOffers = createAction(
+  ActionType.LoadOffers,
+  (offers: Offer[]) => ({payload: offers}),
+);
+
 const changeCity = createAction(
   ActionType.ChangeCity,
   (city: string) => ({payload: city}),
@@ -33,14 +39,11 @@ const changeOption = createAction(
   (option: string) => ({payload: option}),
 );
 
-const loadOffers = createAction(
-  ActionType.LoadOffers,
-  (offers: Offer[]) => ({payload: offers}),
-);
 
-const loadNearby = createAction(
-  ActionType.LoadNearby,
-  (offers: Offer[]) => ({ payload: offers}),
+//Room
+const changeRoomDataStatus = createAction(
+  ActionType.ChangeRoomDataStatus,
+  (status: RoomDataStatus) => ({payload: status}),
 );
 
 const loadOffer =  createAction(
@@ -48,46 +51,34 @@ const loadOffer =  createAction(
   (offer: Offer) => ({payload: offer}),
 );
 
-const loadFavoriteOffers = createAction(
-  ActionType.LoadFavoriteOffers,
-  (offers: Offer[]) => ({payload: offers}),
-);
-
-const requireAuthorization = createAction(
-  ActionType.RequireAuthorization,
-  (authStatus: AuthorizationStatus) => ({payload: authStatus}),
-);
-
-
-const requireLogout = createAction(ActionType.Logout);
-
-const changeRoomDataStatus = createAction(
-  ActionType.ChangeRoomDataStatus,
-  (status: RoomDataStatus) => ({payload: status}),
-);
-
-const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
-
-
 const loadComments = createAction(
   ActionType.LoadComments,
   (comments: Comment[]) => ({payload: comments}),
 );
 
+const loadNearby = createAction(
+  ActionType.LoadNearby,
+  (offers: Offer[]) => ({ payload: offers}),
+);
 
-export type Actions =
-  ReturnType<typeof changeRoomDataStatus> |
-  ReturnType<typeof redirectToNotFoundPage> |
-  ReturnType<typeof requireAuthorization> |
-  ReturnType<typeof requireLogout> |
-  ReturnType<typeof changeCity> |
-  ReturnType<typeof changeMainOffers> |
-  ReturnType<typeof changeOption> |
-  ReturnType<typeof loadOffers> |
-  ReturnType<typeof loadFavoriteOffers> |
-  ReturnType<typeof loadNearby> |
-  ReturnType<typeof loadOffer> |
-  ReturnType<typeof loadComments>;
+
+//Favorites
+const loadFavoriteOffers = createAction(
+  ActionType.LoadFavoriteOffers,
+  (offers: Offer[]) => ({payload: offers}),
+);
+
+
+//Authorization
+const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({payload: authStatus}),
+);
+
+const requireLogout = createAction(ActionType.Logout);
+
+
+const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
 
 
 export {
