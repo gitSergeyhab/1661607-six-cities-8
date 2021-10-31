@@ -4,9 +4,10 @@ import MainFilled from '../main-filled/main-filled';
 import MainEmpty from '../main-empty/main-empty';
 import { Offer, State } from '../../types/types';
 import { AuthorizationStatus } from '../../constants';
+import { getCity, getCityOffers } from '../../store/main-data/main-data-selectors';
 
 
-const mapStateToProps = ({MainData: {city, offers}}: State) => ({selectedCity: city, offers});
+const mapStateToProps = (state: State) => ({selectedCity: getCity(state), offers: getCityOffers(state)});
 
 export type MainProps = {offers: Offer[], authorizationStatus: AuthorizationStatus, selectedCity: string};
 

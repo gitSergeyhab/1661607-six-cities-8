@@ -3,11 +3,12 @@ import { useHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { AppRoute, AuthorizationStatus, CardType } from '../../constants';
 import { postFavoriteStatus } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 import { BtnFavoriteSetting, ThunkAppDispatch, State } from '../../types/types';
 
 
+const mapStateToProps = (state: State) => ({authorizationStatus: getAuthorizationStatus(state)});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({changeStatus: postFavoriteStatus}, dispatch);
-const mapStateToProps = ({UserData: {authorizationStatus}}: State) => ({authorizationStatus});
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

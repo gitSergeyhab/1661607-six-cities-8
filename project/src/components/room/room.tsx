@@ -14,6 +14,7 @@ import { getStarsWidth } from '../../utils/util';
 import { State, ThunkAppDispatch } from '../../types/types';
 import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus} from '../../constants';
 import RoomCommentSection from '../room-comment-section/room-comment-section';
+import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
 
 
 function PremiumMarker() {
@@ -33,7 +34,8 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-const mapStateToProps = ({RoomData: {nearby, roomOffer, roomDataStatus}} : State) => ({neighbours: nearby, roomOffer, roomDataStatus});
+const mapStateToProps = (state : State) =>
+  ({neighbours: getNearby(state), roomOffer: getRoomOffer(state), roomDataStatus: getRoomDataStatus(state)});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

@@ -10,6 +10,8 @@ import Room from '../room/room';
 import Spinner from '../spinner/spinner';
 import { State } from '../../types/types';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+import { getHotelsLoadedStatus } from '../../store/main-data/main-data-selectors';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 
 
 type AppProps = {
@@ -18,7 +20,7 @@ type AppProps = {
 }
 
 
-const mapStateToProps = ({MainData: {areHotelsLoaded}, UserData: {authorizationStatus}} : State) => ({areHotelsLoaded, authorizationStatus});
+const mapStateToProps = (state : State) => ({areHotelsLoaded: getHotelsLoadedStatus(state), authorizationStatus: getAuthorizationStatus(state)});
 
 function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
   /* eslint-disable no-console */

@@ -5,12 +5,13 @@ import { MouseEvent } from 'react';
 import { changeCity, changeMainOffers } from '../../store/action';
 import { State } from '../../types/types';
 import { CITIES } from '../../constants';
+import { getCity } from '../../store/main-data/main-data-selectors';
 
 
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
 
 
-const mapStateToProps = ({MainData} : State) => ({selectedCity: MainData.city});
+const mapStateToProps = (state : State) => ({selectedCity: getCity(state)});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

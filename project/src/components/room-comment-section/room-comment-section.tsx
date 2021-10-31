@@ -4,9 +4,10 @@ import CommentForm from '../comment-form/comment-form';
 import ReviewList from '../review-list/review-list';
 import { Comment, State } from '../../types/types';
 import { AuthorizationStatus} from '../../constants';
+import { getComments } from '../../store/room-data/room-data-selectors';
 
 
-const mapStateToProps = ({RoomData: {comments}} : State) => ({comments});
+const mapStateToProps = (state : State) => ({comments: getComments(state)});
 
 type RoomCommentSectionProps = {authorizationStatus: AuthorizationStatus, id: number, comments: Comment[]};
 

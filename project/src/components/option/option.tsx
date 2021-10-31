@@ -3,9 +3,10 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import { changeOption } from '../../store/action';
 import { State } from '../../types/types';
+import { getActiveOption } from '../../store/main-data/main-data-selectors';
 
 
-const mapStateToProps = ({MainData}: State) => ({activeOption: MainData.activeOption});
+const mapStateToProps = (state : State) => ({activeOption: getActiveOption(state)});
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeSortOption: changeOption}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

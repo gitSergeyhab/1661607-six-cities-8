@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Option from '../option/option';
 import { State } from '../../types/types';
 import { SortOption } from '../../constants';
+import { getActiveOption } from '../../store/main-data/main-data-selectors';
 
 
 function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Element {
@@ -16,7 +17,7 @@ function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Eleme
 }
 
 
-const mapStateToProps = ({MainData:  {activeOption}}: State) => ({activeOption});
+const mapStateToProps = (state: State) => ({activeOption: getActiveOption(state)});
 
 function SortingForm({activeOption} : {activeOption: string}): JSX.Element {
 

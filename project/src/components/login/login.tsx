@@ -8,9 +8,10 @@ import LoginForm from '../login-form/login-form';
 import { changeCity, changeMainOffers } from '../../store/action';
 import { State } from '../../types/types';
 import { AppRoute, AuthorizationStatus, CITIES } from '../../constants';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 
 
-const mapStateToProps = ({UserData} : State) => ({authorizationStatus: UserData.authorizationStatus});
+const mapStateToProps = (state : State) => ({authorizationStatus: getAuthorizationStatus(state)});
 const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
