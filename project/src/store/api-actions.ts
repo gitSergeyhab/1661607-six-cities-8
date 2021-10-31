@@ -101,7 +101,6 @@ export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0):
     await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
     dispatch(fetchHotelsAction());
     if (roomId) { // заргужать RoomOffer по id только в том случаее, если кнопка btn-favorite нажата в Room
-      console.log(roomId);
       dispatch(fetchOfferRoomAction(roomId, false));
     }
 

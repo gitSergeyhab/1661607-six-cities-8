@@ -15,6 +15,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
 
+
+  /* eslint-disable no-console */
+  console.log('LoginForm');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({

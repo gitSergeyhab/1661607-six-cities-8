@@ -11,7 +11,8 @@ const mapStateToProps = ({RoomData: {comments}} : State) => ({comments});
 type RoomCommentSectionProps = {authorizationStatus: AuthorizationStatus, id: number, comments: Comment[]};
 
 function RoomCommentSection({id, authorizationStatus, comments} : RoomCommentSectionProps): JSX.Element {
-
+  /* eslint-disable no-console */
+  console.log('RoomCommentSection');
 
   return (
     <section className="property__reviews reviews">

@@ -5,8 +5,6 @@ import {AuthorizationStatus} from '../../constants';
 
 
 function FavoritesEmpty(): JSX.Element {
-  /* eslint-disable no-console */
-  console.log('FavoritesEmpty');
   return (
     <div className="page page--favorites-empty">
 

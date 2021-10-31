@@ -19,6 +19,9 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Login({changeCityName, changeOffers, authorizationStatus} : PropsFromRedux): JSX.Element {
 
+  /* eslint-disable no-console */
+  console.log('Login');
+
   const randomCity = CITIES[Math.floor(Math.random()*CITIES.length)];
 
   const handleRandomCityClick = () => {

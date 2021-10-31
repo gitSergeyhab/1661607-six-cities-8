@@ -17,8 +17,8 @@ function Premium() {
 function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
   const {isPremium, price, isFavorite, title, previewImage, rating, type, id} = offer;
   const {infoClass, wrapperClass, imgHeight, imgWidth} = restProps;
-  /* eslint-disable no-console */
-  // console.log('OfferCard');
+  // /* eslint-disable no-console */
+  // // console.log('OfferCard');
 
   return (
     <>

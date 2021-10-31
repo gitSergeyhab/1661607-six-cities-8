@@ -16,9 +16,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Favorites({favoriteOffers, areFavoritesLoaded, loadFavorites}: PropsFromRedux): JSX.Element {
 
-  /* eslint-disable no-console */
-  console.log('Favorites');
-
   useEffect(() => {
     loadFavorites();
   }, [loadFavorites]);

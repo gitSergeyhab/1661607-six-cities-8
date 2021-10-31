@@ -155,7 +155,6 @@ function Room({authorizationStatus, neighbours, roomOffer, roomDataStatus, loadO
 
             <Map center={center} offers={offersForMap} selectedId={id}/>
 
-
           </section>
         </section>
         <div className="container">

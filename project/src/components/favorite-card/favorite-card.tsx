@@ -10,7 +10,7 @@ const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgW
 
 function FavoriteCard({offer}: {offer: Offer}): JSX.Element {
   /* eslint-disable no-console */
-  console.log('FavoriteCard');
+  // console.log('FavoriteCard');
   return (
     <article className="favorites__card place-card">
       <OfferCard offer={offer} {...offerCardProps} />

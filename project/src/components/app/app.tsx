@@ -24,11 +24,10 @@ function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('App');
 
+
   if (!areHotelsLoaded) {
     return <Spinner/>;
   }
-
-  console.log('BrowserRouter');
 
 
   return(

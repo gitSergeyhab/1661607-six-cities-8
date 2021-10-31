@@ -10,7 +10,8 @@ const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgW
 
 
 function RoomCard({offer} : {offer: Offer}): JSX.Element {
-
+  /* eslint-disable no-console */
+  // console.log('RoomCard');
   return (
     <article className="cities__place-card place-card">
       <OfferCard offer={offer} {...offerCardProps} />

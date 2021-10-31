@@ -17,6 +17,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Location({city, selectedCity, changeCityName, changeOffers} : {city: string} & PropsFromRedux): JSX.Element {
+  /* eslint-disable no-console */
+  console.log('Location');
 
   const handleCityClick = (evt: MouseEvent) => {
     evt.preventDefault();

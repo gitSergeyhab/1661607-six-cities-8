@@ -1,5 +1,4 @@
-import { Dispatch } from 'react';
-
+import { Dispatch, memo } from 'react';
 import MainCard from '../main-card/main-card';
 import { Offer } from '../../types/types';
 
@@ -20,4 +19,4 @@ function OffersList({offers, setOfferId} : OfferListProps): JSX.Element {
   );
 }
 
-export default OffersList;
+export default memo(OffersList, (prev, next) => prev.offers === next.offers);
