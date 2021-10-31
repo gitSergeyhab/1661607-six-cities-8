@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus, RoomDataStatus } from '../constants';
 import { Comment, Offer } from '../types/types';
 
@@ -17,61 +18,61 @@ export const enum ActionType {
   ChangeRoomDataStatus = 'room/ChangeRoomDataStatus'
 }
 
-const changeCity = (city: string) => ({
-  type: ActionType.ChangeCity,
-  payload: city,
-} as const);
+const changeCity = createAction(
+  ActionType.ChangeCity,
+  (city: string) => ({payload: city}),
+);
 
-const changeMainOffers = (city: string) => ({
-  type: ActionType.ChangeMainOffers,
-  payload: city,
-} as const);
+const changeMainOffers = createAction(
+  ActionType.ChangeMainOffers,
+  (city: string) => ({payload: city}),
+);
 
-const changeOption = (option: string) => ({
-  type: ActionType.ChangeOption,
-  payload: option,
-} as const);
+const changeOption = createAction(
+  ActionType.ChangeOption,
+  (option: string) => ({payload: option}),
+);
 
-const loadOffers = (offers: Offer[]) => ({
-  type: ActionType.LoadOffers,
-  payload: offers,
-} as const);
+const loadOffers = createAction(
+  ActionType.LoadOffers,
+  (offers: Offer[]) => ({payload: offers}),
+);
 
-const loadNearby = (offers: Offer[]) => ({
-  type: ActionType.LoadNearby,
-  payload: offers,
-} as const);
+const loadNearby = createAction(
+  ActionType.LoadNearby,
+  (offers: Offer[]) => ({ payload: offers}),
+);
 
-const loadOffer = (offers: Offer) => ({
-  type: ActionType.LoadOffer,
-  payload: offers,
-} as const);
+const loadOffer =  createAction(
+  ActionType.LoadOffer,
+  (offer: Offer) => ({payload: offer}),
+);
 
-const loadFavoriteOffers = (offers: Offer[]) => ({
-  type: ActionType.LoadFavoriteOffers,
-  payload: offers,
-} as const);
+const loadFavoriteOffers = createAction(
+  ActionType.LoadFavoriteOffers,
+  (offers: Offer[]) => ({payload: offers}),
+);
 
-const requireAuthorization = (authStatus: AuthorizationStatus) => ({
-  type: ActionType.RequireAuthorization,
-  payload: authStatus,
-} as const);
-
-
-const requireLogout = () => ({type: ActionType.Logout} as const);
-
-const changeRoomDataStatus = (status: RoomDataStatus) => ({
-  type: ActionType.ChangeRoomDataStatus,
-  payload: status,
-} as const);
-
-const redirectToNotFoundPage = () => ({type: ActionType.RedirectToNotFoundPage} as const);
+const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({payload: authStatus}),
+);
 
 
-const loadComments = (comments: Comment[]) => ({
-  type: ActionType.LoadComments,
-  payload: comments,
-} as const);
+const requireLogout = createAction(ActionType.Logout);
+
+const changeRoomDataStatus = createAction(
+  ActionType.ChangeRoomDataStatus,
+  (status: RoomDataStatus) => ({payload: status}),
+);
+
+const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
+
+
+const loadComments = createAction(
+  ActionType.LoadComments,
+  (comments: Comment[]) => ({payload: comments}),
+);
 
 
 export type Actions =
