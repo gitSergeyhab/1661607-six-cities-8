@@ -12,16 +12,16 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({g
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>
-type RoomNearbyCardsProps = PropsFromRedux & {id: number, nearbyRoomId: number}
+type RoomNearbyCardsProps = PropsFromRedux & {id: number}
 
-function RoomNearbyCards({id, neighbours, favoriteOffers, nearbyRoomId, getNearby} : RoomNearbyCardsProps): JSX.Element {
+function RoomNearbyCards({id, neighbours, favoriteOffers, getNearby} : RoomNearbyCardsProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('RoomNearbyCards');
   useEffect(() => {
     getNearby(id);
   }, [id, getNearby, favoriteOffers]);
 
-  const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id} nearbyRoomId={nearbyRoomId}/>);
+  const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id}/>);
 
   return (
     <section className="near-places places">

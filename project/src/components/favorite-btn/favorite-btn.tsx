@@ -14,7 +14,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type FavoriteBtnProps = PropsFromRedux & {isFavorite: boolean, btnSetting: BtnFavoriteSetting, hotelId: number}
 
 
-function FavoriteBtn({isFavorite, btnSetting, authorizationStatus, hotelId, changeStatus, nearbyRoomId = 0}: FavoriteBtnProps & {nearbyRoomId: number}): JSX.Element {
+function FavoriteBtn({isFavorite, btnSetting, authorizationStatus, hotelId, changeStatus}: FavoriteBtnProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('FavoriteBtn', btnSetting.type);
 
@@ -26,7 +26,7 @@ function FavoriteBtn({isFavorite, btnSetting, authorizationStatus, hotelId, chan
     }
     const roomId = btnSetting.type === CardType.Room ? hotelId : 0;
     const status = isFavorite ? 0 : 1;
-    changeStatus(hotelId, status, nearbyRoomId || roomId);
+    changeStatus(hotelId, status, roomId);
   };
 
   const activeClass = isFavorite ? `${btnSetting.className}__bookmark-button--active` : '';

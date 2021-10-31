@@ -13,7 +13,7 @@ function FavoriteCard({offer}: {offer: Offer}): JSX.Element {
   console.log('FavoriteCard');
   return (
     <article className="favorites__card place-card">
-      <OfferCard offer={offer} {...offerCardProps} nearbyRoomId={0}/>
+      <OfferCard offer={offer} {...offerCardProps} />
     </article>
   );
 }

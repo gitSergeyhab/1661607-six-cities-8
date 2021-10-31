@@ -19,8 +19,6 @@ function ReviewList({hotelId, comments, loadComments} : ReviewListProps): JSX.El
 
   /* eslint-disable no-console */
   console.log('ReviewList');
-  console.log(comments);
-
 
   useEffect(() => {
     loadComments(hotelId);

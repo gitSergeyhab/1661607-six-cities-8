@@ -3,18 +3,17 @@ import { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 
-import CommentForm from '../comment-form/comment-form';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
-import ReviewList from '../review-list/review-list';
 import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
 import Spinner from '../spinner/spinner';
 import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
 import { State, ThunkAppDispatch } from '../../types/types';
 import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus} from '../../constants';
+import RoomCommentSection from '../room-comment-section/room-comment-section';
 
 
 function PremiumMarker() {
@@ -34,14 +33,14 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-const mapStateToProps = ({RoomData: {nearby, roomOffer, comments, roomDataStatus}} : State) => ({neighbours: nearby, roomOffer, comments, roomDataStatus});
+const mapStateToProps = ({RoomData: {nearby, roomOffer, roomDataStatus}} : State) => ({neighbours: nearby, roomOffer, roomDataStatus});
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type RoomProps = {authorizationStatus: AuthorizationStatus};
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
+function Room({authorizationStatus, neighbours, roomOffer, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
   /* eslint-disable no-console */
   console.log('Room');
 
@@ -93,8 +92,7 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} hotelId={roomOffer.id} btnSetting={FavoriteBtnProp.Room} nearbyRoomId={0}/>
-
+                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.Room} />
 
               </div>
               <div className="property__rating rating">
@@ -148,25 +146,21 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
 
-                <ReviewList hotelId={roomOffer.id}/>
+              <RoomCommentSection id={id} authorizationStatus={authorizationStatus} />
 
-                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm hotelId={roomOffer.id}/>}
-
-              </section>
             </div>
           </div>
           <section className="property__map map">
 
-            <Map center={center} offers={offersForMap} selectedId={roomOffer.id}/>
+            <Map center={center} offers={offersForMap} selectedId={id}/>
+
 
           </section>
         </section>
         <div className="container">
 
-          <RoomNearbyCards id={roomOffer.id} nearbyRoomId={roomOffer.id} />;
+          <RoomNearbyCards id={id} />;
 
         </div>
       </main>

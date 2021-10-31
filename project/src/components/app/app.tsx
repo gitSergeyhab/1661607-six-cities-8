@@ -23,8 +23,6 @@ const mapStateToProps = ({MainData: {areHotelsLoaded}, UserData: {authorizationS
 function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
   /* eslint-disable no-console */
   console.log('App');
-  console.log(areHotelsLoaded);
-
 
   if (!areHotelsLoaded) {
     return <Spinner/>;

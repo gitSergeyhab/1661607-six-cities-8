@@ -37,11 +37,7 @@ export const fetchHotelsAction = (): ThunkActionResult =>
     const {data} = await api.get(APIRoute.Hotels);
     const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
     dispatch(loadOffers(clientData));
-    console.log(getState().MainData);
-
     dispatch(changeMainOffers(getState().MainData.city));
-    console.log(getState().MainData);
-
   };
 
 
@@ -104,7 +100,8 @@ export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0):
   async (dispatch, _getState, api) => {
     await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
     dispatch(fetchHotelsAction());
-    if (roomId) {
+    if (roomId) { // заргужать RoomOffer по id только в том случаее, если кнопка btn-favorite нажата в Room
+      console.log(roomId);
       dispatch(fetchOfferRoomAction(roomId, false));
     }
 
