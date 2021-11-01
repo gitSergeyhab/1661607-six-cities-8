@@ -8,11 +8,11 @@ const [IMG_WIDTH, IMG_HIGHT] = ['260', '200'];
 
 const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgWidth: IMG_WIDTH, imgHeight: IMG_HIGHT};
 
-function RoomCard({offer} : {offer: Offer}): JSX.Element {
 
+function RoomCard({offer} : {offer: Offer}): JSX.Element {
   return (
     <article className="cities__place-card place-card">
-      <OfferCard offer={offer} {...offerCardProps}/>
+      <OfferCard offer={offer} {...offerCardProps} />
     </article>
   );
 }

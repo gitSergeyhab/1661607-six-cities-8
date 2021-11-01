@@ -1,19 +1,11 @@
 import { FormEvent, useState } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { loginAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/types';
 import { checkEmail, checkPassword, disableSignInSubmit } from '../../utils/util';
 
 
-const mapDispatchToProps = (dispatch:  ThunkAppDispatch) =>bindActionCreators({onLogin: loginAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
+function LoginForm(): JSX.Element {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +13,7 @@ function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
     email: '',
     password: '',
   });
+
 
   const changeInputValue = (checkFunction: (fieldValue: string) => boolean, setFunction: (fieldValue: string) => void, errorMessage: string, field: string) =>
     (evt: FormEvent<HTMLInputElement>) => {
@@ -33,9 +26,13 @@ function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
   const handleEmailChange = changeInputValue(checkEmail, setEmail, 'Wrong Email', 'email');
   const handlePasswordChange = changeInputValue(checkPassword, setPassword, 'Wrong Password', 'password');
 
+
+  const dispatch = useDispatch();
+  const login = () => dispatch(loginAction({email, password}));
+
   const onSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    onLogin({email, password});
+    login();
   };
 
   return (
@@ -59,4 +56,4 @@ function LoginForm({onLogin} : PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(LoginForm);
+export default LoginForm;

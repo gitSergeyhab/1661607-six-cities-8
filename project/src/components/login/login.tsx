@@ -1,29 +1,28 @@
 import { Link } from 'react-router-dom';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 
 import Header from '../header/header';
 import LoginForm from '../login-form/login-form';
 import { changeCity, changeMainOffers } from '../../store/action';
-import { State } from '../../types/types';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 import { AppRoute, AuthorizationStatus, CITIES } from '../../constants';
 
 
-const mapStateToProps = ({authorizationStatus} : State) => ({authorizationStatus});
-const mapDispatchToProps = (dispatch: Dispatch ) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function Login({changeCityName, changeOffers, authorizationStatus} : PropsFromRedux): JSX.Element {
+function Login(): JSX.Element {
 
   const randomCity = CITIES[Math.floor(Math.random()*CITIES.length)];
 
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const dispatch = useDispatch();
+  const changeCityName = () => dispatch(changeCity(randomCity)) ;
+  const changeOffers = () => dispatch(changeMainOffers(randomCity));
+
+
   const handleRandomCityClick = () => {
-    changeCityName(randomCity);
-    changeOffers(randomCity);
+    changeCityName();
+    changeOffers();
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -54,4 +53,4 @@ function Login({changeCityName, changeOffers, authorizationStatus} : PropsFromRe
   );
 }
 
-export default connector(Login);
+export default Login;

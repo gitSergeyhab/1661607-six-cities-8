@@ -1,4 +1,4 @@
-import { useEffect, useRef} from 'react';
+import { memo, useEffect, useRef} from 'react';
 import { Icon, Marker, LayerGroup} from 'leaflet';
 
 import useMap from '../../hooks/use-map';
@@ -40,6 +40,7 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
     return () => {markerGroup.remove();};
   });
 
+
   useEffect(() => {
     map?.setView(center);
   }, [center, map]);
@@ -47,4 +48,4 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export default memo(Map, (prev, next) => prev.center === next.center && prev.selectedId === next.selectedId) ;

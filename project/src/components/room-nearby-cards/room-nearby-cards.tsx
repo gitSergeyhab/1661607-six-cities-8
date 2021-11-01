@@ -1,23 +1,24 @@
 import { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {  useDispatch, useSelector } from 'react-redux';
 
 import RoomCard from '../room-card/room-card';
 import { fetchNearbyHotelsAction } from '../../store/api-actions';
-import { State, ThunkAppDispatch } from '../../types/types';
+import { getNearby } from '../../store/room-data/room-data-selectors';
+import { getFavoriteOffers } from '../../store/favorite-data/favorite-data-selectors';
 
 
-const mapStateToProps = ({nearby} : State) => ({neighbours: nearby});
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({getNearby: fetchNearbyHotelsAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
+function RoomNearbyCards({id} : {id: number}): JSX.Element {
 
-type PropsFromRedux = ConnectedProps<typeof connector>
+  const neighbours = useSelector(getNearby);
+  const favoriteOffers = useSelector(getFavoriteOffers);
 
-function RoomNearbyCards({id, neighbours, getNearby} : {id: number} & PropsFromRedux): JSX.Element {
+  const dispatch = useDispatch();
+  const getNeighbours = () => dispatch(fetchNearbyHotelsAction(id));
+
 
   useEffect(() => {
-    getNearby(id);
-  }, [id, getNearby]);
+    getNeighbours();
+  }, [id, favoriteOffers]);
 
   const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id}/>);
 
@@ -33,4 +34,4 @@ function RoomNearbyCards({id, neighbours, getNearby} : {id: number} & PropsFromR
   );
 }
 
-export default connector(RoomNearbyCards);
+export default RoomNearbyCards;

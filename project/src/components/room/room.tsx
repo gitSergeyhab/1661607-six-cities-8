@@ -1,20 +1,18 @@
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 
-import CommentForm from '../comment-form/comment-form';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
-import ReviewList from '../review-list/review-list';
 import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
+import RoomCommentSection from '../room-comment-section/room-comment-section';
 import Spinner from '../spinner/spinner';
 import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
-import { State, ThunkAppDispatch } from '../../types/types';
-import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus} from '../../constants';
+import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
+import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus } from '../../constants';
 
 
 function PremiumMarker() {
@@ -34,29 +32,29 @@ function Good({goodName}: {goodName: string}) {
 }
 
 
-const mapStateToProps = ({nearby, roomOffer, comments, roomDataStatus} : State) => ({neighbours: nearby, roomOffer, comments, roomDataStatus});
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({loadOffer: fetchOfferRoomAction}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type RoomProps = {authorizationStatus: AuthorizationStatus};
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataStatus, loadOffer} : RoomProps & PropsFromRedux): JSX.Element {
-
+function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
   const params: {id: string} = useParams();
   const id = +params.id;
 
+  const neighbours = useSelector(getNearby);
+  const roomOffer = useSelector(getRoomOffer);
+  const roomDataStatus = useSelector(getRoomDataStatus);
+
+  const dispatch = useDispatch();
+  const loadOffer = () => dispatch(fetchOfferRoomAction(id));
+
+
   useEffect(() => {
-    loadOffer(id);
-  }, [id, loadOffer]);
+    loadOffer();
+  }, [id]);
 
 
   if (roomDataStatus === RoomDataStatus.NotFound) {
     return <NotFoundPage authorizationStatus={authorizationStatus}/>;
   }
 
-  if (roomDataStatus === RoomDataStatus.Loading) {
+  if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;
   }
 
@@ -91,7 +89,7 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btn={FavoriteBtnProp.PROPERTY}/>
+                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.Room} />
 
               </div>
               <div className="property__rating rating">
@@ -145,19 +143,14 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
 
-                <ReviewList hotelId={roomOffer.id}/>
+              <RoomCommentSection id={id} authorizationStatus={authorizationStatus} />
 
-                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm hotelId={roomOffer.id}/>}
-
-              </section>
             </div>
           </div>
           <section className="property__map map">
 
-            <Map center={center} offers={offersForMap} selectedId={roomOffer.id}/>
+            <Map center={center} offers={offersForMap} selectedId={id}/>
 
           </section>
         </section>
@@ -171,4 +164,4 @@ function Room({authorizationStatus, neighbours, roomOffer, comments, roomDataSta
   );
 }
 
-export default connector(Room);
+export default Room;

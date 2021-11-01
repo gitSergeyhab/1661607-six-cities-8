@@ -1,5 +1,5 @@
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Favorites from '../favorites/favorites';
 import Login from '../login/login';
@@ -8,23 +8,20 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
 import Spinner from '../spinner/spinner';
-import { State } from '../../types/types';
-import { AppRoute, AuthorizationStatus } from '../../constants';
+import { getHotelsLoadedStatus } from '../../store/main-data/main-data-selectors';
+import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
+import { AppRoute } from '../../constants';
 
 
-type AppProps = {
-  authorizationStatus: AuthorizationStatus,
-  areHotelsLoaded: boolean,
-}
+function App(): JSX.Element {
 
-
-const mapStateToProps = ({areHotelsLoaded, authorizationStatus, roomDataStatus} : State) => ({areHotelsLoaded, authorizationStatus, roomDataStatus});
-
-function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
+  const areHotelsLoaded = useSelector(getHotelsLoadedStatus);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (!areHotelsLoaded) {
     return <Spinner/>;
   }
+
 
   return(
     <BrowserRouter>
@@ -60,4 +57,5 @@ function App({authorizationStatus, areHotelsLoaded}: AppProps): JSX.Element {
   );
 }
 
-export default connect(mapStateToProps)(App);
+export default App;
+

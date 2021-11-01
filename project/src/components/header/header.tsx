@@ -1,10 +1,10 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
+import { memo } from 'react';
+
 
 import { getUserEmail } from '../../services/user-email';
 import { logoutAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/types';
 import { AuthorizationStatus, AppRoute } from '../../constants';
 
 
@@ -36,11 +36,10 @@ function NotAuthHeader(): JSX.Element {
 }
 
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({handleSignOutClick: logoutAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
+function AuthHeader(): JSX.Element {
 
-function AuthHeader({handleSignOutClick}: PropsFromRedux): JSX.Element {
+  const dispatch = useDispatch();
+  const handleSignOutClick = () => dispatch(logoutAction());
 
   const userEmail = getUserEmail();
 
@@ -64,12 +63,10 @@ function AuthHeader({handleSignOutClick}: PropsFromRedux): JSX.Element {
   );
 }
 
-const AuthHeaderWithReduxProps = connector(AuthHeader);
-
 
 function Header({authorizationStatus}: {authorizationStatus?: string}): JSX.Element {
 
-  let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeaderWithReduxProps/> : <NotAuthHeader/>;
+  let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeader/> : <NotAuthHeader/>;
   authComponent = window.location.pathname === AppRoute.Login ? <span></span> : authComponent;
 
   return (
@@ -84,4 +81,4 @@ function Header({authorizationStatus}: {authorizationStatus?: string}): JSX.Elem
   );
 }
 
-export default Header;
+export default memo(Header, (prev, next) => prev.authorizationStatus === next.authorizationStatus);

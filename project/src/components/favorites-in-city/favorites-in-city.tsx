@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import FavoriteCard from '../favorite-card/favorite-card';
 import { changeCity, changeMainOffers } from '../../store/action';
@@ -8,19 +7,18 @@ import { Offer } from '../../types/types';
 import { AppRoute } from '../../constants';
 
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function FavoritesInCity({offers, city, changeCityName, changeOffers} : {offers: Offer[], city: string} & PropsFromRedux):JSX.Element {
+function FavoritesInCity({offers, city} : {offers: Offer[], city: string}):JSX.Element {
 
   const cityOffers = offers.filter((offer) => offer.city.name === city);
   const mapOffers = cityOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id}/>);
 
+  const dispatch = useDispatch();
+  const changeCityName = () => dispatch(changeCity(city));
+  const changeOffers = () => dispatch(changeMainOffers(city));
+
   const handleCityClick = () => {
-    changeCityName(city);
-    changeOffers(city);
+    changeCityName();
+    changeOffers();
   };
 
   return (
@@ -43,4 +41,4 @@ function FavoritesInCity({offers, city, changeCityName, changeOffers} : {offers:
   );
 }
 
-export default connector(FavoritesInCity);
+export default FavoritesInCity;

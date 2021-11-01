@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios';
+import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { AuthorizationStatus, RoomDataStatus} from '../constants';
-import { Actions } from '../store/action';
+import { CardType } from '../constants';
+import { RootState } from '../store/root-reducer';
 
 
 type User = {
@@ -102,30 +103,18 @@ export type ServerComment = {
 
 export type Point = {lat: number, lng: number}
 
-export type State = {
-  city: string,
-  allOffers: Offer[],
-  originOffers: Offer[],
-  nearby: Offer[],
-  offers: Offer[],
-  favoriteOffers: Offer[],
-  roomOffer: Offer,
-  comments: Comment[],
-  activeOption: string,
-  authorizationStatus: AuthorizationStatus,
-  areHotelsLoaded: boolean,
-  areFavoritesLoaded: boolean,
-  roomDataStatus: RoomDataStatus,
-}
-
 export type AuthData = {
   email: string;
   password: string;
 };
 
-export type ButtonFavorite = {className: string, width: string, height: string};
+
+export type BtnFavoriteSetting = {className: string, width: string, height: string, type: CardType};
 
 
-export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+export type ThunkActionResult<R=Promise<void>> = ThunkAction<R, RootState, AxiosInstance, Action>;
 
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<RootState, AxiosInstance, Action>;
+
+
+export type State  = RootState;

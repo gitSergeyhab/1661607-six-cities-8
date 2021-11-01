@@ -1,17 +1,15 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import MainFilled from '../main-filled/main-filled';
 import MainEmpty from '../main-empty/main-empty';
-import { Offer, State } from '../../types/types';
 import { AuthorizationStatus } from '../../constants';
+import { getCity, getCityOffers } from '../../store/main-data/main-data-selectors';
 
 
-const mapStateToProps = ({city, offers}: State) => ({selectedCity: city, offers});
+function Main({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
-export type MainProps = {offers: Offer[], authorizationStatus: AuthorizationStatus, selectedCity: string};
-
-
-function Main({offers, authorizationStatus, selectedCity}: MainProps): JSX.Element {
+  const selectedCity = useSelector(getCity);
+  const offers = useSelector(getCityOffers);
 
   const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
 
@@ -20,4 +18,4 @@ function Main({offers, authorizationStatus, selectedCity}: MainProps): JSX.Eleme
     <MainEmpty authorizationStatus={authorizationStatus} selectedCity={selectedCity}/>;
 }
 
-export default connect(mapStateToProps)(Main);
+export default Main;

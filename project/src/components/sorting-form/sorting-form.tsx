@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Option from '../option/option';
-import { State } from '../../types/types';
 import { SortOption } from '../../constants';
+import { getActiveOption } from '../../store/main-data/main-data-selectors';
 
 
 function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Element {
@@ -16,9 +16,9 @@ function SortingList({onOptionsClick} : {onOptionsClick: () => void}): JSX.Eleme
 }
 
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
+function SortingForm(): JSX.Element {
 
-function SortingForm({activeOption} : {activeOption: string}): JSX.Element {
+  const activeOption = useSelector(getActiveOption);
 
   const [isOptionsShown, toggleShowingOption] = useState(false);
 
@@ -40,4 +40,4 @@ function SortingForm({activeOption} : {activeOption: string}): JSX.Element {
   );
 }
 
-export default connect(mapStateToProps)(SortingForm);
+export default SortingForm;

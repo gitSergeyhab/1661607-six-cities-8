@@ -35,7 +35,7 @@ function OfferCard({offer, ...restProps}: OfferCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <FavoriteBtn isFavorite={isFavorite} hotelId={id} btn={FavoriteBtnProp.CARD}/>
+          <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.Card}/>
 
         </div>
         <div className="place-card__rating rating">

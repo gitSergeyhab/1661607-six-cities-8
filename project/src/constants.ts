@@ -4,11 +4,6 @@ const RATING_COEFFICIENT = 20;
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-const FavoriteBtnProp = {
-  CARD: {className: 'place-card', width: '18', height: '19'},
-  PROPERTY: {className: 'property', width: '31', height: '33'},
-};
-
 const STARS = [
   {score: 5, titleName: 'perfect'},
   {score: 4, titleName: 'good'},
@@ -63,6 +58,16 @@ const enum RoomDataStatus {
   NotFound = 'NotFound',
 }
 
+const enum CardType {
+  Room = 'Room',
+  Card = 'Card',
+}
+
+const FavoriteBtnProp = {
+  Card: {className: 'place-card', width: '18', height: '19', type: CardType.Card},
+  Room: {className: 'property', width: '31', height: '33', type: CardType.Room},
+};
+
 export {
   RATING_COEFFICIENT,
   CITIES,
@@ -73,5 +78,6 @@ export {
   AppRoute,
   APIRoute,
   AuthorizationStatus,
-  RoomDataStatus
+  RoomDataStatus,
+  CardType
 };

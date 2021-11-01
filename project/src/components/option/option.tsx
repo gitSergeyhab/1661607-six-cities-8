@@ -1,21 +1,20 @@
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { changeOption } from '../../store/action';
-import { State } from '../../types/types';
+import { getActiveOption } from '../../store/main-data/main-data-selectors';
 
 
-const mapStateToProps = ({activeOption}: State) => ({activeOption});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeSortOption: changeOption}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type OptionProps = ConnectedProps<typeof connector> & {option: string, onOptionsClick: () => void};
+type OptionProps =  {option: string, onOptionsClick: () => void};
 
 
-function Option({activeOption, changeSortOption, option, onOptionsClick} : OptionProps): JSX.Element {
+function Option({option, onOptionsClick} : OptionProps): JSX.Element {
+
+  const activeOption = useSelector(getActiveOption);
+
+  const dispatch = useDispatch();
+  const changeSortOption = () => dispatch(changeOption(option));
 
   const handleSortOptionClick = () => {
-    changeSortOption(option);
+    changeSortOption();
     onOptionsClick();
   };
 
@@ -30,4 +29,4 @@ function Option({activeOption, changeSortOption, option, onOptionsClick} : Optio
   );
 }
 
-export default connector(Option);
+export default Option;

@@ -1,27 +1,27 @@
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-import { MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { memo, MouseEvent } from 'react';
 
 import { changeCity, changeMainOffers } from '../../store/action';
-import { State } from '../../types/types';
+import { getCity } from '../../store/main-data/main-data-selectors';
 import { CITIES } from '../../constants';
 
 
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
 
 
-const mapStateToProps = ({city} : State) => ({selectedCity: city});
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({changeCityName: changeCity, changeOffers: changeMainOffers}, dispatch);
-const connector = connect(mapStateToProps, mapDispatchToProps);
+function Location({city} : {city: string} ): JSX.Element {
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+  const selectedCity = useSelector(getCity);
 
-function Location({city, selectedCity, changeCityName, changeOffers} : {city: string} & PropsFromRedux): JSX.Element {
+  const dispatch = useDispatch();
+  const changeCityName = () => dispatch(changeCity(city));
+  const changeOffers = () => dispatch(changeMainOffers(city));
+
 
   const handleCityClick = (evt: MouseEvent) => {
     evt.preventDefault();
-    changeCityName(city);
-    changeOffers(city);
+    changeCityName();
+    changeOffers();
   };
 
   return (
@@ -33,12 +33,10 @@ function Location({city, selectedCity, changeCityName, changeOffers} : {city: st
   );
 }
 
-const LocationWithPropsFromRedux = connector(Location);
-
 
 function Locations(): JSX.Element {
 
-  const cities = CITIES.map((city) => <LocationWithPropsFromRedux city={city} key={city}/>);
+  const cities = CITIES.map((city) => <Location city={city} key={city}/>);
 
   return (
     <section className="locations container">
@@ -49,4 +47,4 @@ function Locations(): JSX.Element {
   );
 }
 
-export default Locations;
+export default memo(Locations); // почему-то в Main`e без memo при наведении на карточку MainCard вместе с картой перерисовывется и Locations

@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
-import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
 
 import App from './components/app/app';
-import { reducer } from './store/reducer';
+import { rootReducer } from './store/root-reducer';
 import { AuthorizationStatus, RoomDataStatus } from './constants';
 import { createAPI } from './services/api';
 import { requireAuthorization, changeRoomDataStatus} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
-import { ThunkAppDispatch } from './types/types';
 
 
 const api = createAPI(
@@ -20,10 +17,14 @@ const api = createAPI(
 );
 
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
-(store.dispatch as ThunkAppDispatch)(checkLoginAction());
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument: api}}),
+});
 
-(store.dispatch as ThunkAppDispatch)(fetchHotelsAction());
+
+store.dispatch(checkLoginAction());
+store.dispatch(fetchHotelsAction());
 
 
 ReactDOM.render(

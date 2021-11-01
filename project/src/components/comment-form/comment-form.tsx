@@ -1,48 +1,16 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { ChangeEvent, FormEvent,  useCallback,  useEffect, useState } from 'react';
+import {  useDispatch } from 'react-redux';
 
+import CommentFormStars from '../comment-form-stars/comment-form-stars';
+import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';
 import { postCommentAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/types';
 import { disableByStarAndLength } from '../../utils/util';
-import { STARS } from '../../constants';
+
 
 const ERROR_DISPLAY_TIME = 2000;
 
-type RatingStarProps = {
-  star: {score: number, titleName: string},
-  starsCount: number
-  onChange: (evt: ChangeEvent<HTMLInputElement>) => void,
-  disabled: boolean,
-}
 
-function RatingStar({star: {score, titleName}, starsCount, onChange, disabled}: RatingStarProps) {
-
-  const id = `${score}-stars`;
-
-  return (
-    <>
-      <input
-        disabled={disabled}
-        onChange={onChange}
-        checked={score === starsCount}
-        className="form__rating-input visually-hidden" name="rating" value={score} id={id} type="radio"
-      />
-      <label htmlFor={id} className="reviews__rating-label form__rating-label" title={titleName}>
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
-    </>
-  );
-}
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => bindActionCreators({postComment: postCommentAction}, dispatch);
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type CommentFormProps = PropsFromRedux & {hotelId: number};
-
-function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
+function CommentForm({hotelId} : {hotelId: number}): JSX.Element {
 
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
@@ -72,43 +40,30 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
     }
   }, [errorTimeout]);
 
+
+  const dispatch = useDispatch();
+  const postComment = () => dispatch(postCommentAction({hotelId, review, rating, clearComment, notifyError, unBlockForm}));
+
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     changeBlockForm(true);
-    postComment({hotelId, review, rating, clearComment, notifyError, unBlockForm});
-    // ??? похоже, если CommentForm удаляется до выполнения postComment вылезает ошибка
-    /*Warning: Can't perform a React state update on an unmounted component.
-    his is a no-op, but it indicates a memory leak in your application.
-    To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function. */
-    // видимо, нужно в useEffect как-то остановить выполнение postComment - но как ???
+    postComment();
   };
 
 
+  const handleTextInput = useCallback( (evt: ChangeEvent<HTMLTextAreaElement>) =>  setReview(evt.target.value), [] ) ;
+  const handleStarClick = useCallback( (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value), [] );
+
+
   return (
-    <form className="reviews__form form" action="#" method="post"
-      onSubmit={handleSubmit}
-    >
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
 
-        {STARS.map((star) => (
-          <RatingStar
-            disabled={isFormBlocked}
-            star={star}
-            starsCount={rating}
-            onChange={() => setRating(star.score)}
-            key={star.score}
-          />))}
+      <CommentFormStars onChange={handleStarClick} disabled={isFormBlocked} rating={rating}/>
 
-      </div>
-
-      <textarea
-        disabled={isFormBlocked}
-        value={review}
-        onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => setReview(evt.target.value)}
-        className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
-      >
-      </textarea>
+      <CommentFormTextarea onChange={handleTextInput} value={review} disabled={isFormBlocked}/>
 
       {isErrorSanding && <span style={{color: 'red', fontWeight: 'bold'}}>be careful! you broke everything... but we will fix it. Try again later</span>}
 
@@ -123,4 +78,4 @@ function CommentForm({hotelId, postComment} : CommentFormProps): JSX.Element {
   );
 }
 
-export default connector(CommentForm);
+export default CommentForm;
