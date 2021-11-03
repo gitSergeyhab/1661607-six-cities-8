@@ -12,8 +12,9 @@ import Spinner from '../spinner/spinner';
 import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
-import { AuthorizationStatus, FavoriteBtnProp, RoomDataStatus } from '../../constants';
+import { AuthorizationStatus, BtnType, RoomDataStatus } from '../../constants';
 
+/* eslint-disable no-console */
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -42,12 +43,12 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   const roomDataStatus = useSelector(getRoomDataStatus);
 
   const dispatch = useDispatch();
-  const loadOffer = () => dispatch(fetchOfferRoomAction(id));
 
+  console.log('Room');
 
   useEffect(() => {
-    loadOffer();
-  }, [id]);
+    dispatch(fetchOfferRoomAction(id));
+  }, [id, dispatch]);
 
 
   if (roomDataStatus === RoomDataStatus.NotFound) {
@@ -89,7 +90,7 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
                   {title}
                 </h1>
 
-                <FavoriteBtn isFavorite={isFavorite} hotelId={id} btnSetting={FavoriteBtnProp.Room} />
+                <FavoriteBtn isFavorite={isFavorite} hotelId={id}  btnType={BtnType.Room}/>
 
               </div>
               <div className="property__rating rating">

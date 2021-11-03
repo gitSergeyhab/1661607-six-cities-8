@@ -1,7 +1,7 @@
-import { Offer, Comment } from '../types/types';
+import { Offer, Comment, ServerOffer, ServerComment } from '../types/types';
 
 
-export const adaptHotelFromServer = (serverHotel: any): Offer => { // если назначать конкретый тип...
+export const adaptHotelFromServer = (serverHotel: ServerOffer): Offer => {
   const offer = {
     ...serverHotel,
     isFavorite: serverHotel['is_favorite'],
@@ -15,17 +15,17 @@ export const adaptHotelFromServer = (serverHotel: any): Offer => { // если �
     },
   };
 
-  delete offer['is_favorite']; // ...будет выдавать ошибку при удалении и требовать, чтоб свойство в объекте было опциональным
+  delete offer['is_favorite'];
   delete offer['is_premium'];
   delete offer['max_adults'];
   delete offer['preview_image'];
   delete offer.host['is_pro'];
   delete offer.host['avatar_url'];
 
-  return offer;
+  return offer as Offer;
 };
 
-export const adaptCommentFromServer = (serverComment: any): Comment => {
+export const adaptCommentFromServer = (serverComment: ServerComment): Comment => {
   const comment = {
     ...serverComment,
     user: {
@@ -38,5 +38,5 @@ export const adaptCommentFromServer = (serverComment: any): Comment => {
   delete comment.user['is_pro'];
   delete comment.user['avatar_url'];
 
-  return comment;
+  return comment as Comment;
 };

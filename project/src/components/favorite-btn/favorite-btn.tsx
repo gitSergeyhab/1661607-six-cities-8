@@ -1,24 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { AppRoute, AuthorizationStatus, CardType } from '../../constants';
+import { AppRoute, AuthorizationStatus, BtnType, BtnSetting } from '../../constants';
 import { postFavoriteStatus } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
-import { BtnFavoriteSetting } from '../../types/types';
+// import { BtnFavoriteSetting } from '../../types/types';
 
 
-type FavoriteBtnProps = {isFavorite: boolean, btnSetting: BtnFavoriteSetting, hotelId: number}
+type FavoriteBtnProps = {isFavorite: boolean, btnType: BtnType, hotelId: number}
 
-function FavoriteBtn({isFavorite, btnSetting, hotelId} : FavoriteBtnProps): JSX.Element {
+function FavoriteBtn({isFavorite, btnType, hotelId} : FavoriteBtnProps): JSX.Element {
+
+  const btnSetting = BtnSetting[btnType];
 
   const history = useHistory();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const dispatch = useDispatch();
-  const roomId = btnSetting.type === CardType.Room ? hotelId : 0;
+  const roomId = btnType === BtnType.Room ? hotelId : 0;
   const status = isFavorite ? 0 : 1;
-  const changeStatus = () => dispatch(postFavoriteStatus(hotelId, status, roomId));
+  const changeStatus = () => dispatch(postFavoriteStatus(hotelId, status, roomId, btnType));
 
 
   const handleChangeFavoriteStatus = () => {

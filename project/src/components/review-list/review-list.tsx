@@ -5,18 +5,20 @@ import Review from '../review/review';
 import { fetchCommentsAction } from '../../store/api-actions';
 import { getComments } from '../../store/room-data/room-data-selectors';
 
+/* eslint-disable no-console */
+
 
 function ReviewList({hotelId} : {hotelId: number}): JSX.Element {
+  console.log('ReviewList');
+
 
   const comments = useSelector(getComments);
 
   const dispatch = useDispatch();
-  const loadComments = () => dispatch(fetchCommentsAction(hotelId));
-
 
   useEffect(() => {
-    loadComments();
-  }, []);
+    dispatch(fetchCommentsAction(hotelId));
+  }, [dispatch, hotelId]);
 
   return  (
     <ul className="reviews__list">
