@@ -1,8 +1,9 @@
+import { AuthorizationStatus } from '../../constants';
 import Header from '../header/header';
 import Locations from '../locations/locations';
 
 
-function MainEmpty({authorizationStatus, selectedCity}: {authorizationStatus: string, selectedCity: string}): JSX.Element {
+function MainEmpty({authorizationStatus, selectedCity}: {authorizationStatus: AuthorizationStatus, selectedCity: string}): JSX.Element {
   return (
     <div className="page page--gray page--main">
 

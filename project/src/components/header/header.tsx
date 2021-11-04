@@ -64,7 +64,7 @@ function AuthHeader(): JSX.Element {
 }
 
 
-function Header({authorizationStatus}: {authorizationStatus?: string}): JSX.Element {
+function Header({authorizationStatus}: {authorizationStatus: AuthorizationStatus}): JSX.Element {
 
   let authComponent = authorizationStatus === AuthorizationStatus.Auth ? <AuthHeader/> : <NotAuthHeader/>;
   authComponent = window.location.pathname === AppRoute.Login ? <span></span> : authComponent;
