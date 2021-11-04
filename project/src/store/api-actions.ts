@@ -67,7 +67,6 @@ export const fetchCommentsAction = (hotelId: number): ThunkActionResult =>
     const clientComment = await data.map((comment) => adaptCommentFromServer(comment));
     dispatch(loadComments(clientComment));
   };
-/* eslint-disable no-console */
 
 
 // Room - Post

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router';
 import { AppRoute, AuthorizationStatus, BtnType, BtnSetting } from '../../constants';
 import { postFavoriteStatus } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
-// import { BtnFavoriteSetting } from '../../types/types';
 
 
 type FavoriteBtnProps = {isFavorite: boolean, btnType: BtnType, hotelId: number}
@@ -33,7 +32,6 @@ function FavoriteBtn({isFavorite, btnType, hotelId} : FavoriteBtnProps): JSX.Ele
 
 
   const activeClass = isFavorite ? `${btnSetting.className}__bookmark-button--active` : '';
-
 
   return (
     <button className={`${btnSetting.className}__bookmark-button ${activeClass} button`} type="button" onClick={handleChangeFavoriteStatus}>

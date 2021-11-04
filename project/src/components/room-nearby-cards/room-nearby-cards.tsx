@@ -5,16 +5,12 @@ import RoomCard from '../room-card/room-card';
 import { fetchNearbyHotelsAction } from '../../store/api-actions';
 import { getNearby } from '../../store/room-data/room-data-selectors';
 
-/* eslint-disable no-console */
-
 
 function RoomNearbyCards({id} : {id: number}): JSX.Element {
 
   const neighbours = useSelector(getNearby);
 
   const dispatch = useDispatch();
-  console.log('RoomNearbyCards');
-
 
   useEffect(() => {
     dispatch(fetchNearbyHotelsAction(id));

@@ -46,5 +46,5 @@ function Locations(): JSX.Element {
     </section>
   );
 }
-
-export default memo(Locations); // почему-то в Main`e без memo при наведении на карточку MainCard вместе с картой перерисовывется и Locations
+export {Locations};
+export default memo(Locations);

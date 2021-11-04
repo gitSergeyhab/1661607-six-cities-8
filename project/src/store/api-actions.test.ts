@@ -23,8 +23,6 @@ const fakeServerOffer = makeFakeServerOffer();
 const fakeClientOffer = adaptHotelFromServer(fakeServerOffer);
 
 
-/* eslint-disable no-console */
-
 describe('Async actions', () => {
   const onFakeUnauthorized = jest.fn();
   const onFakeNotFound = jest.fn();

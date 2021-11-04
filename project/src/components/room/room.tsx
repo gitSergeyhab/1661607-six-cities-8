@@ -14,7 +14,6 @@ import { getStarsWidth } from '../../utils/util';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
 import { AuthorizationStatus, BtnType, RoomDataStatus } from '../../constants';
 
-/* eslint-disable no-console */
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -43,8 +42,6 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   const roomDataStatus = useSelector(getRoomDataStatus);
 
   const dispatch = useDispatch();
-
-  console.log('Room');
 
   useEffect(() => {
     dispatch(fetchOfferRoomAction(id));
