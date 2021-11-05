@@ -29,6 +29,7 @@ const SortOption: {[prop: string]: string} = {
   TopRated: 'Top rated first',
 };
 
+
 const enum AppRoute {
   Main = '/',
   Login = '/login',

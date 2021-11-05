@@ -1,110 +1,16 @@
 import { createMemoryHistory } from 'history';
-import { AppRoute, AuthorizationStatus, CITIES, RoomDataStatus, SortOption } from '../../constants';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import App from './app';
-import { makeFakeCommentList, makeFakeFavoritesList, makeFakeOffer, makeFakeOfferList } from '../../utils/mocks';
+import { AnyAction } from 'redux';
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
-import { AnyAction } from 'redux';
 
+import App from './app';
+import { stateAuthAndFilled, stateNoAuthAndEmpty, ScreenText } from '../../utils/test-constants';
+import { AppRoute } from '../../constants';
 
-const INITIAL_CITY_INDEX = 0;
-// const TEST_ID = 11;
-
-const initialCity = CITIES[INITIAL_CITY_INDEX];
 
 const history = createMemoryHistory();
-
-const fakeOffer = makeFakeOffer();
-const fakeOffers = makeFakeOfferList();
-const fakeFavorites = makeFakeFavoritesList();
-const fakeComments = makeFakeCommentList();
-
-
-const stateAuthAndFilled = {
-  MainData: {
-    allOffers: fakeOffers,
-    areHotelsLoaded: true,
-    city: initialCity,
-    originOffers: fakeOffers,
-    offers: fakeOffers,
-    activeOption: SortOption.Popular,
-  },
-  FavoriteData: {
-    favoriteOffers: fakeFavorites,
-    areFavoritesLoaded: true,
-  },
-  RoomData: {
-    nearby: fakeOffers,
-    roomOffer: fakeOffer,
-    comments: fakeComments,
-    roomDataStatus: RoomDataStatus.Ok,
-  },
-  UserData: {authorizationStatus: AuthorizationStatus.Auth},
-};
-
-const stateNoAuthAndEmpty = {
-  MainData: {
-    allOffers: [],
-    areHotelsLoaded: true,
-    city: initialCity,
-    originOffers: [],
-    offers: [],
-    activeOption: SortOption.Popular,
-  },
-  FavoriteData: {
-    favoriteOffers: [],
-    areFavoritesLoaded: true,
-  },
-  RoomData: {
-    nearby: fakeOffers,
-    roomOffer: fakeOffer,
-    comments: fakeComments,
-    roomDataStatus: RoomDataStatus.Ok,
-  },
-  UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
-};
-
-const ScreenText = {
-  Main: {
-    Filled: {
-      Places: /to stay in/i,
-      Sort: /Sort by/i,
-    },
-    Empty: {
-      Status: /No places to stay available/i,
-      Description: /We could not find any property available at the moment in/i,
-    },
-  },
-  Favorite: {
-    Filled: {
-      Title: /Saved listing/i,
-      City: new RegExp(initialCity, 'i'),
-    },
-    Empty: {
-      Status: /Nothing yet saved/i,
-      Description: /Save properties to narrow down search or plan your future trips/i,
-    },
-  },
-  Login: {
-    Email: /Email/i,
-    Password: /Password/i,
-  },
-  Room: {
-    All: {
-      Goods: /What's inside/i,
-      Nearby: /Other places in the neighbourhood/i,
-    },
-    Auth: {
-      Review: /Your review/i,
-    },
-  },
-  Page404: {
-    Message: /Page Not Found/i,
-    Link: /TO THE MAIN PAGE/i,
-  },
-};
 
 const mockStore = configureMockStore();
 
@@ -126,7 +32,6 @@ describe('App Component', () => {
 
       expect(screen.getByText(ScreenText.Main.Filled.Places)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Main.Filled.Sort)).toBeInTheDocument();
-
     });
 
     it('test rout /login -> redirect to /', () => {
@@ -169,7 +74,6 @@ describe('App Component', () => {
 
       expect(screen.getByText(ScreenText.Page404.Message)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Page404.Link)).toBeInTheDocument();
-
     });
   });
 
@@ -184,7 +88,6 @@ describe('App Component', () => {
 
       expect(screen.getByText(ScreenText.Main.Empty.Description)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Main.Empty.Status)).toBeInTheDocument();
-
     });
 
     it('test rout /login', () => {
@@ -192,10 +95,8 @@ describe('App Component', () => {
       history.push(AppRoute.Login);
       render(fakeApp);
 
-
       expect(screen.getByPlaceholderText(ScreenText.Login.Email)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(ScreenText.Login.Password)).toBeInTheDocument();
-
     });
 
 
