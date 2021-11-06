@@ -7,7 +7,7 @@ type UserData = {authorizationStatus: AuthorizationStatus}
 const initialState: UserData = {authorizationStatus: AuthorizationStatus.NoAuth};
 
 
-export const userProcess = createReducer(initialState, (builder) => {
+export const userData = createReducer(initialState, (builder) => {
   builder
     .addCase(requireAuthorization, (state, action) => {state.authorizationStatus = action.payload;})
     .addCase(requireLogout, (state) => {state.authorizationStatus = AuthorizationStatus.NoAuth;});

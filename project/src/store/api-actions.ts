@@ -3,7 +3,7 @@ import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapte
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
 import { removeUserEmail, saveUserEmail } from '../services/user-email';
-import { APIRoute, AuthorizationStatus, RoomDataStatus } from '../constants';
+import { APIRoute, AuthorizationStatus, BtnType, RoomDataStatus } from '../constants';
 
 
 // Authorization
@@ -96,13 +96,36 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
 
 
 // All  (btn-favorite)
-export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
-    dispatch(fetchHotelsAction());
-    if (roomId) { // заргужать RoomOffer по id только в том случаее, если кнопка btn-favorite нажата в Room
-      dispatch(fetchOfferRoomAction(roomId, false));
+
+export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0, btnType: BtnType): ThunkActionResult =>
+  async (dispatch, getState, api) => {
+    const {data} = await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
+    const {id} = data;
+    const isFavorite = data['is_favorite'];
+    const allOffers = getState().MainData.allOffers;
+    const offerIndex = allOffers.findIndex((offer) => offer.id === id); //??? или можно не искать, а считать, что offerIndexWithNewStatus === id ???
+
+    if (offerIndex === -1) {
+      throw new Error(`there is not hotel with id ${id}`);
     }
 
-    dispatch(fetchFavoriteHotelsAction());
+    const changedOffer = {...allOffers[offerIndex], isFavorite};
+    const newOffers = [...allOffers.slice(0, offerIndex), changedOffer, ...allOffers.slice(offerIndex + 1)];
+    dispatch(loadOffers(newOffers));
+    dispatch(changeMainOffers(getState().MainData.city));
+
+    if (roomId) {
+      dispatch(loadOffer(changedOffer));
+    }
+
+    if (btnType === BtnType.NearbyCard) {
+      const nearbyOffers = getState().RoomData.nearby;
+      const nearbyIndex = nearbyOffers.findIndex((offer) => offer.id === id);
+      const newNearby = [...nearbyOffers.slice(0, nearbyIndex), changedOffer, ...nearbyOffers.slice(nearbyIndex + 1)];
+      dispatch(loadNearby(newNearby));
+    }
+
+    if (btnType === BtnType.FavoriteCard) {
+      dispatch(fetchFavoriteHotelsAction());
+    }
   };

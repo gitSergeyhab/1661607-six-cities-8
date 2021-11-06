@@ -11,10 +11,8 @@ function Main({authorizationStatus}: {authorizationStatus: AuthorizationStatus})
   const selectedCity = useSelector(getCity);
   const offers = useSelector(getCityOffers);
 
-  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
-
-  return selectedCityOffers.length ?
-    <MainFilled offers={selectedCityOffers} authorizationStatus={authorizationStatus} selectedCity={selectedCity}/> :
+  return offers.length ?
+    <MainFilled offers={offers} authorizationStatus={authorizationStatus} selectedCity={selectedCity}/> :
     <MainEmpty authorizationStatus={authorizationStatus} selectedCity={selectedCity}/>;
 }
 

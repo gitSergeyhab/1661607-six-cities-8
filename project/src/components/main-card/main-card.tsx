@@ -1,5 +1,6 @@
 import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/types';
+import { BtnType } from '../../constants';
 
 
 type MainCardProps = {
@@ -18,7 +19,7 @@ function MainCard({offer, onMouseLeave, onMouseEnter}: MainCardProps): JSX.Eleme
 
   return (
     <article className="cities__place-card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <OfferCard offer={offer} {...offerCardProps} />
+      <OfferCard offer={offer} btnType={BtnType.MainCard} {...offerCardProps} />
     </article>
   );
 }

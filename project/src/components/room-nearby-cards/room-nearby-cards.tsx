@@ -4,21 +4,17 @@ import {  useDispatch, useSelector } from 'react-redux';
 import RoomCard from '../room-card/room-card';
 import { fetchNearbyHotelsAction } from '../../store/api-actions';
 import { getNearby } from '../../store/room-data/room-data-selectors';
-import { getFavoriteOffers } from '../../store/favorite-data/favorite-data-selectors';
 
 
 function RoomNearbyCards({id} : {id: number}): JSX.Element {
 
   const neighbours = useSelector(getNearby);
-  const favoriteOffers = useSelector(getFavoriteOffers);
 
   const dispatch = useDispatch();
-  const getNeighbours = () => dispatch(fetchNearbyHotelsAction(id));
-
 
   useEffect(() => {
-    getNeighbours();
-  }, [id, favoriteOffers]);
+    dispatch(fetchNearbyHotelsAction(id));
+  }, [id, dispatch]);
 
   const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id}/>);
 

@@ -10,10 +10,10 @@ const enum HttpCode {
   NotFound = 404,
 }
 
-type UnauthorizedCB = () => void;
+type CreateAPIArgsCB = () => void;
 
 
-export const createAPI = (onUnauthorized: UnauthorizedCB, onNotFounded: UnauthorizedCB): AxiosInstance => {
+export const createAPI = (onUnauthorized: CreateAPIArgsCB, onNotFound: CreateAPIArgsCB): AxiosInstance => {
 
   const api = axios.create({baseURL: BASE_URL, timeout: REQUEST_TIMEOUT});
 
@@ -38,7 +38,7 @@ export const createAPI = (onUnauthorized: UnauthorizedCB, onNotFounded: Unauthor
       }
 
       if (response?.status === HttpCode.NotFound) {
-        onNotFounded();
+        onNotFound();
       }
 
       return Promise.reject(error);

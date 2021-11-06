@@ -7,17 +7,17 @@ import Spinner from '../spinner/spinner';
 import { fetchFavoriteHotelsAction } from '../../store/api-actions';
 import { getFavoriteOffers, getFavoritesLoadedStatus } from '../../store/favorite-data/favorite-data-selectors';
 
+
 function Favorites(): JSX.Element {
 
   const favoriteOffers = useSelector(getFavoriteOffers);
   const areFavoritesLoaded = useSelector(getFavoritesLoadedStatus);
 
   const dispatch = useDispatch();
-  const loadFavorites = () => dispatch(fetchFavoriteHotelsAction());
 
   useEffect(() => {
-    loadFavorites();
-  }, []);
+    dispatch(fetchFavoriteHotelsAction());
+  }, [dispatch]);
 
   if (!areFavoritesLoaded) {
     return <Spinner/>;

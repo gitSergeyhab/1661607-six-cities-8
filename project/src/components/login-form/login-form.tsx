@@ -42,6 +42,7 @@ function LoginForm(): JSX.Element {
         <div style={{color: 'red'}}>{error.email}</div>
         <input className="login__input form__input" type="email" name="email" placeholder="Email" required
           value={email} onChange={handleEmailChange}
+          data-testid='email'
         />
       </div>
       <div className="login__input-wrapper form__input-wrapper">
@@ -49,6 +50,7 @@ function LoginForm(): JSX.Element {
         <div style={{color: 'red'}}>{error.password}</div>
         <input className="login__input form__input" type="password" name="password" placeholder="Password" required
           value={password} onChange={handlePasswordChange}
+          data-testid='password'
         />
       </div>
       <button className="login__submit form__submit button" type="submit" disabled={disableSignInSubmit(email, password)}>Sign in</button>

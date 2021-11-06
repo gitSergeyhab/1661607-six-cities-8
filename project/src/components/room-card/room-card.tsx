@@ -1,5 +1,6 @@
 import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/types';
+import { BtnType } from '../../constants';
 
 
 const INFO_CLASS = '';
@@ -12,7 +13,7 @@ const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgW
 function RoomCard({offer} : {offer: Offer}): JSX.Element {
   return (
     <article className="cities__place-card place-card">
-      <OfferCard offer={offer} {...offerCardProps} />
+      <OfferCard offer={offer} btnType={BtnType.NearbyCard} {...offerCardProps} />
     </article>
   );
 }

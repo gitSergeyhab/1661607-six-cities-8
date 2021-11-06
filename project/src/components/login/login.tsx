@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../header/header';
 import LoginForm from '../login-form/login-form';
@@ -32,7 +32,7 @@ function Login(): JSX.Element {
   return (
     <div className="page page--gray page--login">
 
-      <Header/>
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -42,7 +42,7 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleRandomCityClick}>
+              <Link data-testid='random-city-link' className="locations__item-link" to={AppRoute.Main} onClick={handleRandomCityClick}>
                 <span>{randomCity}</span>
               </Link>
             </div>

@@ -3,8 +3,8 @@ import { loadFavoriteOffers } from '../action';
 import { Offer } from '../../types/types';
 
 
-type FavoriteData = { favoriteOffers: Offer[], areFavoritesLoaded: boolean }
-const initialState: FavoriteData = {  favoriteOffers: [], areFavoritesLoaded: false };
+type FavoriteData = { favoriteOffers: Offer[], areFavoritesLoaded: boolean };
+const initialState: FavoriteData = { favoriteOffers: [], areFavoritesLoaded: false };
 
 export const favoriteData =  createReducer(initialState, (builder) => {
   builder.addCase(loadFavoriteOffers, (state, action) => {

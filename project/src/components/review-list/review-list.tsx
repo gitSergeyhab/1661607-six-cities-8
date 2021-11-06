@@ -11,12 +11,10 @@ function ReviewList({hotelId} : {hotelId: number}): JSX.Element {
   const comments = useSelector(getComments);
 
   const dispatch = useDispatch();
-  const loadComments = () => dispatch(fetchCommentsAction(hotelId));
-
 
   useEffect(() => {
-    loadComments();
-  }, []);
+    dispatch(fetchCommentsAction(hotelId));
+  }, [dispatch, hotelId]);
 
   return  (
     <ul className="reviews__list">

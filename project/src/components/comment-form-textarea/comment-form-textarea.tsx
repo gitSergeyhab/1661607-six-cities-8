@@ -7,6 +7,7 @@ function CommentFormTextarea(props : CommentFormTextareaProps): JSX.Element {
 
   return (
     <textarea
+      data-testid='comment-form-textarea'
       {...props}
       className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
     >

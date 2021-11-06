@@ -29,6 +29,7 @@ const SortOption: {[prop: string]: string} = {
   TopRated: 'Top rated first',
 };
 
+
 const enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -41,7 +42,6 @@ const enum APIRoute {
   Hotels = '/hotels',
   Nearby = '/nearby',
   Favorite = '/favorite',
-  Status = '/:status',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout'
@@ -64,8 +64,22 @@ const enum CardType {
 }
 
 const FavoriteBtnProp = {
-  Card: {className: 'place-card', width: '18', height: '19', type: CardType.Card},
-  Room: {className: 'property', width: '31', height: '33', type: CardType.Room},
+  Card: {className: 'place-card', width: '18', height: '19'},
+  Room: {className: 'property', width: '31', height: '33'},
+};
+
+const enum BtnType {
+  MainCard = 'MainCard',
+  NearbyCard = 'NearbyCard',
+  FavoriteCard = 'FavoriteCard',
+  Room = 'RoomBig',
+}
+
+const BtnSetting = {
+  [BtnType.MainCard]: FavoriteBtnProp.Card,
+  [BtnType.NearbyCard]: FavoriteBtnProp.Card,
+  [BtnType.FavoriteCard]: FavoriteBtnProp.Card,
+  [BtnType.Room]: FavoriteBtnProp.Room,
 };
 
 export {
@@ -79,5 +93,7 @@ export {
   APIRoute,
   AuthorizationStatus,
   RoomDataStatus,
-  CardType
+  CardType,
+  BtnSetting,
+  BtnType
 };

@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Favorites from '../favorites/favorites';
@@ -22,38 +22,35 @@ function App(): JSX.Element {
     return <Spinner/>;
   }
 
-
   return(
-    <BrowserRouter>
-      <Switch>
+    <Switch>
 
-        <Route exact path={AppRoute.Main}>
-          <Main authorizationStatus={authorizationStatus} />
-        </Route>
+      <Route exact path={AppRoute.Main}>
+        <Main authorizationStatus={authorizationStatus} />
+      </Route>
 
-        <Route exact path={AppRoute.Login}>
-          <Login/>
-        </Route>
+      <Route exact path={AppRoute.Login}>
+        <Login/>
+      </Route>
 
-        <Route exact path={AppRoute.Favorites}>
-          <PrivateRoute
-            exact
-            path={AppRoute.Favorites}
-            render = {() => <Favorites/>}
-            authorizationStatus={authorizationStatus}
-          />
-        </Route>
+      <Route exact path={AppRoute.Favorites}>
+        <PrivateRoute
+          exact
+          path={AppRoute.Favorites}
+          render = {() => <Favorites/>}
+          authorizationStatus={authorizationStatus}
+        />
+      </Route>
 
-        <Route exact path={AppRoute.Room}>
-          <Room authorizationStatus={authorizationStatus}/>
-        </Route>
+      <Route exact path={AppRoute.Room}>
+        <Room authorizationStatus={authorizationStatus}/>
+      </Route>
 
-        <Route>
-          <NotFoundPage authorizationStatus={authorizationStatus}/>
-        </Route>
+      <Route>
+        <NotFoundPage authorizationStatus={authorizationStatus}/>
+      </Route>
 
-      </Switch>
-    </BrowserRouter>
+    </Switch>
   );
 }
 
