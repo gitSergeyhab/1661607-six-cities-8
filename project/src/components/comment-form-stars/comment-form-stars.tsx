@@ -34,7 +34,7 @@ function CommentFormStars(props : CommentFormStarsProps): JSX.Element {
   const stars = STARS.map((star) => <RatingStar star={star} key={star.score} {...props}/>);
 
   return (
-    <div className="reviews__rating-form form__rating">
+    <div className="reviews__rating-form form__rating" data-testid='comment-form-stars'>
       {stars}
     </div>
   );

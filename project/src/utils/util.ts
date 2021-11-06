@@ -2,7 +2,7 @@ import { Offer } from '../types/types';
 import { RATING_COEFFICIENT, SortOption } from '../constants';
 
 
-const ReviewLength = {
+export const ReviewLength = {
   MIN: 50,
   MAX: 300,
 };
