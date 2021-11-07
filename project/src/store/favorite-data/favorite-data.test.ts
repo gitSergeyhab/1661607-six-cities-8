@@ -1,6 +1,6 @@
 import { favoriteData } from './favorite-data';
 import { loadFavoriteOffers } from '../action';
-import { makeFakeFavoritesList } from '../../utils/mocks';
+import { makeFakeFavoritesList } from '../../utils/test-mocks';
 
 
 const favorites = makeFakeFavoritesList();

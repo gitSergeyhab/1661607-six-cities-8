@@ -1,6 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createMemoryHistory } from 'history';
-import { makeFakeOfferList } from '../../utils/mocks';
+import { makeFakeOfferList } from '../../utils/test-mocks';
 import { initialStateAuth, renderComponent, CardText } from '../../utils/test-utils';
 import OffersList from './offers-list';
 

@@ -129,3 +129,5 @@ export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0, 
       dispatch(fetchFavoriteHotelsAction());
     }
   };
+
+

@@ -1,5 +1,5 @@
 
-import { makeFakeOffer } from '../../utils/mocks';
+import { makeFakeOffer } from '../../utils/test-mocks';
 import { testCard } from '../../utils/test-utils';
 import FavoriteCard from './favorite-card';
 

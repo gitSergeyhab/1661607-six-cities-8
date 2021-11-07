@@ -28,8 +28,8 @@ export const makeFakeServerOffer = (favorite = false): ServerOffer => ({
   'max_adults': datatype.number(6),
   bedrooms: datatype.number(6),
   description: commerce.productDescription(),
-  goods: new Array(5).fill(null).map(() => commerce.productName()),
-  images: new Array(5).fill(null).map(() => image.image()),
+  goods: new Array(1).fill(null).map(() => commerce.productName()),
+  images: new Array(1).fill(null).map(() => image.image()), // иногда вставляет в массив одинаковые картинки - console.error по повторяющимся ключам в {images.map((image) => <ApartmentPicture src={image} key={image}/>)} поэтому всего 1 элемент
   host: {
     'avatar_url': '',
     id: datatype.number(),

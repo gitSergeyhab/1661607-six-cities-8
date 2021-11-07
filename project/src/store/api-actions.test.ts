@@ -7,7 +7,7 @@ import { checkLoginAction, fetchCommentsAction, fetchFavoriteHotelsAction, fetch
 import { State } from '../types/types';
 import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus } from '../constants';
 import { changeMainOffers, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization } from './action';
-import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/mocks';
+import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/test-mocks';
 import { adaptCommentFromServer, adaptHotelFromServer } from '../services/adapters';
 
 const TEST_ID = 11;

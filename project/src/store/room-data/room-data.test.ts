@@ -1,4 +1,4 @@
-import { makeFakeCommentList, makeFakeOffer, makeFakeOfferList} from '../../utils/mocks';
+import { makeFakeCommentList, makeFakeOffer, makeFakeOfferList} from '../../utils/test-mocks';
 import { changeRoomDataStatus, loadComments, loadNearby, loadOffer } from '../action';
 import { RoomDataStatus } from '../../constants';
 import { roomData } from './room-data';

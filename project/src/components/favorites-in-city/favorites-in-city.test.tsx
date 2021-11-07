@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import FavoritesInCity from './favorites-in-city';
 import { renderComponent } from '../../utils/test-utils';
 import { initialCity, stateAuthAndFilled } from '../../utils/test-constants';
-import { makeFakeFavoritesList } from '../../utils/mocks';
+import { makeFakeFavoritesList } from '../../utils/test-mocks';
 
 
 const ALT_TEXT = 'Place';

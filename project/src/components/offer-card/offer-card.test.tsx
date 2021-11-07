@@ -1,6 +1,6 @@
 import OfferCard from './offer-card';
 
-import { makeFakeOffer } from '../../utils/mocks';
+import { makeFakeOffer } from '../../utils/test-mocks';
 import { testCard } from '../../utils/test-utils';
 import { offerCardProps } from '../favorite-card/favorite-card';
 import { BtnType } from '../../constants';

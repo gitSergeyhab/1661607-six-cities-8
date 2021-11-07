@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeComment } from '../../utils/mocks';
+import { makeFakeComment } from '../../utils/test-mocks';
 import Review from './review';
 
 

@@ -1,5 +1,5 @@
 import { AuthorizationStatus, CITIES, RoomDataStatus, SortOption } from '../constants';
-import { makeFakeCommentList, makeFakeFavoritesList, makeFakeOffer, makeFakeOfferList } from './mocks';
+import { makeFakeCommentList, makeFakeFavoritesList, makeFakeOffer, makeFakeOfferList } from './test-mocks';
 
 
 const fakeOffer = makeFakeOffer();
@@ -49,9 +49,9 @@ export const stateNoAuthAndEmpty = {
     areFavoritesLoaded: true,
   },
   RoomData: {
-    nearby: fakeOffers,
-    roomOffer: fakeOffer,
-    comments: fakeComments,
+    nearby: [],
+    roomOffer: [],
+    comments: [],
     roomDataStatus: RoomDataStatus.Ok,
   },
   UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
@@ -71,7 +71,7 @@ export const ScreenText = {
   Favorite: {
     Filled: {
       Title: /Saved listing/i,
-      City: new RegExp(initialCity, 'i'),
+      Night: /night/i,
     },
     Empty: {
       Status: /Nothing yet saved/i,
@@ -89,12 +89,22 @@ export const ScreenText = {
       Nearby: /Other places in the neighbourhood/i,
     },
     Auth: {
-      Review: /Your review/i,
+      YourReview: /Your review/i,
     },
   },
   Page404: {
     Message: /Page Not Found/i,
     Link: /TO THE MAIN PAGE/i,
+  },
+  Card: {
+    Night: /night/i,
+  },
+  Comment: {
+    Title: /Reviews/i,
+    AltReviewAvatar: /Reviews avatar/i,
+  },
+  Nearby: {
+    Title: /Other places in the neighbourhood/i,
   },
 };
 
