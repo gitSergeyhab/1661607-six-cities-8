@@ -57,6 +57,16 @@ export const stateNoAuthAndEmpty = {
   UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
 };
 
+export const stateAuthAndEmpty = {
+  ...stateNoAuthAndEmpty,
+  UserData: {authorizationStatus: AuthorizationStatus.Auth},
+};
+
+export const stateNotAuthAndFilled = {
+  ...stateAuthAndFilled,
+  UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
+};
+
 export const ScreenText = {
   Main: {
     Filled: {
@@ -105,6 +115,11 @@ export const ScreenText = {
   },
   Nearby: {
     Title: /Other places in the neighbourhood/i,
+  },
+  Header: {
+    SignIn: /Sign in/i,
+    SignOut: /Sign Out/i,
+    Alt: /6 cities logo/i,
   },
 };
 

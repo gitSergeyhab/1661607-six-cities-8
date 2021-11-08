@@ -1,19 +1,47 @@
-import { Action } from 'redux';
-import thunk, { ThunkDispatch } from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
+import thunk, { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 import { configureMockStore } from '@jedmao/redux-mock-store';
+
 import { createAPI } from '../services/api';
-import { checkLoginAction, fetchCommentsAction, fetchFavoriteHotelsAction, fetchHotelsAction, fetchNearbyHotelsAction, fetchOfferRoomAction, postCommentAction, postFavoriteStatus } from './api-actions';
-import { State } from '../types/types';
-import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus } from '../constants';
-import { changeMainOffers, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization } from './action';
+import { checkLoginAction, fetchCommentsAction, fetchFavoriteHotelsAction, fetchHotelsAction, fetchNearbyHotelsAction, fetchOfferRoomAction, loginAction, logoutAction, postCommentAction, postFavoriteStatus } from './api-actions';
+import { AuthData, State } from '../types/types';
+import { changeMainOffers, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization, requireLogout } from './action';
 import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/test-mocks';
 import { adaptCommentFromServer, adaptHotelFromServer } from '../services/adapters';
+import { removeToken, saveToken } from '../services/token';
+import { removeUserEmail, saveUserEmail } from '../services/user-email';
+import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus } from '../constants';
+import { TEST_ID } from '../utils/test-constants';
 
-const TEST_ID = 11;
+
 const TEST_REVIEW = 'TEST_REVIEW';
 const TEST_RATING = 3;
 const TEST_STATUS = 1;
+const TEST_TOKEN = 'TEST_TOKEN';
+const TEST_TOKEN_KEY = 'TEST_TOKEN_KEY';
+const TEST_EMAIL_KEY = 'TEST_EMAIL_KEY';
+
+
+const testAuthData: AuthData = {email: 'test@mail.com', password: 'test-pa5Sword'};
+
+jest.mock('../services/token', () => ({
+  __esModule: true,
+  saveToken: jest.fn(),
+  getToken: jest.fn(),
+  removeToken: jest.fn(),
+  AUTH_TOKEN_KEY: TEST_TOKEN_KEY,
+}),
+);
+
+jest.mock('../services/user-email', () => ({
+  __esModule: true,
+  saveUserEmail: jest.fn(),
+  getUserEmail: jest.fn(),
+  removeUserEmail: jest.fn(),
+  AUTH_TOKEN_KEY: TEST_EMAIL_KEY,
+}),
+);
 
 const fakeServerOffers = makeFakeServerOfferList();
 const fakeClientOffers = fakeServerOffers.map((offer) => adaptHotelFromServer(offer));
@@ -21,7 +49,6 @@ const fakeServerComments = makeFakeServerCommentList();
 const fakeClientComments = fakeServerComments.map((comment) => adaptCommentFromServer(comment));
 const fakeServerOffer = makeFakeServerOffer();
 const fakeClientOffer = adaptHotelFromServer(fakeServerOffer);
-
 
 describe('Async actions', () => {
   const onFakeUnauthorized = jest.fn();
@@ -41,6 +68,35 @@ describe('Async actions', () => {
       await store.dispatch(checkLoginAction());
       expect(store.getActions())
         .toEqual([requireAuthorization(AuthorizationStatus.Auth)]);
+    });
+
+    it('loginAction: should dispatch requireAuthorization and to called saveToken, saveUserEmail', async () => {
+
+      const store = mockStore();
+      mockAPI.onPost(APIRoute.Login).reply(200, {token: TEST_TOKEN, email: testAuthData.email});
+      expect(store.getActions()).toEqual([]);
+      await store.dispatch(loginAction(testAuthData));
+
+      expect(store.getActions()).toEqual([requireAuthorization(AuthorizationStatus.Auth)]);
+
+      expect(saveToken).toBeCalledTimes(1);
+      expect(saveToken).toBeCalledWith(TEST_TOKEN);
+
+      expect(saveUserEmail).toBeCalledTimes(1);
+      expect(saveUserEmail).toBeCalledWith(testAuthData.email);
+    });
+
+    it('logoutAction: should dispatch requireLogout and to called removeToken, removeUserEmail', async () => {
+
+      const store = mockStore();
+      mockAPI.onDelete(APIRoute.Logout).reply(204, []);
+      expect(store.getActions()).toEqual([]);
+      await store.dispatch(logoutAction());
+
+      expect(store.getActions()).toEqual([requireLogout()]);
+
+      expect(removeToken).toBeCalledTimes(1);
+      expect(removeUserEmail).toBeCalledTimes(1);
     });
   });
 
