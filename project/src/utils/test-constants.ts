@@ -108,10 +108,12 @@ export const ScreenText = {
   },
   Card: {
     Night: /night/i,
+    ImgAlt: /Place/i,
   },
   Comment: {
     Title: /Reviews/i,
     AltReviewAvatar: /Reviews avatar/i,
+    Placeholder: /Tell how was your stay, what you like and what can be improved/i,
   },
   Nearby: {
     Title: /Other places in the neighbourhood/i,
@@ -121,5 +123,12 @@ export const ScreenText = {
     SignOut: /Sign Out/i,
     Alt: /6 cities logo/i,
   },
+};
+
+export const TestPageText = {
+  Login: 'Login Page Test Text',
+  Favorites: 'Favorites Page Test Text',
+  Main: 'Main Page Test Text',
+  Room: 'Room Page Test Text',
 };
 

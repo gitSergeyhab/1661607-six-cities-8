@@ -1,6 +1,7 @@
+import thunk from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createMemoryHistory } from 'history';
-import { stateAuthAndFilled, TEST_ID } from '../../utils/test-constants';
+import { ScreenText, stateAuthAndFilled, TEST_ID } from '../../utils/test-constants';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -8,12 +9,14 @@ import { renderComponent } from '../../utils/test-utils';
 import CommentForm from './comment-form';
 import { AppRoute, STARS } from '../../constants';
 import { ReviewLength } from '../../utils/util';
+import { postCommentAction } from '../../store/api-actions';
 
 
-const TEXT = /Your review/i;
+// const TEXT = /Your review/i;
 const TEXTAREA_TEST_ID = 'comment-form-textarea';
 
 const testText = {
+  ok: new Array(ReviewLength.MIN + 1).fill('x').join(''),
   tooSmall: new Array(ReviewLength.MIN - 1).fill('x').join(''), // на символ меньше минимального -> disabled=true
   addToOk: 'ok', // -> disabled=false
   addToTooBig: new Array(ReviewLength.MAX).fill('x').join(''), //-> disabled=true
@@ -23,21 +26,30 @@ const displayTestComment = new RegExp(testText.tooSmall, 'i');
 
 
 const history = createMemoryHistory();
-const mockStore = configureMockStore();
+const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateAuthAndFilled);
 
+
 describe('CommentForm Component', () => {
+  history.push(AppRoute.Login);
+  const loginForm = <CommentForm hotelId={TEST_ID} />;
   it('should render correctly', () => {
-    history.push(AppRoute.Login);
-    const loginForm = <CommentForm hotelId={TEST_ID} />;
+    renderComponent(loginForm, store, history);
+
+    expect(screen.getByText(ScreenText.Room.Auth.YourReview)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(ScreenText.Comment.Placeholder)).toBeInTheDocument();
+    expect(screen.queryAllByRole('radio').length).toBe(STARS.length);
+    expect(screen.queryByRole('button')).toBeInTheDocument();
+  });
+  it('should input and checked correctly', () => {
+
     renderComponent(loginForm, store, history);
 
     //button - before
-    const submitBtn = screen.queryByRole('button');
+    const submitBtn = screen.getByRole('button');
     expect(submitBtn).toHaveAttribute('disabled');
 
     //textarea
-    expect(screen.getByText(TEXT)).toBeInTheDocument();
     expect(screen.queryByDisplayValue(displayTestComment)).not.toBeInTheDocument();
 
     userEvent.type(screen.getByTestId(TEXTAREA_TEST_ID), testText.tooSmall);
@@ -47,7 +59,6 @@ describe('CommentForm Component', () => {
     //stars
     const radioButtons = screen.queryAllByRole('radio');
     const lastBtn = radioButtons[STARS.length - 1];
-    expect(radioButtons.length).toBe(STARS.length);
     expect(lastBtn).toBeInTheDocument();
     expect(lastBtn).not.toBeChecked();
 
@@ -65,5 +76,30 @@ describe('CommentForm Component', () => {
     userEvent.type(screen.getByTestId(TEXTAREA_TEST_ID), testText.addToTooBig);
 
     expect(submitBtn).toHaveAttribute('disabled');
+  });
+
+  it('should dispatch postCommentAction when click submit', () => {
+
+    renderComponent(loginForm, store, history);
+
+    userEvent.type(screen.getByTestId(TEXTAREA_TEST_ID), testText.ok);
+    const radioButtons = screen.queryAllByRole('radio');
+    const lastBtn = radioButtons[STARS.length - 1];
+    userEvent.click(lastBtn);
+
+    expect(store.getActions()).toEqual([]);
+
+    userEvent.click(screen.getByRole('button'));
+
+    const params = {
+      hotelId: stateAuthAndFilled.RoomData.roomOffer.id,
+      review: testText.ok,
+      rating: STARS.length,
+      clearComment: jest.fn(),
+      notifyError: jest.fn(),
+      unBlockForm: jest.fn(),
+    };
+
+    setTimeout(() => expect(store.getActions()).toEqual([postCommentAction(params)]), 0);
   });
 });

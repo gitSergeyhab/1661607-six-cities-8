@@ -7,7 +7,6 @@ import { createMemoryHistory } from 'history';
 
 import Location from './location';
 import { renderComponent } from '../../utils/test-utils';
-// import { CITIES } from '../../constants';
 import { initialCity, stateAuthAndFilled } from '../../utils/test-constants';
 import { changeCity, changeMainOffers } from '../../store/action';
 
@@ -23,7 +22,7 @@ const city =  new RegExp(initialCity, 'i');
 const location = <Location city={initialCity}/>;
 
 
-describe('Locations Component', () => {
+describe('Location Component', () => {
   it('render correctly', () => {
 
     renderComponent(location, store, history);

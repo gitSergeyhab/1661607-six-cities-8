@@ -1,4 +1,5 @@
 import thunk from 'redux-thunk';
+import userEvent from '@testing-library/user-event';
 import { Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
@@ -6,23 +7,17 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 
 import Header from './header';
-import { ScreenText, stateAuthAndFilled, stateNoAuthAndEmpty } from '../../utils/test-constants';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import userEvent from '@testing-library/user-event';
+import { ScreenText, stateAuthAndFilled, stateNoAuthAndEmpty, TestPageText } from '../../utils/test-constants';
 
 
 const TestId = {
   SignIn: 'sign-in',
   SignOut: 'sign-out',
   Favorites: 'favorites',
-  Main: 'main',
+  Logo: 'logo',
 };
 
-const TestPageText = {
-  Login: 'Login Page',
-  Favorites: 'Favorites Page',
-  Main: 'Main Page',
-};
 
 const history = createMemoryHistory();
 
@@ -87,7 +82,7 @@ describe('Component Header', () => {
       expect(screen.queryByText(TestPageText.Favorites)).toBeInTheDocument();
       expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
 
-      userEvent.click(screen.getByTestId(TestId.Main));
+      userEvent.click(screen.getByTestId(TestId.Logo));
 
       expect(screen.queryByText(TestPageText.Main)).toBeInTheDocument();
       expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
@@ -121,7 +116,7 @@ describe('Component Header', () => {
       expect(screen.queryByText(TestPageText.Login)).toBeInTheDocument();
       expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
 
-      userEvent.click(screen.getByTestId(TestId.Main));
+      userEvent.click(screen.getByTestId(TestId.Logo));
 
       expect(screen.queryByText(TestPageText.Main)).toBeInTheDocument();
       expect(screen.queryByText(TestPageText.Login)).not.toBeInTheDocument();

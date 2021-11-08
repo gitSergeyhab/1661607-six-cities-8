@@ -12,7 +12,8 @@ import { ScreenText, stateAuthAndFilled } from '../../utils/test-constants';
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 
-describe('Main Component', () => {
+describe('Room Component', () => {
+  const titleText = new RegExp(`${stateAuthAndFilled.RoomData.roomOffer.title}`, 'i');
   describe('AUTH and FILLED', () => {
     const room = <Room authorizationStatus={AuthorizationStatus.Auth}/>;
     const store = mockStore(stateAuthAndFilled);
@@ -21,6 +22,7 @@ describe('Main Component', () => {
 
       renderComponent(room, store, history);
 
+      expect(screen.getByText(titleText)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Goods)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Nearby)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.Auth.YourReview)).toBeInTheDocument();
@@ -40,6 +42,7 @@ describe('Main Component', () => {
 
       renderComponent(room, store, history);
 
+      expect(screen.getByText(titleText)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Goods)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Nearby)).toBeInTheDocument();
       expect(screen.getAllByText(ScreenText.Card.Night).length)
@@ -63,6 +66,7 @@ describe('Main Component', () => {
 
       renderComponent(room, store, history);
 
+      expect(screen.getByText(titleText)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Goods)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.All.Nearby)).toBeInTheDocument();
       expect(screen.getByText(ScreenText.Room.Auth.YourReview)).toBeInTheDocument();

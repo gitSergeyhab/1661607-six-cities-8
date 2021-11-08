@@ -40,15 +40,12 @@ function CommentForm({hotelId} : {hotelId: number}): JSX.Element {
     }
   }, [errorTimeout]);
 
-
   const dispatch = useDispatch();
-  const postComment = () => dispatch(postCommentAction({hotelId, review, rating, clearComment, notifyError, unBlockForm}));
-
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     changeBlockForm(true);
-    postComment();
+    dispatch(postCommentAction({hotelId, review, rating, clearComment, notifyError, unBlockForm}));
   };
 
 

@@ -15,7 +15,7 @@ const card =  <MainCard offer={offer} onMouseEnter={jest.fn()} onMouseLeave={jes
 
 testCard(card, 'MainCard');
 
-describe('should react to events', () => {
+describe('MainCard Component', () => {
   const history = createMemoryHistory();
   const mockStore = configureMockStore();
   it('should call onMouseEnter and onMouseLeave', () => {

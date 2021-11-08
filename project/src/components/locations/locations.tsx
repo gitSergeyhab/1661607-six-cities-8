@@ -9,7 +9,7 @@ function Locations(): JSX.Element {
   const cities = CITIES.map((city) => <Location city={city} key={city}/>);
 
   return (
-    <section className="locations container">
+    <section className="locations container" data-testid='locations'>
       <ul className="locations__list tabs__list">
         {cities}
       </ul>
