@@ -11,6 +11,7 @@ import Spinner from '../spinner/spinner';
 import { getHotelsLoadedStatus } from '../../store/main-data/main-data-selectors';
 import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 import { AppRoute } from '../../constants';
+import NetStatus from '../net-status/net-status';
 
 
 function App(): JSX.Element {
@@ -23,34 +24,37 @@ function App(): JSX.Element {
   }
 
   return(
-    <Switch>
+    <>
+      <NetStatus/>
+      <Switch>
 
-      <Route exact path={AppRoute.Main}>
-        <Main authorizationStatus={authorizationStatus} />
-      </Route>
+        <Route exact path={AppRoute.Main}>
+          <Main authorizationStatus={authorizationStatus} />
+        </Route>
 
-      <Route exact path={AppRoute.Login}>
-        <Login/>
-      </Route>
+        <Route exact path={AppRoute.Login}>
+          <Login/>
+        </Route>
 
-      <Route exact path={AppRoute.Favorites}>
-        <PrivateRoute
-          exact
-          path={AppRoute.Favorites}
-          render = {() => <Favorites/>}
-          authorizationStatus={authorizationStatus}
-        />
-      </Route>
+        <Route exact path={AppRoute.Favorites}>
+          <PrivateRoute
+            exact
+            path={AppRoute.Favorites}
+            render = {() => <Favorites/>}
+            authorizationStatus={authorizationStatus}
+          />
+        </Route>
 
-      <Route exact path={AppRoute.Room}>
-        <Room authorizationStatus={authorizationStatus}/>
-      </Route>
+        <Route exact path={AppRoute.Room}>
+          <Room authorizationStatus={authorizationStatus}/>
+        </Route>
 
-      <Route>
-        <NotFoundPage authorizationStatus={authorizationStatus}/>
-      </Route>
+        <Route>
+          <NotFoundPage authorizationStatus={authorizationStatus}/>
+        </Route>
 
-    </Switch>
+      </Switch>
+    </>
   );
 }
 

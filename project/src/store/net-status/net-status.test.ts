@@ -1,23 +1,15 @@
-import { AuthorizationStatus } from '../../constants';
-import { requireAuthorization, requireLogout } from '../action';
-import { userData } from './user-data';
+import { changeNetStatus } from '../action';
+import { netStatus } from './net-status';
 
-const initState = {authorizationStatus: AuthorizationStatus.NoAuth};
+const initState = {status: true};
 
-describe('Reducer: userData', () => {
+describe('Reducer: netStatus', () => {
   it('without additional parameters should return initial state', () => {
-    expect(userData(undefined, {type: 'FAKE'})).toEqual(initState);
+    expect(netStatus(undefined, {type: 'FAKE'})).toEqual(initState);
   });
 
-  it('should update authorizationStatus by requireAuthorization', () => {
+  it('should update status by changeNetStatus', () => {
     const state = {...initState};
-    expect(userData(state, requireAuthorization(AuthorizationStatus.Auth)))
-      .toEqual({authorizationStatus: AuthorizationStatus.Auth});
-  });
-
-  it('should update authorizationStatus by requireLogout', () => {
-    const state = {authorizationStatus: AuthorizationStatus.Auth};
-    expect(userData(state, requireLogout()))
-      .toEqual({authorizationStatus: AuthorizationStatus.NoAuth});
+    expect(netStatus(state, changeNetStatus(false))).toEqual({status: false});
   });
 });
