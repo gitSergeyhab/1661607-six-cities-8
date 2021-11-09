@@ -8,7 +8,7 @@ import { ScreenText } from '../../utils/test-constants';
 import { SortOption } from '../../constants';
 
 
-const TextCity = new RegExp(SortOption.Popular, 'i');
+const textCity = new RegExp(SortOption.Popular, 'i');
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
@@ -21,7 +21,7 @@ describe('SortingForm Component', () => {
     const sortingForm = <SortingForm/>;
     renderComponent(sortingForm, store, history);
 
-    expect(screen.getByText(TextCity)).toBeInTheDocument();
+    expect(screen.getByText(textCity)).toBeInTheDocument();
     expect(screen.getByText(ScreenText.Main.Filled.Sort)).toBeInTheDocument();
   });
 });
