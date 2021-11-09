@@ -16,7 +16,6 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateAuthAndFilled);
 
 const propOption = SortOption.TopRated;
-
 const screenOption = new RegExp(propOption, 'i');
 
 describe('Option Component', () => {

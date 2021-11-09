@@ -1,8 +1,10 @@
 import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
+
 import PrivateRoute from './private-route';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+
 
 const history = createMemoryHistory();
 
@@ -17,11 +19,11 @@ const RouteTextRegExp = {
 };
 
 describe('Component: PrivateRouter', () => {
-  beforeEach(() => {
-    history.push('/private');
-  });
+
+  beforeEach(() => history.push('/private'));
 
   it('should render component for public route, when user not authorized', () => {
+
     render(
       <Router history={history}>
         <Route exact path={AppRoute.Login}><h1>{RouteText.PublicRoute}</h1></Route>
@@ -39,7 +41,6 @@ describe('Component: PrivateRouter', () => {
   });
 
   it('should render component for private route, when user authorized', () => {
-
 
     render(
       <Router history={history}>

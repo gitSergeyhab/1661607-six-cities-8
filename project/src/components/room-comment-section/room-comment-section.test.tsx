@@ -15,10 +15,12 @@ const mockStore = configureMockStore([thunk]);
 
 describe('RoomCommentSection Component', () => {
   describe('AUTH and FILLED', () => {
+
     const store = mockStore(stateAuthAndFilled);
     const roomCommentSection = <RoomCommentSection id={TEST_ID} authorizationStatus={AuthorizationStatus.Auth}/>;
 
     it ('should render correctly', () => {
+
       renderComponent(roomCommentSection, store, history);
 
       expect(screen.getByText(ScreenText.Comment.Title)).toBeInTheDocument();
@@ -31,10 +33,12 @@ describe('RoomCommentSection Component', () => {
   });
 
   describe('NO_AUTH and EMPTY', () => {
+
     const store = mockStore(stateNoAuthAndEmpty);
     const roomCommentSection = <RoomCommentSection id={TEST_ID} authorizationStatus={AuthorizationStatus.NoAuth}/>;
 
     it ('should render correctly', () => {
+
       renderComponent(roomCommentSection, store, history);
 
       expect(screen.getByText(ScreenText.Comment.Title)).toBeInTheDocument();
@@ -45,5 +49,4 @@ describe('RoomCommentSection Component', () => {
       expect(screen.queryByRole('button')).not.toBeInTheDocument();
     });
   });
-
 });

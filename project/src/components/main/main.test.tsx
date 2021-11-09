@@ -11,12 +11,15 @@ import { ScreenText, stateAuthAndFilled, stateNoAuthAndEmpty } from '../../utils
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
+
 const main = <Main authorizationStatus={AuthorizationStatus.Auth}/>;
 
 describe('Main Component', () => {
   describe('filled', () => {
+
     const store = mockStore(stateAuthAndFilled);
     it('should render correctly', () => {
+
       renderComponent(main, store, history);
 
       expect(screen.getByText(ScreenText.Main.Filled.Places)).toBeInTheDocument();
@@ -25,8 +28,10 @@ describe('Main Component', () => {
   });
 
   describe('empty', () => {
+
     const store = mockStore(stateNoAuthAndEmpty);
     it('should render correctly', () => {
+
       renderComponent(main, store, history);
 
       expect(screen.getByText(ScreenText.Main.Empty.Description)).toBeInTheDocument();

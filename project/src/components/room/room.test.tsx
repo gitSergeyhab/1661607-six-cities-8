@@ -13,8 +13,10 @@ const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 
 describe('Room Component', () => {
+
   const titleText = new RegExp(`${stateAuthAndFilled.RoomData.roomOffer.title}`, 'i');
   describe('AUTH and FILLED', () => {
+
     const room = <Room authorizationStatus={AuthorizationStatus.Auth}/>;
     const store = mockStore(stateAuthAndFilled);
 
@@ -35,6 +37,7 @@ describe('Room Component', () => {
   });
 
   describe('FILLED and NO_AUTH', () => {
+
     const room = <Room authorizationStatus={AuthorizationStatus.NoAuth}/>;
     const store = mockStore(stateAuthAndFilled);
 
@@ -54,7 +57,9 @@ describe('Room Component', () => {
       expect(screen.queryByRole('radio')).not.toBeInTheDocument();
     });
   });
+
   describe('AUTH and NO_COMMENTS', () => {
+
     const room = <Room authorizationStatus={AuthorizationStatus.Auth}/>;
     const stateNoComments = {
       ...stateAuthAndFilled, RoomData: {

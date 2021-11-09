@@ -10,8 +10,8 @@ import OfferCard from './offer-card';
 import { makeFakeOffer } from '../../utils/test-mocks';
 import { testCard } from '../../utils/test-utils';
 import { offerCardProps } from '../favorite-card/favorite-card';
-import { AppRoute, BtnType } from '../../constants';
 import { stateAuthAndFilled, TestPageText, TEST_ID } from '../../utils/test-constants';
+import { AppRoute, BtnType } from '../../constants';
 
 
 const ROOM_ORIGINAL_PATH = '/offer/12';

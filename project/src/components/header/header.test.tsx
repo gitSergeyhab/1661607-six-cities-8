@@ -7,8 +7,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 
 import Header from './header';
-import { AppRoute, AuthorizationStatus } from '../../constants';
 import { ScreenText, stateAuthAndFilled, stateNoAuthAndEmpty, TestPageText } from '../../utils/test-constants';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 
 
 const TestId = {
@@ -20,7 +20,6 @@ const TestId = {
 
 
 const history = createMemoryHistory();
-
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateAuthAndFilled);
 
@@ -56,8 +55,10 @@ describe('Component Header', () => {
 
   describe('should rout correctly', () => {
     it('AUTH: should redirect from Main to Favorite and from Favorite to Main when user clicked to link', () => {
+
       history.push(AppRoute.Main);
       const header = <Header authorizationStatus={AuthorizationStatus.Auth} />;
+
       render(
         <Provider store={store}>
           <Router history={history}>
@@ -89,9 +90,11 @@ describe('Component Header', () => {
     });
 
     it('NO_AUTH: should redirect from Main to Login when user clicked to link', () => {
+
       const storeNoAuth = mockStore(stateNoAuthAndEmpty);
       history.push(AppRoute.Main);
       const header = <Header authorizationStatus={AuthorizationStatus.NoAuth} />;
+
       render(
         <Provider store={storeNoAuth}>
           <Router history={history}>
@@ -108,6 +111,7 @@ describe('Component Header', () => {
           </Router>
         </Provider>,
       );
+
       expect(screen.queryByText(TestPageText.Main)).toBeInTheDocument();
       expect(screen.queryByText(TestPageText.Login)).not.toBeInTheDocument();
 
@@ -122,6 +126,4 @@ describe('Component Header', () => {
       expect(screen.queryByText(TestPageText.Login)).not.toBeInTheDocument();
     });
   });
-
-
 });

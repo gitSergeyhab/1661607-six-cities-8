@@ -1,19 +1,15 @@
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
-
 import { Route, Router, Switch } from 'react-router';
-
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
+import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import Footer from './footer';
 import { Provider} from 'react-redux';
 import { AppRoute } from '../../constants';
-import { stateAuthAndFilled, TestPageText } from '../../utils/test-constants';
-import { configureMockStore } from '@jedmao/redux-mock-store';
+import { ScreenText, stateAuthAndFilled, TestPageText } from '../../utils/test-constants';
 
-
-const TextAlt = /6 cities logo/i;
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
@@ -24,14 +20,13 @@ describe('Component Footer', () => {
 
   it('should render with altText', () => {
 
-
     const { getByAltText, getByRole } = render(
       <Router history={history}>
         <Footer/>
       </Router>,
     );
 
-    const altText = getByAltText(TextAlt);
+    const altText = getByAltText(ScreenText.Header.Alt);
     expect(altText).toBeInTheDocument();
 
     const link = getByRole('link');

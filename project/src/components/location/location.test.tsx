@@ -12,17 +12,17 @@ import { changeCity, changeMainOffers } from '../../store/action';
 
 
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
+const city =  new RegExp(initialCity, 'i');
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateAuthAndFilled);
 
-const city =  new RegExp(initialCity, 'i');
-
-const location = <Location city={initialCity}/>;
-
 
 describe('Location Component', () => {
+
+  const location = <Location city={initialCity}/>;
+
   it('render correctly', () => {
 
     renderComponent(location, store, history);

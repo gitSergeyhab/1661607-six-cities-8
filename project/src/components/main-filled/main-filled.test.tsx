@@ -4,10 +4,11 @@ import { createMemoryHistory } from 'history';
 import { screen } from '@testing-library/react';
 
 import MainFilled from './main-filled';
-import { AuthorizationStatus, CITIES } from '../../constants';
 import { renderComponent } from '../../utils/test-utils';
-import { initialCity, ScreenText, stateAuthAndFilled } from '../../utils/test-constants';
 import { makeFakeOfferList } from '../../utils/test-mocks';
+import { initialCity, ScreenText, stateAuthAndFilled } from '../../utils/test-constants';
+import { AuthorizationStatus, CITIES } from '../../constants';
+
 
 const DataTestId = {
   Map: 'map',
@@ -15,11 +16,11 @@ const DataTestId = {
   Locations: 'locations',
 };
 
-
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 
 describe('MainFilled Component', () => {
+
   const main = <MainFilled authorizationStatus={AuthorizationStatus.Auth} offers={makeFakeOfferList()} selectedCity={initialCity}/>;
   const store = mockStore(stateAuthAndFilled);
 

@@ -16,10 +16,12 @@ const TEST_ID = 'random-city-link';
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateNotAuthAndFilled);
-const login = <Login/>;
 
 
 describe('Login Component', () => {
+
+  const login = <Login/>;
+
   it('should render correctly', () => {
 
     renderComponent(login, store, history);

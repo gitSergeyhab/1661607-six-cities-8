@@ -11,10 +11,12 @@ import { ScreenText, stateAuthAndFilled, TEST_ID } from '../../utils/test-consta
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateAuthAndFilled);
+
 const nearby = <RoomNearbyCards id={TEST_ID}/>;
 
 describe ('RoomNearbyCards Component', () => {
   it('should render correctly', () => {
+
     renderComponent(nearby, store, history);
 
     expect(screen.queryByText(ScreenText.Nearby.Title)).toBeInTheDocument();

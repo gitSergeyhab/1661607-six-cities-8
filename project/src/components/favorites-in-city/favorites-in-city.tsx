@@ -13,12 +13,10 @@ function FavoritesInCity({offers, city} : {offers: Offer[], city: string}):JSX.E
   const mapOffers = cityOffers.map((offer) => <FavoriteCard offer={offer} key={offer.id}/>);
 
   const dispatch = useDispatch();
-  const changeCityName = () => dispatch(changeCity(city));
-  const changeOffers = () => dispatch(changeMainOffers(city));
 
   const handleCityClick = () => {
-    changeCityName();
-    changeOffers();
+    dispatch(changeCity(city));
+    dispatch(changeMainOffers(city));
   };
 
   return (
@@ -26,7 +24,7 @@ function FavoritesInCity({offers, city} : {offers: Offer[], city: string}):JSX.E
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
 
-          <Link className="locations__item-link" onClick={handleCityClick} to={AppRoute.Main}>
+          <Link className="locations__item-link" onClick={handleCityClick} to={AppRoute.Main} data-testid='city-link'>
             <span>{city}</span>
           </Link>
 

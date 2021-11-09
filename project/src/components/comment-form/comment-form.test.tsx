@@ -1,18 +1,17 @@
 import thunk from 'redux-thunk';
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { createMemoryHistory } from 'history';
-import { ScreenText, stateAuthAndFilled, TEST_ID } from '../../utils/test-constants';
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { screen } from '@testing-library/react';
 
-import { renderComponent } from '../../utils/test-utils';
 import CommentForm from './comment-form';
-import { AppRoute, STARS } from '../../constants';
+import { renderComponent } from '../../utils/test-utils';
 import { ReviewLength } from '../../utils/util';
 import { postCommentAction } from '../../store/api-actions';
+import { ScreenText, stateAuthAndFilled, TEST_ID } from '../../utils/test-constants';
+import { AppRoute, STARS } from '../../constants';
 
 
-// const TEXT = /Your review/i;
 const TEXTAREA_TEST_ID = 'comment-form-textarea';
 
 const testText = {

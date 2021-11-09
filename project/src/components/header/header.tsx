@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { memo } from 'react';
 
-
 import { getUserEmail } from '../../services/user-email';
 import { logoutAction } from '../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from '../../constants';

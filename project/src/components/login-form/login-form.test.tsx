@@ -29,8 +29,8 @@ const DisplayValue = {
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore(stateNoAuthAndEmpty);
-const loginForm = <LoginForm/>;
 
+const loginForm = <LoginForm/>;
 
 describe('LoginForm Component', () => {
   it('should render and input Password and Email correctly', () => {

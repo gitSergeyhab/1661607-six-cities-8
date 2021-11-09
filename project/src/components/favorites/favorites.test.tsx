@@ -16,6 +16,7 @@ describe('Favorites Component', () => {
   describe('Filled', () => {
     const store = mockStore(stateAuthAndFilled);
     it('should render correctly', () => {
+
       renderComponent(favorites, store, history);
 
       expect(screen.getAllByText(ScreenText.Favorite.Filled.Night).length).toBe(stateAuthAndFilled.FavoriteData.favoriteOffers.length);
@@ -26,6 +27,7 @@ describe('Favorites Component', () => {
   describe('Empty', () => {
     const store = mockStore(stateNoAuthAndEmpty);
     it('should render correctly', () => {
+
       renderComponent(favorites, store, history);
 
       expect(screen.getByText(ScreenText.Favorite.Empty.Status)).toBeInTheDocument();
