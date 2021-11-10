@@ -33,7 +33,7 @@ export const stateAuthAndFilled = {
     roomDataStatus: RoomDataStatus.Ok,
   },
   UserData: {authorizationStatus: AuthorizationStatus.Auth},
-  NetStatus: {status: true},
+  NetStatus: {online: true},
 };
 
 export const stateNoAuthAndEmpty = {
@@ -56,7 +56,7 @@ export const stateNoAuthAndEmpty = {
     roomDataStatus: RoomDataStatus.Ok,
   },
   UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
-  NetStatus: {status: true},
+  NetStatus: {online: true},
 
 };
 

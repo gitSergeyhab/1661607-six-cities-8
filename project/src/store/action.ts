@@ -81,8 +81,10 @@ const requireLogout = createAction(ActionType.Logout);
 
 const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
 
-// export const changeNetStatus = (status: boolean) : {type: ActionType, payload: boolean} => ({type: ActionType.ChangeNetStatus, payload: status});
-const changeNetStatus = createAction(ActionType.ChangeNetStatus, (status: boolean) => ({payload: status}));
+const changeNetStatus = createAction(
+  ActionType.ChangeNetStatus,
+  (online: boolean) => ({payload: online}),
+);
 
 export {
   changeCity,

@@ -10,8 +10,8 @@ const text = new RegExp('no connection to the server', 'i');
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
-const stateOnline = {NetStatus: {status: true}};
-const stateOffline = {NetStatus: {status: false}};
+const stateOnline = {NetStatus: {online: true}};
+const stateOffline = {NetStatus: {online: false}};
 
 const netStatus = <NetStatus/>;
 

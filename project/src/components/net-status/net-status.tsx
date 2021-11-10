@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import { getNetStatus } from '../../store/net-status/net-status-selectors';
 
 function NetStatus(): JSX.Element {
-  const status = useSelector(getNetStatus);
+  const online = useSelector(getNetStatus);
 
-  if (status) {
+  if (online) {
     return <span></span>;
   }
 
