@@ -8,10 +8,11 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 
 import OfferCard from './offer-card';
 import { makeFakeOffer } from '../../utils/test-mocks';
-import { testCard } from '../../utils/test-utils';
+import { renderComponent, testCard } from '../../utils/test-utils';
 import { offerCardProps } from '../favorite-card/favorite-card';
 import { stateAuthAndFilled, TestPageText, TEST_ID } from '../../utils/test-constants';
-import { AppRoute, BtnType } from '../../constants';
+import { AppRoute, BtnType, RoomDataStatus } from '../../constants';
+import { changeRoomDataStatus } from '../../store/action';
 
 
 const ROOM_ORIGINAL_PATH = '/offer/12';
@@ -25,81 +26,98 @@ const card =  <OfferCard offer={offer} btnType={BtnType.FavoriteCard} {...offerC
 testCard(card, 'OfferCard');
 
 
-describe('OfferCard Component: should redirect correctly', () => {
+describe('OfferCard Component', () => {
+
   const history = createMemoryHistory();
   const mockStore = configureMockStore([thunk]);
   const store = mockStore(stateAuthAndFilled);
 
-  const renderProviderWithCard = (cardWithRoute: JSX.Element) => render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          {cardWithRoute}
-          <Route path={AppRoute.Room}>
-            {TestPageText.Room}
-          </Route>
-        </Switch>
-      </Router>
-    </Provider>,
-  );
+  it('should dispatch changeRoomDataStatus', () => {
 
-  it('should redirect by FIRST link from MAIN to /offer/id', () => {
-
-    history.push(AppRoute.Main);
-    const cardInMain = <Route path={AppRoute.Main} exact>{card} {TestPageText.Main}</Route>;
-
-    renderProviderWithCard(cardInMain);
+    renderComponent(card, store, history);
 
     const links = screen.getAllByRole('link');
-    expect(links.length).toBe(2);
 
-    expect(screen.queryByText(TestPageText.Main)).toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
-
-    userEvent.click(links[0]);
-
-    expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
-  });
-
-  it('should redirect by SECOND link from FAVORITES to /offer/id', () => {
-
-    history.push(AppRoute.Favorites);
-    const cardInFavorites = <Route path={AppRoute.Favorites} exact>{card} {TestPageText.Favorites}</Route>;
-
-    renderProviderWithCard(cardInFavorites);
-
-    const links = screen.getAllByRole('link');
-    expect(links.length).toBe(2);
-
-    expect(screen.queryByText(TestPageText.Favorites)).toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
+    expect(store.getActions()).toEqual([]);
 
     userEvent.click(links[1]);
 
-    expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
+    expect(store.getActions()).toEqual([changeRoomDataStatus(RoomDataStatus.Loading)]);
   });
 
-  it('should redirect by SECOND link from /offer/12 to /offer/11', () => {
+  describe('should redirect correctly', () => {
 
-    history.push(ROOM_ORIGINAL_PATH);
-    const cardInFavorites = <Route path={ROOM_ORIGINAL_PATH} exact>{card} {ROOM_ORIGINAL_TEXT}</Route>;
-    renderProviderWithCard(cardInFavorites);
+    const renderProviderWithCard = (cardWithRoute: JSX.Element) => render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Switch>
+            {cardWithRoute}
+            <Route path={AppRoute.Room}>
+              {TestPageText.Room}
+            </Route>
+          </Switch>
+        </Router>
+      </Provider>,
+    );
 
-    const links = screen.getAllByRole('link');
-    expect(links.length).toBe(2);
+    it('should redirect by FIRST link from MAIN to /offer/id', () => {
 
-    expect(screen.queryByText(ROOM_ORIGINAL_TEXT)).toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
-    expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
+      history.push(AppRoute.Main);
+      const cardInMain = <Route path={AppRoute.Main} exact>{card} {TestPageText.Main}</Route>;
 
-    userEvent.click(links[1]);
+      renderProviderWithCard(cardInMain);
 
-    expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
-    expect(screen.queryByText(ROOM_ORIGINAL_TEXT)).not.toBeInTheDocument();
+      const links = screen.getAllByRole('link');
+      expect(links.length).toBe(2);
+
+      expect(screen.queryByText(TestPageText.Main)).toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
+
+      userEvent.click(links[0]);
+
+      expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
+    });
+
+    it('should redirect by SECOND link from FAVORITES to /offer/id', () => {
+
+      history.push(AppRoute.Favorites);
+      const cardInFavorites = <Route path={AppRoute.Favorites} exact>{card} {TestPageText.Favorites}</Route>;
+
+      renderProviderWithCard(cardInFavorites);
+
+      const links = screen.getAllByRole('link');
+      expect(links.length).toBe(2);
+
+      expect(screen.queryByText(TestPageText.Favorites)).toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
+
+      userEvent.click(links[1]);
+
+      expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
+    });
+
+    it('should redirect by SECOND link from /offer/12 to /offer/11', () => {
+
+      history.push(ROOM_ORIGINAL_PATH);
+      const cardInFavorites = <Route path={ROOM_ORIGINAL_PATH} exact>{card} {ROOM_ORIGINAL_TEXT}</Route>;
+      renderProviderWithCard(cardInFavorites);
+
+      const links = screen.getAllByRole('link');
+      expect(links.length).toBe(2);
+
+      expect(screen.queryByText(ROOM_ORIGINAL_TEXT)).toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Room)).not.toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Main)).not.toBeInTheDocument();
+      expect(screen.queryByText(TestPageText.Favorites)).not.toBeInTheDocument();
+
+      userEvent.click(links[1]);
+
+      expect(screen.queryByText(TestPageText.Room)).toBeInTheDocument();
+      expect(screen.queryByText(ROOM_ORIGINAL_TEXT)).not.toBeInTheDocument();
+    });
   });
 });

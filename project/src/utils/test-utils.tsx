@@ -1,15 +1,14 @@
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
-import { render, screen } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import { createMemoryHistory, History } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { AnyAction } from 'redux';
 import { AuthorizationStatus } from '../constants';
 
 
 export const initialStateAuth = {UserData: {authorizationStatus: AuthorizationStatus.Auth}};
 
-export const renderComponent = (component: JSX.Element, store: MockStore<any, AnyAction>, history: History<unknown>) : any => render(
+export const renderComponent = (component: JSX.Element, store: MockStore, history: History<unknown>) : RenderResult => render(
   <Provider store={store}>
     <Router history={history}>
       {component}

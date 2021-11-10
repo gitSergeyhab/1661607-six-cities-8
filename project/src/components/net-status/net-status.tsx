@@ -1,17 +1,20 @@
 import { useSelector } from 'react-redux';
 import { getNetStatus } from '../../store/net-status/net-status-selectors';
 
+import './net-status.css';
+
 function NetStatus(): JSX.Element {
   const online = useSelector(getNetStatus);
-
-  if (online) {
-    return <span></span>;
-  }
+  const containerClasses = online ?  'visually-hidden' : 'container net-status__container';
 
   return (
-    <div className="container">
+    <div className={containerClasses} data-testid='net-status-container'>
       <div className="header__wrapper">
-        <div style={{margin: 'auto', color: 'red', fontWeight: 'bold', fontSize: '20px'}}>no connection to the server</div>
+        <div className="net-status__wrapper">
+          <div className="net-status__text">
+              no connection to the server
+          </div>
+        </div>
       </div>
     </div>
   );

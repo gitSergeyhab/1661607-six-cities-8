@@ -1,5 +1,4 @@
 import thunk from 'redux-thunk';
-import { AnyAction } from 'redux';
 import { createMemoryHistory } from 'history';
 import { screen } from '@testing-library/react';
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
@@ -14,7 +13,7 @@ const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 
 const app = <App/>;
-const renderFakeApp = (store: MockStore<any, AnyAction>) => renderComponent(app, store, history);
+const renderFakeApp = (store: MockStore) => renderComponent(app, store, history);
 
 describe('App Component', () => {
   describe('AUTH and FILLED', () => {
