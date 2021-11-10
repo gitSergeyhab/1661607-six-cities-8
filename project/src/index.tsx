@@ -10,6 +10,7 @@ import { AuthorizationStatus, RoomDataStatus } from './constants';
 import { createAPI } from './services/api';
 import { requireAuthorization, changeRoomDataStatus} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
+import { listenNetStatus } from './utils/net-util';
 
 
 const api = createAPI(
@@ -26,6 +27,7 @@ const store = configureStore({
 
 store.dispatch(checkLoginAction());
 store.dispatch(fetchHotelsAction());
+listenNetStatus(store);
 
 
 ReactDOM.render(

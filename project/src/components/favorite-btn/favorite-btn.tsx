@@ -19,7 +19,6 @@ function FavoriteBtn({isFavorite, btnType, hotelId} : FavoriteBtnProps): JSX.Ele
   const dispatch = useDispatch();
   const roomId = btnType === BtnType.Room ? hotelId : 0;
   const status = isFavorite ? 0 : 1;
-  const changeStatus = () => dispatch(postFavoriteStatus(hotelId, status, roomId, btnType));
 
 
   const handleChangeFavoriteStatus = () => {
@@ -27,7 +26,7 @@ function FavoriteBtn({isFavorite, btnType, hotelId} : FavoriteBtnProps): JSX.Ele
       return history.push(AppRoute.Login);
     }
 
-    changeStatus();
+    dispatch(postFavoriteStatus(hotelId, status, roomId, btnType));
   };
 
 

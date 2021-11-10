@@ -15,7 +15,8 @@ export const enum ActionType {
   RequireAuthorization = 'user/requireAuthorization',
   Logout = 'user/Logout',
   RedirectToNotFoundPage = 'error404/RedirectToNotFoundPage',
-  ChangeRoomDataStatus = 'room/ChangeRoomDataStatus'
+  ChangeRoomDataStatus = 'room/ChangeRoomDataStatus',
+  ChangeNetStatus = 'net/ChangeNetStatus'
 }
 
 //Main
@@ -80,6 +81,10 @@ const requireLogout = createAction(ActionType.Logout);
 
 const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
 
+const changeNetStatus = createAction(
+  ActionType.ChangeNetStatus,
+  (online: boolean) => ({payload: online}),
+);
 
 export {
   changeCity,
@@ -93,5 +98,6 @@ export {
   requireLogout,
   requireAuthorization,
   redirectToNotFoundPage,
-  changeRoomDataStatus
+  changeRoomDataStatus,
+  changeNetStatus
 };

@@ -1,5 +1,5 @@
 import { AuthorizationStatus, CITIES, RoomDataStatus, SortOption } from '../constants';
-import { makeFakeCommentList, makeFakeFavoritesList, makeFakeOffer, makeFakeOfferList } from './mocks';
+import { makeFakeCommentList, makeFakeFavoritesList, makeFakeOffer, makeFakeOfferList } from './test-mocks';
 
 
 const fakeOffer = makeFakeOffer();
@@ -33,6 +33,7 @@ export const stateAuthAndFilled = {
     roomDataStatus: RoomDataStatus.Ok,
   },
   UserData: {authorizationStatus: AuthorizationStatus.Auth},
+  NetStatus: {online: true},
 };
 
 export const stateNoAuthAndEmpty = {
@@ -49,11 +50,23 @@ export const stateNoAuthAndEmpty = {
     areFavoritesLoaded: true,
   },
   RoomData: {
-    nearby: fakeOffers,
-    roomOffer: fakeOffer,
-    comments: fakeComments,
+    nearby: [],
+    roomOffer: [],
+    comments: [],
     roomDataStatus: RoomDataStatus.Ok,
   },
+  UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
+  NetStatus: {online: true},
+
+};
+
+export const stateAuthAndEmpty = {
+  ...stateNoAuthAndEmpty,
+  UserData: {authorizationStatus: AuthorizationStatus.Auth},
+};
+
+export const stateNotAuthAndFilled = {
+  ...stateAuthAndFilled,
   UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
 };
 
@@ -71,7 +84,7 @@ export const ScreenText = {
   Favorite: {
     Filled: {
       Title: /Saved listing/i,
-      City: new RegExp(initialCity, 'i'),
+      Night: /night/i,
     },
     Empty: {
       Status: /Nothing yet saved/i,
@@ -89,12 +102,36 @@ export const ScreenText = {
       Nearby: /Other places in the neighbourhood/i,
     },
     Auth: {
-      Review: /Your review/i,
+      YourReview: /Your review/i,
     },
   },
   Page404: {
     Message: /Page Not Found/i,
     Link: /TO THE MAIN PAGE/i,
   },
+  Card: {
+    Night: /night/i,
+    ImgAlt: /Place/i,
+  },
+  Comment: {
+    Title: /Reviews/i,
+    AltReviewAvatar: /Reviews avatar/i,
+    Placeholder: /Tell how was your stay, what you like and what can be improved/i,
+  },
+  Nearby: {
+    Title: /Other places in the neighbourhood/i,
+  },
+  Header: {
+    SignIn: /Sign in/i,
+    SignOut: /Sign Out/i,
+    Alt: /6 cities logo/i,
+  },
+};
+
+export const TestPageText = {
+  Login: 'Login Page Test Text',
+  Favorites: 'Favorites Page Test Text',
+  Main: 'Main Page Test Text',
+  Room: 'Room Page Test Text',
 };
 

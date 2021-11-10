@@ -1,7 +1,6 @@
-
-import { makeFakeOffer } from '../../utils/mocks';
-import { testCard } from '../../utils/test-utils';
 import FavoriteCard from './favorite-card';
+import { makeFakeOffer } from '../../utils/test-mocks';
+import { testCard } from '../../utils/test-utils';
 
 
 const offer = makeFakeOffer();

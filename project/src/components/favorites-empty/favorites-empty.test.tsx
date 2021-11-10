@@ -1,34 +1,24 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { AuthorizationStatus } from '../../constants';
-import FavoritesEmpty from './favorites-empty';
 
-const Text = {
-  Status: /Nothing yet saved/i,
-  Description: /Save properties to narrow down search or plan your future trips/i,
-};
+import FavoritesEmpty from './favorites-empty';
+import { ScreenText } from '../../utils/test-constants';
+import { AuthorizationStatus } from '../../constants';
+import { renderComponent } from '../../utils/test-utils';
 
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
+const store = mockStore({UserData: {authorizationStatus: AuthorizationStatus.Auth}});
 
 describe('FavoritesEmpty Component', () => {
   it('should render text Status and Description', () => {
-    const {getByText} = render(
-      <Provider store={mockStore({UserData: {authorizationStatus: AuthorizationStatus.Auth}})}>
-        <Router history={history}>
-          <FavoritesEmpty/>
-        </Router>
-      </Provider>,
-    );
 
-    const status = getByText(Text.Status);
-    const description = getByText(Text.Description);
+    const favorites = <FavoritesEmpty/>;
+    renderComponent(favorites, store, history);
 
-    expect(status).toBeInTheDocument();
-    expect(description).toBeInTheDocument();
+    expect(screen.getByText(ScreenText.Favorite.Empty.Status)).toBeInTheDocument();
+    expect(screen.getByText(ScreenText.Favorite.Empty.Description)).toBeInTheDocument();
   });
 });

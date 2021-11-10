@@ -45,7 +45,7 @@ function Map({center, offers, selectedId}: MapProps): JSX.Element {
     map?.setView(center);
   }, [center, map]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return <div data-testid='map' style={{height: '100%'}} ref={mapRef}></div>;
 }
 
 export default memo(Map, (prev, next) => prev.center === next.center && prev.selectedId === next.selectedId) ;

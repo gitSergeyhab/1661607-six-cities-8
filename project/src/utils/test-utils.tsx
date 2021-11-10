@@ -1,15 +1,14 @@
 import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
-import { render } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import { createMemoryHistory, History } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { AnyAction } from 'redux';
 import { AuthorizationStatus } from '../constants';
 
 
 export const initialStateAuth = {UserData: {authorizationStatus: AuthorizationStatus.Auth}};
 
-export const renderComponent = (component: JSX.Element, store: MockStore<any, AnyAction>, history: History<unknown>) : any => render(
+export const renderComponent = (component: JSX.Element, store: MockStore, history: History<unknown>) : RenderResult => render(
   <Provider store={store}>
     <Router history={history}>
       {component}
@@ -27,19 +26,11 @@ export const testCard = (cardComponent: JSX.Element, cardName: string): void => 
   it('should render with altText "Place" ant text "night"', () => {
     const mockStore = configureMockStore();
     const history = createMemoryHistory();
+    const store = mockStore({UserData: {authorizationStatus: AuthorizationStatus.Auth}});
 
-    const {getByAltText, getByText} = render(
-      <Provider store={mockStore({UserData: {authorizationStatus: AuthorizationStatus.Auth}})}>
-        <Router history={history}>
-          {cardComponent}
-        </Router>
-      </Provider>,
-    );
+    renderComponent(cardComponent, store, history);
 
-    const altText = getByAltText(CardText.Alt);
-    const contentText = getByText(CardText.Content);
-
-    expect(altText).toBeInTheDocument();
-    expect(contentText).toBeInTheDocument();
+    expect(screen.getByAltText(CardText.Alt)).toBeInTheDocument();
+    expect(screen.getByText(CardText.Content)).toBeInTheDocument();
   });
 });

@@ -30,13 +30,13 @@ function LoginForm(): JSX.Element {
   const dispatch = useDispatch();
   const login = () => dispatch(loginAction({email, password}));
 
-  const onSubmit = (evt: FormEvent) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     login();
   };
 
   return (
-    <form className="login__form form" action="#" method="post" onSubmit={onSubmit}>
+    <form data-testid='form' className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
       <div className="login__input-wrapper form__input-wrapper">
         <label className="visually-hidden">E-mail</label>
         <div style={{color: 'red'}}>{error.email}</div>

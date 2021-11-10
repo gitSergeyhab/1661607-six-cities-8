@@ -8,6 +8,7 @@ const TEXT = /ERROR 404/i;
 
 
 describe('NotFoundPage Component', () => {
+
   const notFoundPage = <NotFoundPage authorizationStatus={AuthorizationStatus.Auth}/>;
   const mockStore = configureMockStore();
   const store = mockStore(initialStateAuth);
@@ -17,6 +18,5 @@ describe('NotFoundPage Component', () => {
     const {getByText} = renderComponent(notFoundPage, store, history);
     const textElement = getByText(TEXT);
     expect(textElement).toBeInTheDocument();
-
   });
 });

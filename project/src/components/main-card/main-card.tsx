@@ -9,11 +9,8 @@ type MainCardProps = {
   onMouseLeave: () => void,
 }
 
-const INFO_CLASS = '';
-const WRAPPER_CLASS = 'cities__image-wrapper';
-const [IMG_WIDTH, IMG_HIGHT] = ['260', '200'];
+const offerCardProps = {infoClass: '', wrapperClass: 'cities__image-wrapper', imgWidth: '260', imgHeight: '200'};
 
-const offerCardProps = {infoClass: INFO_CLASS, wrapperClass: WRAPPER_CLASS, imgWidth: IMG_WIDTH, imgHeight: IMG_HIGHT};
 
 function MainCard({offer, onMouseLeave, onMouseEnter}: MainCardProps): JSX.Element {
 

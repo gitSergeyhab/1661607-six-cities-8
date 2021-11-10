@@ -3,13 +3,10 @@ import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { AuthorizationStatus, CITIES } from '../../constants';
-import MainEmpty from './main-empty';
 
-const Text = {
-  Status: /No places to stay available/i,
-  Description: /We could not find any property available at the moment in/i,
-};
+import MainEmpty from './main-empty';
+import { AuthorizationStatus, CITIES } from '../../constants';
+import { ScreenText } from '../../utils/test-constants';
 
 
 const history = createMemoryHistory();
@@ -32,8 +29,8 @@ describe('MainEmpty Component', () => {
       </Provider>,
     );
 
-    const status = getByText(Text.Status);
-    const description = getByText(Text.Description);
+    const status = getByText(ScreenText.Main.Empty.Status);
+    const description = getByText(ScreenText.Main.Empty.Description);
 
     expect(status).toBeInTheDocument();
     expect(description).toBeInTheDocument();

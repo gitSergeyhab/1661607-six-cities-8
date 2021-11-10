@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
-import {  useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
@@ -14,6 +14,8 @@ import { getStarsWidth } from '../../utils/util';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
 import { AuthorizationStatus, BtnType, RoomDataStatus } from '../../constants';
 
+
+const MAX_IMAGES_NUMBER = 6;
 
 function PremiumMarker() {
   return <div className="property__mark"><span>Premium</span></div>;
@@ -62,6 +64,9 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   const center = {lat: roomOffer.location.latitude, lng: roomOffer.location.longitude};
   const offersForMap = [...neighbours, roomOffer];
 
+  const imageList = images.slice(0, MAX_IMAGES_NUMBER).map((image) => <ApartmentPicture src={image} key={image}/>);
+  const goodList = goods.map((good) => <Good goodName={good} key={good}/>);
+
 
   return (
     <div className="page">
@@ -72,9 +77,7 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-
-              {images.map((image) => <ApartmentPicture src={image} key={image}/>)}
-
+              {imageList}
             </div>
           </div>
           <div className="property__container container">
@@ -115,9 +118,7 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-
-                  {goods.map((good) => <Good goodName={good} key={good}/>)}
-
+                  {goodList}
                 </ul>
               </div>
               <div className="property__host">

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import {  useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Review from '../review/review';
 import { fetchCommentsAction } from '../../store/api-actions';
-import { getComments } from '../../store/room-data/room-data-selectors';
+import { getCommentsForRender } from '../../store/room-data/room-data-selectors';
 
 
 function ReviewList({hotelId} : {hotelId: number}): JSX.Element {
 
-  const comments = useSelector(getComments);
+  const comments = useSelector(getCommentsForRender);
 
   const dispatch = useDispatch();
 

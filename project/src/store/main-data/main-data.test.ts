@@ -1,5 +1,5 @@
 import { mainData } from './main-data';
-import { makeFakeOfferList} from '../../utils/mocks';
+import { makeFakeOfferList} from '../../utils/test-mocks';
 import { changeCity, changeMainOffers, changeOption, loadOffers } from '../action';
 import { getOffersByCity, getSortedOffers } from '../../utils/util';
 import { CITIES, SortOption } from '../../constants';

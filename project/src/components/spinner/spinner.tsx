@@ -1,3 +1,12 @@
+import BarLoader from 'react-spinners/BarLoader';
+import { css } from '@emotion/react';
+
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+`;
+
 function Spinner(): JSX.Element {
   return (
     <div className="page page--gray page--main">
@@ -15,7 +24,12 @@ function Spinner(): JSX.Element {
       <main className="page__main page__main--index">
         <div className="cities">
           <div className="cities__places-container container">
-            <h2 style={{margin: 'auto'}}>Loading... .. .</h2>
+            <h2 style={{margin: 'auto'}}>
+
+              ... Loading ...
+              <BarLoader css={override} color="#4481c3" width="150px"/>
+
+            </h2>
           </div>
         </div>
       </main>

@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { STARS } from '../../constants';
 import CommentFormStars from './comment-form-stars';
+import { render, screen } from '@testing-library/react';
+import { STARS } from '../../constants';
 
 
 const TEST_ID = 'comment-form-stars';

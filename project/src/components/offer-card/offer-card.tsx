@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import { Offer } from '../../types/types';
 import { getStarsWidth } from '../../utils/util';
-import { BtnType } from '../../constants';
+import { BtnType, RoomDataStatus } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { changeRoomDataStatus } from '../../store/action';
 
 
 const OFFER_PATH = '/offer/';
@@ -18,12 +20,16 @@ function OfferCard({offer, btnType, ...restProps}: OfferCardProps): JSX.Element 
   const {isPremium, price, isFavorite, title, previewImage, rating, type, id} = offer;
   const {infoClass, wrapperClass, imgHeight, imgWidth} = restProps;
 
+  const dispatch = useDispatch();
+
+  const handleLinkClick = () => dispatch(changeRoomDataStatus(RoomDataStatus.Loading));
+
   return (
     <>
       {isPremium && <Premium/>}
 
       <div className={`${wrapperClass} place-card__image-wrapper`}>
-        <Link to={`${OFFER_PATH}${id}`}>
+        <Link to={`${OFFER_PATH}${id}`} onClick={handleLinkClick}>
           <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place"/>
         </Link>
       </div>
@@ -47,7 +53,9 @@ function OfferCard({offer, btnType, ...restProps}: OfferCardProps): JSX.Element 
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${OFFER_PATH}${id}`}>{title}</Link>
+          <Link to={`${OFFER_PATH}${id}`} onClick={handleLinkClick}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

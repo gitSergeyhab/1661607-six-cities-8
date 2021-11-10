@@ -3,8 +3,8 @@ import Spinner from './spinner';
 
 describe('Spinner', () => {
   it('render Loading', () => {
-    render(<Spinner/>);
 
+    render(<Spinner/>);
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 });

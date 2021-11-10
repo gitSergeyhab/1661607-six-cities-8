@@ -1,8 +1,13 @@
 import { Comment } from '../../types/types';
+import { getDateTime, getReviewDate } from '../../utils/date-util';
 import { getStarsWidth } from '../../utils/util';
 
 
 function Review({comment: {comment: commentText, date, rating, user}}: {comment: Comment}): JSX.Element {
+
+  const datetime = getDateTime(date);
+  const reviewDate = getReviewDate(date);
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -25,7 +30,9 @@ function Review({comment: {comment: commentText, date, rating, user}}: {comment:
         <p className="reviews__text">
           {commentText}
         </p>
-        <time className="reviews__time" dateTime={(new Date(date).toDateString())}>{(new Date(date).toLocaleString('en-US', {month: 'long', year: 'numeric'}))}</time>
+        <time className="reviews__time" dateTime={datetime}>
+          {reviewDate}
+        </time>
       </div>
     </li>
   );

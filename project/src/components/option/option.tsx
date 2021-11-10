@@ -11,10 +11,9 @@ function Option({option, onOptionsClick} : OptionProps): JSX.Element {
   const activeOption = useSelector(getActiveOption);
 
   const dispatch = useDispatch();
-  const changeSortOption = () => dispatch(changeOption(option));
 
   const handleSortOptionClick = () => {
-    changeSortOption();
+    dispatch(changeOption(option));
     onOptionsClick();
   };
 

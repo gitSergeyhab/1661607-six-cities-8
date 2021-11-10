@@ -16,7 +16,8 @@ const state = {MainData: {city: 'Paris'}};
 const store = mockStore(state);
 
 describe('Locations Component', () => {
-  it('render Cities', () => {
+  it('render correctly', () => {
+
     const locations = <Locations/>;
     renderComponent(locations, store, history);
 
