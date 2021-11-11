@@ -68,6 +68,6 @@ describe('LoginForm Component', () => {
     userEvent.click(screen.getByRole('button'));
 
     const params = {email: Value.Email, password: Value.Password};
-    setTimeout(() => expect(store.getActions()).toEqual([loginAction(params)]), 0); // ??? почему-то работает только так ???
+    setTimeout(() => expect(store.getActions()).toEqual([loginAction(params)]), 0);
   });
 });

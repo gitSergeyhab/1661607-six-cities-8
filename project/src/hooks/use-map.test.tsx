@@ -6,7 +6,6 @@ import { CityCoordinate } from '../constants';
 import { initialCity } from '../utils/test-constants';
 import { useRef } from 'react';
 
-// совершенно бесполезный тест //
 describe('Hook: useMap', () => {
   it('should render correctly', () => {
     const center = CityCoordinate[initialCity.toUpperCase()];

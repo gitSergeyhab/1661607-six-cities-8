@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {  useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import RoomCard from '../room-card/room-card';
 import { fetchNearbyHotelsAction } from '../../store/api-actions';

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent,  useCallback,  useEffect, useState } from 'react';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import CommentFormStars from '../comment-form-stars/comment-form-stars';
 import CommentFormTextarea from '../comment-form-textarea/comment-form-textarea';

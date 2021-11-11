@@ -29,7 +29,7 @@ export const makeFakeServerOffer = (favorite = false): ServerOffer => ({
   bedrooms: datatype.number(6),
   description: commerce.productDescription(),
   goods: new Array(1).fill(null).map(() => commerce.productName()),
-  images: new Array(1).fill(null).map(() => image.image()), // иногда вставляет в массив одинаковые картинки - console.error по повторяющимся ключам в {images.map((image) => <ApartmentPicture src={image} key={image}/>)} поэтому всего 1 элемент
+  images: new Array(1).fill(null).map(() => image.image()),
   host: {
     'avatar_url': '',
     id: datatype.number(),
@@ -60,10 +60,5 @@ export const makeFakeServerComment = (): ServerComment => ({
 });
 
 export const makeFakeServerCommentList = (): ServerComment[] => new Array(datatype.number(5)).fill(null).map(() => makeFakeServerComment());
-
-
 export const makeFakeComment = (): Comment => adaptCommentFromServer(makeFakeServerComment());
 export const makeFakeCommentList = (): Comment[] => new Array(5).fill(null).map(() => makeFakeComment());
-
-export const fakeServerHotels = makeFakeServerOfferList();
-export const fakeHotels = fakeServerHotels.map((hotel) => adaptHotelFromServer(hotel));
