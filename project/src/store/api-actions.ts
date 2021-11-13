@@ -1,4 +1,4 @@
-import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus} from './action';
+import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus, changeOption} from './action';
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
@@ -113,6 +113,7 @@ export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0, 
     const newOffers = [...allOffers.slice(0, offerIndex), changedOffer, ...allOffers.slice(offerIndex + 1)];
     dispatch(loadOffers(newOffers));
     dispatch(changeMainOffers(getState().MainData.city));
+    dispatch(changeOption(getState().MainData.activeOption));
 
     if (roomId) {
       dispatch(loadOffer(changedOffer));

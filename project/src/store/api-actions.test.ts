@@ -6,12 +6,12 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
 import { checkLoginAction, fetchCommentsAction, fetchFavoriteHotelsAction, fetchHotelsAction, fetchNearbyHotelsAction, fetchOfferRoomAction, loginAction, logoutAction, postCommentAction, postFavoriteStatus } from './api-actions';
 import { AuthData, State } from '../types/types';
-import { changeMainOffers, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization, requireLogout } from './action';
+import { changeMainOffers, changeOption, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization, requireLogout } from './action';
 import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/test-mocks';
 import { adaptCommentFromServer, adaptHotelFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { removeUserEmail, saveUserEmail } from '../services/user-email';
-import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus } from '../constants';
+import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus, SortOption } from '../constants';
 import { TEST_ID } from '../utils/test-constants';
 
 
@@ -178,7 +178,7 @@ describe('Async actions', () => {
     const clientOffers = [...fakeClientOffers, clientOffer];
 
     const initState = {
-      MainData: {city: CITIES[0], allOffers: clientOffers},
+      MainData: {city: CITIES[0], allOffers: clientOffers, activeOption: SortOption.Popular},
       RoomData: {nearby: clientOffers},
     };
 
@@ -191,7 +191,7 @@ describe('Async actions', () => {
       mockAPI.onPost(`${APIRoute.Favorite}/${TEST_ID}/${TEST_STATUS}`).reply(200, serverOffer);
       await store.dispatch(postFavoriteStatus(TEST_ID, TEST_STATUS, undefined, BtnType.MainCard));
       expect(store.getActions())
-        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0])]);
+        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), changeOption(SortOption.Popular)]);
     });
 
     it('postFavoriteStatus: from FavoriteCard: should dispatch loadOffers, changeMainOffers when POST /favorites/id/status', async () => {
@@ -199,7 +199,7 @@ describe('Async actions', () => {
       mockAPI.onPost(`${APIRoute.Favorite}/${TEST_ID}/${TEST_STATUS}`).reply(200, serverOffer);
       await store.dispatch(postFavoriteStatus(TEST_ID, TEST_STATUS, undefined, BtnType.FavoriteCard));
       expect(store.getActions())
-        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0])]);
+        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), changeOption(SortOption.Popular)]);
     });
 
     it('postFavoriteStatus: from Room: should dispatch loadOffers, changeMainOffers, loadOffer when POST /favorites/id/status', async () => {
@@ -207,7 +207,7 @@ describe('Async actions', () => {
       mockAPI.onPost(`${APIRoute.Favorite}/${TEST_ID}/${TEST_STATUS}`).reply(200, serverOffer);
       await store.dispatch(postFavoriteStatus(TEST_ID, TEST_STATUS, TEST_ID, BtnType.Room));
       expect(store.getActions())
-        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), loadOffer(clientOffer)]);
+        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), changeOption(SortOption.Popular), loadOffer(clientOffer)]);
     });
 
     it('postFavoriteStatus: from NearbyCard: should dispatch loadOffers, changeMainOffers, loadNearby when POST /favorites/id/status', async () => {
@@ -215,7 +215,7 @@ describe('Async actions', () => {
       mockAPI.onPost(`${APIRoute.Favorite}/${TEST_ID}/${TEST_STATUS}`).reply(200, serverOffer);
       await store.dispatch(postFavoriteStatus(TEST_ID, TEST_STATUS, undefined, BtnType.NearbyCard));
       expect(store.getActions())
-        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), loadNearby(clientOffers)]);
+        .toEqual([loadOffers(clientOffers), changeMainOffers(CITIES[0]), changeOption(SortOption.Popular), loadNearby(clientOffers)]);
     });
   });
 });
