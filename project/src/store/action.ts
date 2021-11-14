@@ -16,7 +16,8 @@ export const enum ActionType {
   Logout = 'user/Logout',
   RedirectToNotFoundPage = 'error404/RedirectToNotFoundPage',
   ChangeRoomDataStatus = 'room/ChangeRoomDataStatus',
-  ChangeNetStatus = 'net/ChangeNetStatus'
+  ChangeNetStatus = 'net/ChangeNetStatus',
+  ChangeCityAndSorting = 'main/city-option/ChangeCityAndSorting'
 }
 
 //Main
@@ -39,6 +40,8 @@ const changeOption = createAction(
   ActionType.ChangeOption,
   (option: string) => ({payload: option}),
 );
+
+const changeCityAndSorting = createAction(ActionType.ChangeCityAndSorting);
 
 
 //Room
@@ -86,6 +89,7 @@ const changeNetStatus = createAction(
   (online: boolean) => ({payload: online}),
 );
 
+
 export {
   changeCity,
   changeMainOffers,
@@ -99,5 +103,6 @@ export {
   requireAuthorization,
   redirectToNotFoundPage,
   changeRoomDataStatus,
-  changeNetStatus
+  changeNetStatus,
+  changeCityAndSorting
 };

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { changeCity, changeMainOffers, changeOption, loadOffers } from '../action';
-import { getOffersByCity, getSortedOffers } from '../../utils/util';
+import { changeCity, changeCityAndSorting, changeMainOffers, changeOption, loadOffers } from '../action';
+import { filterAndSortOffers, getOffersByCity, getSortedOffers } from '../../utils/util';
 import { Offer } from '../../types/types';
 import { CITIES, SortOption } from '../../constants';
 
@@ -38,10 +38,14 @@ export const mainData = createReducer (initialState, (builder) => {
     .addCase(changeCity, (state, action) => {state.city = action.payload;})
     .addCase(changeMainOffers, (state, action) => {
       state.originOffers = getOffersByCity(state.allOffers, action.payload);
-      state.offers = getOffersByCity(state.allOffers, action.payload);
+      state.offers = filterAndSortOffers(state.allOffers, action.payload, state.activeOption);
     })
     .addCase(changeOption, (state, action) => {
       state.activeOption = action.payload;
       state.offers = getSortedOffers(state.originOffers, action.payload);
+    })
+    .addCase(changeCityAndSorting, (state) => {
+      state.originOffers = getOffersByCity(state.allOffers, state.city);
+      state.offers = filterAndSortOffers(state.allOffers, state.city, state.activeOption);
     });
 });

@@ -16,13 +16,10 @@ function Login(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const dispatch = useDispatch();
-  const changeCityName = () => dispatch(changeCity(randomCity)) ;
-  const changeOffers = () => dispatch(changeMainOffers(randomCity));
-
 
   const handleRandomCityClick = () => {
-    changeCityName();
-    changeOffers();
+    dispatch(changeCity(randomCity));
+    dispatch(changeMainOffers(randomCity));
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {

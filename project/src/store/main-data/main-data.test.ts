@@ -1,7 +1,7 @@
 import { mainData } from './main-data';
 import { makeFakeOfferList} from '../../utils/test-mocks';
-import { changeCity, changeMainOffers, changeOption, loadOffers } from '../action';
-import { getOffersByCity, getSortedOffers } from '../../utils/util';
+import { changeCity, changeCityAndSorting, changeMainOffers, changeOption, loadOffers } from '../action';
+import { filterAndSortOffers, getOffersByCity, getSortedOffers } from '../../utils/util';
 import { CITIES, SortOption } from '../../constants';
 
 
@@ -47,7 +47,9 @@ describe('Reducer: mainData', () => {
   it('should update originOffers and offers by changeMainOffers', () => {
     const state = {...initState, allOffers: fakeOffers, areHotelsLoaded: true, city: testCity};
     const filteredOffers = getOffersByCity(state.allOffers, testCity);
-    const expectedState = {...state, city: testCity, originOffers: filteredOffers, offers: filteredOffers };
+    const filteredSortedOffers =  filterAndSortOffers(state.allOffers, state.city, state.activeOption);
+
+    const expectedState = {...state, city: testCity, originOffers: filteredOffers, offers: filteredSortedOffers};
     expect(mainData(state, changeMainOffers(testCity)))
       .toEqual(expectedState);
   });
@@ -57,6 +59,15 @@ describe('Reducer: mainData', () => {
     const sortedOffers = getSortedOffers(state.originOffers, testOption);
     const expectedState = {...state, offers: sortedOffers, activeOption: testOption};
     expect(mainData(state, changeOption(testOption)))
+      .toEqual(expectedState);
+  });
+
+  it('should update originOffers and offers by changeCityAndSorting', () => {
+    const state = {...initState, allOffers: fakeOffers, areHotelsLoaded: true, city: testCity};
+    const filteredOffers = getOffersByCity(state.allOffers, testCity);
+    const filteredSortedOffers =  filterAndSortOffers(state.allOffers, state.city, state.activeOption);
+    const expectedState = {...state, city: testCity, originOffers: filteredOffers, offers: filteredSortedOffers};
+    expect(mainData(state, changeCityAndSorting()))
       .toEqual(expectedState);
   });
 });

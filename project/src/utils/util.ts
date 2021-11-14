@@ -46,6 +46,8 @@ const checkEmail = (email: string): boolean => Re.EMAIL.test(String(email).toLow
 
 const disableSignInSubmit = (email: string, password: string): boolean => !checkEmail(email) || !checkPassword(password);
 
+const filterAndSortOffers = (offers: Offer[], city: string, option: string): Offer[] => getSortedOffers(getOffersByCity(offers, city), option);
+
 export {
   getStarsWidth,
   getOffersByCity,
@@ -53,5 +55,6 @@ export {
   disableByStarAndLength,
   checkPassword,
   checkEmail,
-  disableSignInSubmit
+  disableSignInSubmit,
+  filterAndSortOffers
 };
