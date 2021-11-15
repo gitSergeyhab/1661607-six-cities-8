@@ -4,6 +4,7 @@ import { roomData } from './room-data/room-data';
 import { favoriteData } from './favorite-data/favorite-data';
 import { userData } from './user-data/user-data';
 import { netStatus } from './net-status/net-status';
+import { errorStatus } from './error-status/error-status';
 
 
 export const enum RootReducerKey {
@@ -12,6 +13,7 @@ export const enum RootReducerKey {
   FavoriteData = 'FavoriteData',
   UserData = 'UserData',
   NetStatus = 'NetStatus',
+  ErrorStatus = 'ErrorStatus',
 }
 
 export const rootReducer = combineReducers({
@@ -20,7 +22,7 @@ export const rootReducer = combineReducers({
   [RootReducerKey.FavoriteData]: favoriteData,
   [RootReducerKey.UserData]: userData,
   [RootReducerKey.NetStatus]: netStatus,
-
+  [RootReducerKey.ErrorStatus]: errorStatus,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

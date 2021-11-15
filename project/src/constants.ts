@@ -40,7 +40,7 @@ const enum AppRoute {
 
 const enum APIRoute {
   Hotels = '/hotels',
-  Nearby = '/nearby1',
+  Nearby = '/nearby',
   Favorite = '/favorite',
   Comments = '/comments',
   Login = '/login',

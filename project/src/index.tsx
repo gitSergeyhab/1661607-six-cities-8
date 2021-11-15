@@ -28,8 +28,7 @@ const store = configureStore({
 });
 
 
-store.dispatch(checkLoginAction());
-store.dispatch(fetchHotelsAction());
+store.dispatch(checkLoginAction()).then(() => store.dispatch(fetchHotelsAction()));
 listenNetStatus(store);
 
 

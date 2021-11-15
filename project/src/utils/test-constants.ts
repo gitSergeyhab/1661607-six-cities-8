@@ -34,6 +34,11 @@ export const stateAuthAndFilled = {
   },
   UserData: {authorizationStatus: AuthorizationStatus.Auth},
   NetStatus: {online: true},
+  ErrorStatus: {
+    main: false,
+    room: false,
+    favorites: false,
+  },
 };
 
 export const stateNoAuthAndEmpty = {
@@ -57,7 +62,11 @@ export const stateNoAuthAndEmpty = {
   },
   UserData: {authorizationStatus: AuthorizationStatus.NoAuth},
   NetStatus: {online: true},
-
+  ErrorStatus: {
+    main: false,
+    room: false,
+    favorites: false,
+  },
 };
 
 export const stateAuthAndEmpty = {

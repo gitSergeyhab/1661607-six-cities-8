@@ -17,7 +17,10 @@ export const enum ActionType {
   RedirectToNotFoundPage = 'error404/RedirectToNotFoundPage',
   ChangeRoomDataStatus = 'room/ChangeRoomDataStatus',
   ChangeNetStatus = 'net/ChangeNetStatus',
-  ChangeCityAndSorting = 'main/city-option/ChangeCityAndSorting'
+  ChangeCityAndSorting = 'main/city-option/ChangeCityAndSorting',
+  ChangeMainErrorStatus = 'error/main/ChangeMainErrorStatus',
+  ChangeRoomErrorStatus = 'error/room/ChangeRoomErrorStatus',
+  ChangeFavoritesErrorStatus = 'error/favorite/ChangeFavoritesErrorStatus',
 }
 
 //Main
@@ -84,11 +87,27 @@ const requireLogout = createAction(ActionType.Logout);
 
 const redirectToNotFoundPage = createAction(ActionType.RedirectToNotFoundPage);
 
+// Network
 const changeNetStatus = createAction(
   ActionType.ChangeNetStatus,
   (online: boolean) => ({payload: online}),
 );
 
+// Error
+const changeMainErrorStatus = createAction(
+  ActionType.ChangeMainErrorStatus,
+  (error: boolean) => ({payload: error}),
+);
+
+const changeRoomErrorStatus = createAction(
+  ActionType.ChangeRoomErrorStatus,
+  (error: boolean) => ({payload: error}),
+);
+
+const changeFavoritesErrorStatus = createAction(
+  ActionType.ChangeFavoritesErrorStatus,
+  (error: boolean) => ({payload: error}),
+);
 
 export {
   changeCity,
@@ -104,5 +123,8 @@ export {
   redirectToNotFoundPage,
   changeRoomDataStatus,
   changeNetStatus,
-  changeCityAndSorting
+  changeCityAndSorting,
+  changeMainErrorStatus,
+  changeRoomErrorStatus,
+  changeFavoritesErrorStatus
 };

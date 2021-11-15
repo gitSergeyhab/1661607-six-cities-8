@@ -18,9 +18,13 @@ function RoomNearbyCards({id} : {id: number}): JSX.Element {
 
   const neighbourCards = neighbours.map((neighbour) => <RoomCard offer={neighbour} key={neighbour.id}/>);
 
+  const title = <h2 className="near-places__title">Other places in the neighbourhood</h2>;
+
   return (
     <section className="near-places places">
-      <h2 className="near-places__title">Other places in the neighbourhood</h2>
+
+      {neighbours.length ? title : null}
+
       <div className="near-places__list places__list">
 
         {neighbourCards}

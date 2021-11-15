@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus, changeCityAndSorting} from './action';
+import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus, changeCityAndSorting, changeMainErrorStatus, changeRoomErrorStatus, changeFavoritesErrorStatus} from './action';
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
@@ -62,7 +62,9 @@ export const fetchHotelsAction = (): ThunkActionResult =>
       const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
       dispatch(loadOffers(clientData));
       dispatch(changeMainOffers(getState().MainData.city));
+      dispatch(changeMainErrorStatus(false));
     } catch {
+      dispatch(changeMainErrorStatus(true));
       toast.error(ErrorMessage.FetchHotels);
     }
   };
@@ -90,7 +92,10 @@ export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): Thunk
       const clientData = adaptHotelFromServer(data);
       dispatch(changeRoomDataStatus(RoomDataStatus.Ok)); // убрать спиннер
       dispatch(loadOffer(clientData));
+      dispatch(changeRoomErrorStatus(false));
     } catch {
+      dispatch(changeRoomErrorStatus(true));
+
       toast.error(ErrorMessage.FetchOfferRoom);
     }
   };
@@ -132,7 +137,9 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
       const {data} = await api.get<Offer[]>(APIRoute.Favorite);
       const clientOffers = data.map((serverOffer) => adaptHotelFromServer(serverOffer));
       dispatch(loadFavoriteOffers(clientOffers));
+      dispatch(changeFavoritesErrorStatus(false));
     } catch {
+      dispatch(changeFavoritesErrorStatus(true));
       toast.error(ErrorMessage.FetchFavorite);
     }
 

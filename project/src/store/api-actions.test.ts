@@ -6,7 +6,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
 import { checkLoginAction, fetchCommentsAction, fetchFavoriteHotelsAction, fetchHotelsAction, fetchNearbyHotelsAction, fetchOfferRoomAction, loginAction, logoutAction, postCommentAction, postFavoriteStatus } from './api-actions';
 import { AuthData, State } from '../types/types';
-import { changeCityAndSorting, changeMainOffers, changeRoomDataStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization, requireLogout } from './action';
+import { changeCityAndSorting, changeFavoritesErrorStatus, changeMainErrorStatus, changeMainOffers, changeRoomDataStatus, changeRoomErrorStatus, loadComments, loadFavoriteOffers, loadNearby, loadOffer, loadOffers, requireAuthorization, requireLogout } from './action';
 import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/test-mocks';
 import { adaptCommentFromServer, adaptHotelFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
@@ -102,13 +102,13 @@ describe('Async actions', () => {
 
 
   describe('MAIN', () => {
-    it('fetchHotelsAction: should dispatch loadOffers and changeMainOffers when GET /hotels', async () => {
+    it('fetchHotelsAction: should dispatch loadOffers, changeMainOffers and changeMainErrorStatus when GET /hotels', async () => {
       const store = mockStore({MainData: {city: CITIES[0]}});
       mockAPI.onGet(APIRoute.Hotels).reply(200, fakeServerOffers);
       expect(store.getActions()).toEqual([]);
       await store.dispatch(fetchHotelsAction());
       expect(store.getActions())
-        .toEqual([loadOffers(fakeClientOffers), changeMainOffers(CITIES[0])]);
+        .toEqual([loadOffers(fakeClientOffers), changeMainOffers(CITIES[0]), changeMainErrorStatus(false)]);
     });
   });
 
@@ -124,13 +124,13 @@ describe('Async actions', () => {
         .toEqual([loadNearby(fakeClientOffers)]);
     });
 
-    it('fetchOfferRoomAction: clearStatus=false: should dispatch changeRoomDataStatus, loadOffer when GET /hotels/id', async () => {
+    it('fetchOfferRoomAction: should dispatch changeRoomDataStatus, loadOffer and changeRoomErrorStatus when GET /hotels/id', async () => {
       const store = mockStore();
       mockAPI.onGet(`${APIRoute.Hotels}/${TEST_ID}`).reply(200, fakeServerOffer);
       expect(store.getActions()).toEqual([]);
       await store.dispatch(fetchOfferRoomAction(TEST_ID, false));
       expect(store.getActions())
-        .toEqual([changeRoomDataStatus(RoomDataStatus.Ok), loadOffer(fakeClientOffer)]);
+        .toEqual([changeRoomDataStatus(RoomDataStatus.Ok), loadOffer(fakeClientOffer), changeRoomErrorStatus(false)]);
     });
 
     it('fetchCommentsAction: should dispatch loadComments when GET /comments/id', async () => {
@@ -161,13 +161,13 @@ describe('Async actions', () => {
   });
 
   describe('FAVORITES', () => {
-    it('fetchFavoriteHotelsAction: should dispatch loadFavoriteOffers when GET /favorites/id', async () => {
+    it('fetchFavoriteHotelsAction: should dispatch loadFavoriteOffers and changeFavoritesErrorStatus when GET /favorites/id', async () => {
       const store = mockStore();
       mockAPI.onGet(APIRoute.Favorite).reply(200, fakeServerOffers);
       expect(store.getActions()).toEqual([]);
       await store.dispatch(fetchFavoriteHotelsAction());
       expect(store.getActions())
-        .toEqual([loadFavoriteOffers(fakeClientOffers)]);
+        .toEqual([loadFavoriteOffers(fakeClientOffers), changeFavoritesErrorStatus(false)]);
     });
   });
 

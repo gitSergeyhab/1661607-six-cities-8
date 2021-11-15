@@ -7,8 +7,8 @@ import Main from '../main/main';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import Room from '../room/room';
-import Spinner from '../spinner/spinner';
-import { getHotelsLoadedStatus } from '../../store/main-data/main-data-selectors';
+// import Spinner from '../spinner/spinner';
+// import { getHotelsLoadedStatus } from '../../store/main-data/main-data-selectors';
 import { getAuthorizationStatus } from '../../store/user-data/user-data-selectors';
 import { AppRoute } from '../../constants';
 import NetStatus from '../net-status/net-status';
@@ -16,12 +16,12 @@ import NetStatus from '../net-status/net-status';
 
 function App(): JSX.Element {
 
-  const areHotelsLoaded = useSelector(getHotelsLoadedStatus);
+  // const areHotelsLoaded = useSelector(getHotelsLoadedStatus);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  if (!areHotelsLoaded) {
-    return <Spinner/>;
-  }
+  // if (!areHotelsLoaded) {
+  //   return <Spinner/>;
+  // }
 
   return(
     <>

@@ -13,6 +13,8 @@ import { fetchOfferRoomAction } from '../../store/api-actions';
 import { getStarsWidth } from '../../utils/util';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
 import { AuthorizationStatus, BtnType, RoomDataStatus } from '../../constants';
+import { getRoomErrorStatus } from '../../store/error-status/error-status-selectors';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 
 const MAX_IMAGES_NUMBER = 6;
@@ -42,6 +44,7 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   const neighbours = useSelector(getNearby);
   const roomOffer = useSelector(getRoomOffer);
   const roomDataStatus = useSelector(getRoomDataStatus);
+  const error = useSelector(getRoomErrorStatus);
 
   const dispatch = useDispatch();
 
@@ -50,9 +53,9 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   }, [id, dispatch]);
 
 
-  // if (roomDataStatus === RoomDataStatus.NotFound) {
-  //   return <NotFoundPage authorizationStatus={authorizationStatus}/>;
-  // }
+  if (error) {
+    return <NotFoundPage authorizationStatus={authorizationStatus} />;
+  }
 
   if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;
