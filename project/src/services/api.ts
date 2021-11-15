@@ -38,9 +38,11 @@ export const createAPI = (onUnauthorized: CreateAPIArgsCB, onNotFound: CreateAPI
       }
 
       if (response?.status === HttpCode.NotFound) {
+        console.log(response, response.status);
+
         onNotFound();
       }
-
+      console.log(response);
       return Promise.reject(error);
     },
   );

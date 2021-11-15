@@ -1,9 +1,24 @@
+import { toast } from 'react-toastify';
+
 import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainOffers, loadNearby, loadComments, loadFavoriteOffers, changeRoomDataStatus, changeCityAndSorting} from './action';
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
 import { removeUserEmail, saveUserEmail } from '../services/user-email';
 import { APIRoute, AuthorizationStatus, BtnType, RoomDataStatus } from '../constants';
+
+
+const ErrorMessage = {
+  Login: 'unable to log in',
+  Logout: 'unable to log out',
+  FetchHotels: 'unable to upload offers',
+  FetchNearby: 'unable to upload nearby offers',
+  FetchOfferRoom: 'unable to upload this offer',
+  FetchComments: 'unable to upload comments',
+  FetchFavorite: 'unable to upload favorite offers',
+  PostComments: 'unable to send comment',
+  PostFavorite: 'unable to add to favorite',
+};
 
 
 // Authorization
@@ -15,57 +30,81 @@ export const checkLoginAction = (): ThunkActionResult =>
 
 export const loginAction = ({email, password} : AuthData): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const response = await api.post(APIRoute.Login, {email, password});
-    const {data} = response;
-    saveToken(data.token);
-    saveUserEmail(data.email);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    try {
+      const response = await api.post(APIRoute.Login, {email, password});
+      const {data} = response;
+      saveToken(data.token);
+      saveUserEmail(data.email);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      toast.error(ErrorMessage.Login);
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    await api.delete(APIRoute.Logout);
-    removeToken();
-    removeUserEmail();
-    dispatch(requireLogout());
+    try {
+      await api.delete(APIRoute.Logout);
+      removeToken();
+      removeUserEmail();
+      dispatch(requireLogout());
+    } catch {
+      toast.error(ErrorMessage.Logout);
+    }
   };
 
 
 // Main
 export const fetchHotelsAction = (): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {
-    const {data} = await api.get(APIRoute.Hotels);
-    const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
-    dispatch(loadOffers(clientData));
-    dispatch(changeMainOffers(getState().MainData.city));
+    try {
+      const {data} = await api.get(APIRoute.Hotels);
+      const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
+      dispatch(loadOffers(clientData));
+      dispatch(changeMainOffers(getState().MainData.city));
+    } catch {
+      toast.error(ErrorMessage.FetchHotels);
+    }
   };
 
 
 // Room - Get
 export const fetchNearbyHotelsAction = (hotelId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}${APIRoute.Nearby}`);
-    const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
-    dispatch(loadNearby(clientData));
+    try {
+      const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}${APIRoute.Nearby}`);
+      const clientData = await data.map((offer: ServerOffer) => adaptHotelFromServer(offer));
+      dispatch(loadNearby(clientData));
+    } catch {
+      toast.warning(ErrorMessage.FetchNearby);
+    }
   };
 
 export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    if (clearStatus) { // true - всегда, кроме postFavoriteStatus
-      dispatch(changeRoomDataStatus(RoomDataStatus.Loading));
+    try {
+      if (clearStatus) { // true - всегда, кроме postFavoriteStatus
+        dispatch(changeRoomDataStatus(RoomDataStatus.Loading));
+      }
+      const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}`);
+      const clientData = adaptHotelFromServer(data);
+      dispatch(changeRoomDataStatus(RoomDataStatus.Ok)); // убрать спиннер
+      dispatch(loadOffer(clientData));
+    } catch {
+      toast.error(ErrorMessage.FetchOfferRoom);
     }
-    const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}`);
-    const clientData = adaptHotelFromServer(data);
-    dispatch(changeRoomDataStatus(RoomDataStatus.Ok)); // убрать спиннер
-
-    dispatch(loadOffer(clientData));
   };
 
 export const fetchCommentsAction = (hotelId: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.get<ServerComment[]>(`${APIRoute.Comments}/${hotelId}`);
-    const clientComment = await data.map((comment) => adaptCommentFromServer(comment));
-    dispatch(loadComments(clientComment));
+    try {
+      const {data} = await api.get<ServerComment[]>(`${APIRoute.Comments}/${hotelId}`);
+      const clientComment = await data.map((comment) => adaptCommentFromServer(comment));
+      dispatch(loadComments(clientComment));
+    } catch {
+      toast.warning(ErrorMessage.FetchComments);
+    }
+
   };
 
 
@@ -89,9 +128,14 @@ export const postCommentAction = ({hotelId, review, rating, clearComment, notify
 // Favorites
 export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
-    const clientOffers = data.map((serverOffer) => adaptHotelFromServer(serverOffer));
-    dispatch(loadFavoriteOffers(clientOffers));
+    try {
+      const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+      const clientOffers = data.map((serverOffer) => adaptHotelFromServer(serverOffer));
+      dispatch(loadFavoriteOffers(clientOffers));
+    } catch {
+      toast.error(ErrorMessage.FetchFavorite);
+    }
+
   };
 
 
@@ -99,34 +143,38 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
 
 export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0, btnType: BtnType): ThunkActionResult =>
   async (dispatch, getState, api) => {
-    const {data} = await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
-    const {id} = data;
-    const isFavorite = data['is_favorite'];
-    const allOffers = getState().MainData.allOffers;
-    const offerIndex = allOffers.findIndex((offer) => offer.id === id); //??? или можно не искать, а считать, что offerIndexWithNewStatus === id ???
+    try {
+      const {data} = await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
+      const {id} = data;
+      const isFavorite = data['is_favorite'];
+      const allOffers = getState().MainData.allOffers;
+      const offerIndex = allOffers.findIndex((offer) => offer.id === id); //??? или можно не искать, а считать, что offerIndexWithNewStatus === id ???
 
-    if (offerIndex === -1) {
-      throw new Error(`there is not hotel with id ${id}`);
-    }
+      if (offerIndex === -1) {
+        throw new Error(`there is not hotel with id ${id}`);
+      }
 
-    const changedOffer = {...allOffers[offerIndex], isFavorite};
-    const newOffers = [...allOffers.slice(0, offerIndex), changedOffer, ...allOffers.slice(offerIndex + 1)];
-    dispatch(loadOffers(newOffers));
-    dispatch(changeCityAndSorting());
+      const changedOffer = {...allOffers[offerIndex], isFavorite};
+      const newOffers = [...allOffers.slice(0, offerIndex), changedOffer, ...allOffers.slice(offerIndex + 1)];
+      dispatch(loadOffers(newOffers));
+      dispatch(changeCityAndSorting());
 
-    if (roomId) {
-      dispatch(loadOffer(changedOffer));
-    }
+      if (roomId) {
+        dispatch(loadOffer(changedOffer));
+      }
 
-    if (btnType === BtnType.NearbyCard) {
-      const nearbyOffers = getState().RoomData.nearby;
-      const nearbyIndex = nearbyOffers.findIndex((offer) => offer.id === id);
-      const newNearby = [...nearbyOffers.slice(0, nearbyIndex), changedOffer, ...nearbyOffers.slice(nearbyIndex + 1)];
-      dispatch(loadNearby(newNearby));
-    }
+      if (btnType === BtnType.NearbyCard) {
+        const nearbyOffers = getState().RoomData.nearby;
+        const nearbyIndex = nearbyOffers.findIndex((offer) => offer.id === id);
+        const newNearby = [...nearbyOffers.slice(0, nearbyIndex), changedOffer, ...nearbyOffers.slice(nearbyIndex + 1)];
+        dispatch(loadNearby(newNearby));
+      }
 
-    if (btnType === BtnType.FavoriteCard) {
-      dispatch(fetchFavoriteHotelsAction());
+      if (btnType === BtnType.FavoriteCard) {
+        dispatch(fetchFavoriteHotelsAction());
+      }
+    } catch {
+      toast.error(ErrorMessage.PostFavorite);
     }
   };
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
 import Map from '../map/map';
-import NotFoundPage from '../not-found-page/not-found-page';
+// import NotFoundPage from '../not-found-page/not-found-page';
 import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
 import RoomCommentSection from '../room-comment-section/room-comment-section';
 import Spinner from '../spinner/spinner';
@@ -50,9 +50,9 @@ function Room({authorizationStatus} : {authorizationStatus: AuthorizationStatus}
   }, [id, dispatch]);
 
 
-  if (roomDataStatus === RoomDataStatus.NotFound) {
-    return <NotFoundPage authorizationStatus={authorizationStatus}/>;
-  }
+  // if (roomDataStatus === RoomDataStatus.NotFound) {
+  //   return <NotFoundPage authorizationStatus={authorizationStatus}/>;
+  // }
 
   if (roomDataStatus === RoomDataStatus.Loading || !roomOffer) {
     return <Spinner/>;

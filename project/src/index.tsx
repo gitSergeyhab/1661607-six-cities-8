@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
+import { ToastContainer } from 'react-toastify';
 
 import App from './components/app/app';
 import { rootReducer } from './store/root-reducer';
@@ -11,6 +12,8 @@ import { createAPI } from './services/api';
 import { requireAuthorization, changeRoomDataStatus} from './store/action';
 import { checkLoginAction, fetchHotelsAction } from './store/api-actions';
 import { listenNetStatus } from './utils/net-util';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const api = createAPI(
@@ -34,6 +37,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <ToastContainer/>
         <App/>
       </BrowserRouter>
     </Provider>
