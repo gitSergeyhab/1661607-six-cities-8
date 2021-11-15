@@ -4,7 +4,7 @@ import { AuthorizationStatus } from '../../constants';
 
 
 type UserData = {authorizationStatus: AuthorizationStatus}
-const initialState: UserData = {authorizationStatus: AuthorizationStatus.NoAuth};
+const initialState: UserData = {authorizationStatus: AuthorizationStatus.Auth};
 
 
 export const userData = createReducer(initialState, (builder) => {

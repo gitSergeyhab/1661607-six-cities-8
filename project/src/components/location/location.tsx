@@ -16,8 +16,10 @@ function Location({city} : {city: string} ): JSX.Element {
 
   const handleCityClick = (evt: MouseEvent) => {
     evt.preventDefault();
-    dispatch(changeCity(city));
-    dispatch(changeMainOffers(city));
+    if (selectedCity !== city) {
+      dispatch(changeCity(city));
+      dispatch(changeMainOffers(city));
+    }
   };
 
   return (

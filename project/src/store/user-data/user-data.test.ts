@@ -2,7 +2,7 @@ import { AuthorizationStatus } from '../../constants';
 import { requireAuthorization, requireLogout } from '../action';
 import { userData } from './user-data';
 
-const initState = {authorizationStatus: AuthorizationStatus.NoAuth};
+const initState = {authorizationStatus: AuthorizationStatus.Auth};
 
 describe('Reducer: userData', () => {
   it('without additional parameters should return initial state', () => {

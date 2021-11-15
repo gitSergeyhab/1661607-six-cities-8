@@ -4,7 +4,7 @@ import { loadOffers, loadOffer, requireAuthorization, requireLogout, changeMainO
 import { adaptHotelFromServer, adaptCommentFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
 import { ServerOffer, ThunkActionResult, AuthData, ServerComment, Offer } from '../types/types';
-import { removeUserEmail, saveUserEmail } from '../services/user-email';
+import { removeAvatar, removeUserEmail, saveAvatar, saveUserEmail } from '../services/user-info';
 import { APIRoute, AuthorizationStatus, BtnType, RoomDataStatus } from '../constants';
 
 
@@ -17,8 +17,10 @@ const ErrorMessage = {
   FetchComments: 'unable to upload comments',
   FetchFavorite: 'unable to upload favorite offers',
   PostComments: 'unable to send comment',
-  PostFavorite: 'unable to add to favorite',
+  PostFavorite: 'unable to change favorite status',
 };
+
+const AVATAR_URL_FIELD = 'avatar_url';
 
 
 // Authorization
@@ -35,6 +37,7 @@ export const loginAction = ({email, password} : AuthData): ThunkActionResult =>
       const {data} = response;
       saveToken(data.token);
       saveUserEmail(data.email);
+      saveAvatar(data[AVATAR_URL_FIELD]);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       toast.error(ErrorMessage.Login);
@@ -42,12 +45,18 @@ export const loginAction = ({email, password} : AuthData): ThunkActionResult =>
   };
 
 export const logoutAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api): Promise<void> => {
+  async (dispatch, getState, api): Promise<void> => {
     try {
       await api.delete(APIRoute.Logout);
       removeToken();
       removeUserEmail();
+      removeAvatar();
       dispatch(requireLogout());
+      dispatch(fetchHotelsAction());
+      const offer = getState().RoomData.roomOffer;
+      if (offer) {
+        dispatch(fetchOfferRoomAction(offer.id));
+      }
     } catch {
       toast.error(ErrorMessage.Logout);
     }
@@ -85,17 +94,16 @@ export const fetchNearbyHotelsAction = (hotelId: number): ThunkActionResult =>
 export const fetchOfferRoomAction = (hotelId: number, clearStatus = true): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      if (clearStatus) { // true - всегда, кроме postFavoriteStatus
+      if (clearStatus) {
         dispatch(changeRoomDataStatus(RoomDataStatus.Loading));
       }
       const {data} = await api.get(`${APIRoute.Hotels}/${hotelId}`);
       const clientData = adaptHotelFromServer(data);
-      dispatch(changeRoomDataStatus(RoomDataStatus.Ok)); // убрать спиннер
+      dispatch(changeRoomDataStatus(RoomDataStatus.Ok));
       dispatch(loadOffer(clientData));
       dispatch(changeRoomErrorStatus(false));
     } catch {
       dispatch(changeRoomErrorStatus(true));
-
       toast.error(ErrorMessage.FetchOfferRoom);
     }
   };
@@ -109,7 +117,6 @@ export const fetchCommentsAction = (hotelId: number): ThunkActionResult =>
     } catch {
       toast.warning(ErrorMessage.FetchComments);
     }
-
   };
 
 
@@ -123,9 +130,9 @@ export const postCommentAction = ({hotelId, review, rating, clearComment, notify
         const {data} = result;
         const clientComment = data.map((serverComment) => adaptCommentFromServer(serverComment));
         dispatch(loadComments(clientComment));
-        clearComment(); // set 0 star and '' review
+        clearComment();
       })
-      .catch(notifyError) // made red message for 2 sec
+      .catch(notifyError)
       .finally(unBlockForm);
   };
 
@@ -142,7 +149,6 @@ export const fetchFavoriteHotelsAction = (): ThunkActionResult =>
       dispatch(changeFavoritesErrorStatus(true));
       toast.error(ErrorMessage.FetchFavorite);
     }
-
   };
 
 
@@ -155,7 +161,7 @@ export const postFavoriteStatus = (hotelId: number, status: number, roomId = 0, 
       const {id} = data;
       const isFavorite = data['is_favorite'];
       const allOffers = getState().MainData.allOffers;
-      const offerIndex = allOffers.findIndex((offer) => offer.id === id); //??? или можно не искать, а считать, что offerIndexWithNewStatus === id ???
+      const offerIndex = allOffers.findIndex((offer) => offer.id === id);
 
       if (offerIndex === -1) {
         throw new Error(`there is not hotel with id ${id}`);

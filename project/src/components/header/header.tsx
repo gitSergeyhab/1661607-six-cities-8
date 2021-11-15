@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { memo } from 'react';
+import { memo, MouseEvent } from 'react';
 
-import { getUserEmail } from '../../services/user-email';
+import { getUserEmail, getAvatar } from '../../services/user-info';
 import { logoutAction } from '../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from '../../constants';
 
@@ -38,9 +38,15 @@ function NotAuthHeader(): JSX.Element {
 function AuthHeader(): JSX.Element {
 
   const dispatch = useDispatch();
-  const handleSignOutClick = () => dispatch(logoutAction());
+
+  const handleSignOutClick = (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
+
 
   const userEmail = getUserEmail();
+  const avatar = getAvatar();
 
   return(
     <nav className="header__nav">
@@ -48,14 +54,15 @@ function AuthHeader(): JSX.Element {
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites} data-testid="favorites">
             <div className="header__avatar-wrapper user__avatar-wrapper">
+              <img src={avatar} alt="" style={{borderRadius: '50%'}}/>
             </div>
             <span className="header__user-name user__name">{userEmail}</span>
           </Link>
         </li>
         <li className="header__nav-item">
-          <Link className="header__nav-link" onClick={handleSignOutClick} to={AppRoute.Login} data-testid="sign-out">
+          <a href='/' className="header__nav-link" onClick={handleSignOutClick} data-testid="sign-out">
             <span className="header__signout">Sign out</span>
-          </Link>
+          </a>
         </li>
       </ul>
     </nav>

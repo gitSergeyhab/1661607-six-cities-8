@@ -48,6 +48,8 @@ const disableSignInSubmit = (email: string, password: string): boolean => !check
 
 const filterAndSortOffers = (offers: Offer[], city: string, option: string): Offer[] => getSortedOffers(getOffersByCity(offers, city), option);
 
+const capitalize = (str: string): string => `${str[0].toUpperCase()}${str.slice(1)}`;
+
 export {
   getStarsWidth,
   getOffersByCity,
@@ -56,5 +58,6 @@ export {
   checkPassword,
   checkEmail,
   disableSignInSubmit,
-  filterAndSortOffers
+  filterAndSortOffers,
+  capitalize
 };

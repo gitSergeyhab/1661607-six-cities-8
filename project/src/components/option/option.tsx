@@ -13,7 +13,10 @@ function Option({option, onOptionsClick} : OptionProps): JSX.Element {
   const dispatch = useDispatch();
 
   const handleSortOptionClick = () => {
-    dispatch(changeOption(option));
+    if (option !== activeOption) {
+      dispatch(changeOption(option));
+    }
+
     onOptionsClick();
   };
 

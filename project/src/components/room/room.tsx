@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import Header from '../header/header';
 import Map from '../map/map';
-// import NotFoundPage from '../not-found-page/not-found-page';
+import NotFoundPage from '../not-found-page/not-found-page';
 import RoomNearbyCards from '../room-nearby-cards/room-nearby-cards';
 import RoomCommentSection from '../room-comment-section/room-comment-section';
 import Spinner from '../spinner/spinner';
@@ -14,7 +14,6 @@ import { getStarsWidth } from '../../utils/util';
 import { getNearby, getRoomDataStatus, getRoomOffer } from '../../store/room-data/room-data-selectors';
 import { AuthorizationStatus, BtnType, RoomDataStatus } from '../../constants';
 import { getRoomErrorStatus } from '../../store/error-status/error-status-selectors';
-import NotFoundPage from '../not-found-page/not-found-page';
 
 
 const MAX_IMAGES_NUMBER = 6;

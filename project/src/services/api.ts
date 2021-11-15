@@ -5,15 +5,12 @@ const BASE_URL = 'https://8.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 const TOKEN_HEADER = 'X-Token';
 
-const enum HttpCode {
-  Unauthorized = 401,
-  NotFound = 404,
-}
+const enum HttpCode {Unauthorized = 401}
 
 type CreateAPIArgsCB = () => void;
 
 
-export const createAPI = (onUnauthorized: CreateAPIArgsCB, onNotFound: CreateAPIArgsCB): AxiosInstance => {
+export const createAPI = (onUnauthorized: CreateAPIArgsCB): AxiosInstance => {
 
   const api = axios.create({baseURL: BASE_URL, timeout: REQUEST_TIMEOUT});
 
@@ -37,12 +34,6 @@ export const createAPI = (onUnauthorized: CreateAPIArgsCB, onNotFound: CreateAPI
         onUnauthorized();
       }
 
-      if (response?.status === HttpCode.NotFound) {
-        console.log(response, response.status);
-
-        onNotFound();
-      }
-      console.log(response);
       return Promise.reject(error);
     },
   );

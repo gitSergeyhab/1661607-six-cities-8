@@ -7,12 +7,15 @@ import { createMemoryHistory } from 'history';
 
 import Location from './location';
 import { renderComponent } from '../../utils/test-utils';
-import { initialCity, stateAuthAndFilled } from '../../utils/test-constants';
+import { stateAuthAndFilled } from '../../utils/test-constants';
 import { changeCity, changeMainOffers } from '../../store/action';
+import { CITIES } from '../../constants';
 
 
 const ACTIVE_CITY_CLASS = 'tabs__item tabs__item--active';
-const city =  new RegExp(initialCity, 'i');
+const initialCity = CITIES[CITIES.length - 1];
+const cityName =  new RegExp(initialCity, 'i');
+
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
@@ -27,8 +30,8 @@ describe('Location Component', () => {
 
     renderComponent(location, store, history);
 
-    expect(screen.getByText(city)).toBeInTheDocument();
-    expect(screen.getByText(city).parentElement).toHaveClass(ACTIVE_CITY_CLASS);
+    expect(screen.getByText(cityName)).toBeInTheDocument();
+    expect(screen.getByText(cityName).parentElement).not.toHaveClass(ACTIVE_CITY_CLASS);
   });
 
   it('should dispatch changeCity and changeMainOffers', () => {

@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 
 import FavoriteBtn from '../favorite-btn/favorite-btn';
 import { Offer } from '../../types/types';
-import { getStarsWidth } from '../../utils/util';
+import { capitalize, getStarsWidth } from '../../utils/util';
 import { BtnType, RoomDataStatus } from '../../constants';
 import { useDispatch } from 'react-redux';
 import { changeRoomDataStatus } from '../../store/action';
 
 
 const OFFER_PATH = '/offer/';
+
 
 type OfferCardProps = {offer: Offer, btnType: BtnType, infoClass: string, wrapperClass: string, imgWidth: string, imgHeight: string};
 
@@ -57,7 +58,7 @@ function OfferCard({offer, btnType, ...restProps}: OfferCardProps): JSX.Element 
             {title}
           </Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </>
   );

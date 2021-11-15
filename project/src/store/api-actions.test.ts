@@ -10,7 +10,7 @@ import { changeCityAndSorting, changeFavoritesErrorStatus, changeMainErrorStatus
 import { makeFakeServerOffer, makeFakeServerCommentList, makeFakeServerOfferList } from '../utils/test-mocks';
 import { adaptCommentFromServer, adaptHotelFromServer } from '../services/adapters';
 import { removeToken, saveToken } from '../services/token';
-import { removeUserEmail, saveUserEmail } from '../services/user-email';
+import { removeAvatar, removeUserEmail, saveAvatar, saveUserEmail} from '../services/user-info';
 import { APIRoute, AuthorizationStatus, BtnType, CITIES, RoomDataStatus, SortOption } from '../constants';
 import { TEST_ID } from '../utils/test-constants';
 
@@ -19,8 +19,7 @@ const TEST_REVIEW = 'TEST_REVIEW';
 const TEST_RATING = 3;
 const TEST_STATUS = 1;
 const TEST_TOKEN = 'TEST_TOKEN';
-const TEST_TOKEN_KEY = 'TEST_TOKEN_KEY';
-const TEST_EMAIL_KEY = 'TEST_EMAIL_KEY';
+const TEST_AVATAR = 'avatar_url';
 
 
 const testAuthData: AuthData = {email: 'test@mail.com', password: 'test-pa5Sword'};
@@ -30,16 +29,17 @@ jest.mock('../services/token', () => ({
   saveToken: jest.fn(),
   getToken: jest.fn(),
   removeToken: jest.fn(),
-  AUTH_TOKEN_KEY: TEST_TOKEN_KEY,
 }),
 );
 
-jest.mock('../services/user-email', () => ({
+jest.mock('../services/user-info', () => ({
   __esModule: true,
   saveUserEmail: jest.fn(),
   getUserEmail: jest.fn(),
   removeUserEmail: jest.fn(),
-  AUTH_TOKEN_KEY: TEST_EMAIL_KEY,
+  saveAvatar: jest.fn(),
+  getAvatar: jest.fn(),
+  removeAvatar: jest.fn(),
 }),
 );
 
@@ -52,8 +52,7 @@ const fakeClientOffer = adaptHotelFromServer(fakeServerOffer);
 
 describe('Async actions', () => {
   const onFakeUnauthorized = jest.fn();
-  const onFakeNotFound = jest.fn();
-  const api = createAPI(onFakeUnauthorized, onFakeNotFound);
+  const api = createAPI(onFakeUnauthorized);
   const mockAPI = new MockAdapter(api);
   const middleWares = [thunk.withExtraArgument(api)];
 
@@ -73,7 +72,7 @@ describe('Async actions', () => {
     it('loginAction: should dispatch requireAuthorization and to called saveToken, saveUserEmail', async () => {
 
       const store = mockStore();
-      mockAPI.onPost(APIRoute.Login).reply(200, {token: TEST_TOKEN, email: testAuthData.email});
+      mockAPI.onPost(APIRoute.Login).reply(200, {token: TEST_TOKEN, email: testAuthData.email, [TEST_AVATAR]: TEST_AVATAR});
       expect(store.getActions()).toEqual([]);
       await store.dispatch(loginAction(testAuthData));
 
@@ -84,6 +83,9 @@ describe('Async actions', () => {
 
       expect(saveUserEmail).toBeCalledTimes(1);
       expect(saveUserEmail).toBeCalledWith(testAuthData.email);
+
+      expect(saveAvatar).toBeCalledTimes(1);
+      expect(saveAvatar).toBeCalledWith(TEST_AVATAR);
     });
 
     it('logoutAction: should dispatch requireLogout and to called removeToken, removeUserEmail', async () => {
@@ -97,6 +99,7 @@ describe('Async actions', () => {
 
       expect(removeToken).toBeCalledTimes(1);
       expect(removeUserEmail).toBeCalledTimes(1);
+      expect(removeAvatar).toBeCalledTimes(1);
     });
   });
 
